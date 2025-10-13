@@ -1,0 +1,24 @@
+// 전역 변수 및 데이터 로드, 전역 변수 + JSON 데이터 로드
+let categories = [];
+let currentCategoryIndex = null;
+let currentProblemIndex = 0;
+let showAnswer = false;
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+});
+
+async function loadData() {
+    try {
+        const response = await fetch('InformationProcessing.json');
+        const data = await response.json();
+        
+        categories = data.categories;
+        
+        renderAccordion();
+        
+    } catch (error) {
+        console.error('JSON 파일 로드 실패:', error);
+        alert('문제 데이터를 불러오는데 실패했습니다.');
+    }
+}

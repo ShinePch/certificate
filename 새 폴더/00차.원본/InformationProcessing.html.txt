@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정보처리기사 실기 - 문제풀이</title>
+    <link rel="stylesheet" href="InformationProcessing.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>정보처리기사 실기</h1>
+            <p class="subtitle">문제 풀이 연습</p>
+        </header>
+
+        <main class="main-content">
+            <div class="accordion-container" id="accordionContainer">
+                <!-- 아코디언 메뉴가 여기에 동적으로 생성됩니다 -->
+            </div>
+        </main>
+    </div>
+
+    <script src="ProblemGenerators.js"></script>
+    <script src="InformationProcessing.js"></script>
+</body>
+</html>
