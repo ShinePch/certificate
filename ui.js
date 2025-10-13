@@ -180,7 +180,7 @@ function updateProblemDisplay(categoryIndex) {
     const category = categories[categoryIndex];
     const problem = category.problems[currentProblemIndex];
     
-    const problemNumberText = (category.id === 'page' && currentProblemIndex === 3) 
+    const problemNumberText = problem.exam === '랜덤 생성'
     ? `랜덤문제 / ${category.problems.length}` 
     : `문제 ${currentProblemIndex + 1} / ${category.problems.length}`;
 document.getElementById(`problemNumber-${categoryIndex}`).textContent = problemNumberText;
@@ -264,14 +264,14 @@ function createProblemGrid(categoryIndex) {
     
     grid.innerHTML = '';
     
-    category.problems.forEach((_, index) => {
+    category.problems.forEach((problem, index) => {
         const btn = document.createElement('button');
         btn.className = 'problem-number-btn';
         if (index === currentProblemIndex) {
             btn.classList.add('active');
         }
-        // 페이지 교체 알고리즘의 4번째 문제는 "랜덤"으로 표시
-        btn.textContent = (category.id === 'page' && index === 3) ? '랜덤' : index + 1;
+        // exam이 "랜덤 생성"이면 "랜덤"으로 표시, 아니면 번호 표시
+        btn.textContent = problem.exam === '랜덤 생성' ? '랜덤' : index + 1;
         btn.onclick = () => goToProblem(categoryIndex, index);
         grid.appendChild(btn);
     });
