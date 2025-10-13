@@ -57,7 +57,7 @@ function generateRandomSubnetProblem(categoryIndex) {
     const maskString = `255.255.255.${subnetMask}`;
     
     const networkAddress = octets[3] & subnetMask;
-    const hostBits = 8 - Math.log2(256 - subnetMask);
+    const hostBits = Math.log2(256 - subnetMask);
     const totalHosts = Math.pow(2, hostBits) - 2;
     
     categories[categoryIndex].problems[currentProblemIndex].question = 
