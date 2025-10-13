@@ -3,13 +3,39 @@ function generateRandomProblem(categoryIndex) {
     const category = categories[categoryIndex];
     const problem = category.problems[currentProblemIndex];
     
+    // 서브넷 카테고리 분기 처리 (기존 코드 교체)
     if (category.id === 'subnet') {
+        const problemType = problem.problemType;
+        
+        // 기존 1~3번 문제 (ID로 구분)
         if (problem.id === 1) {
             generateRandomIPAllocationProblem(categoryIndex);
         } else if (problem.id === 2) {
             generateRandomFLSMProblem(categoryIndex);
         } else if (problem.id === 3) {
             generateRandomSubnetProblem(categoryIndex);
+        }
+        // 신규 4~13번 문제 (problemType으로 구분)
+        else if (problemType === 'subnetMaskForHosts') {
+            generateSubnetMaskForHostsProblem(categoryIndex);
+        } else if (problemType === 'subnetHostCount') {
+            generateSubnetHostCountProblem(categoryIndex);
+        } else if (problemType === 'optimalSubnetMask') {
+            generateOptimalSubnetMaskProblem(categoryIndex);
+        } else if (problemType === 'flsmSpecificIP') {
+            generateFLSMSpecificIPProblem(categoryIndex);
+        } else if (problemType === 'flsmBroadcast') {
+            generateFLSMBroadcastProblem(categoryIndex);
+        } else if (problemType === 'usableLastIP') {
+            generateUsableLastIPProblem(categoryIndex);
+        } else if (problemType === 'broadcastAddress') {
+            generateBroadcastAddressProblem(categoryIndex);
+        } else if (problemType === 'subnetBitsCount') {
+            generateSubnetBitsCountProblem(categoryIndex);
+        } else if (problemType === 'validSubnetID') {
+            generateValidSubnetIDProblem(categoryIndex);
+        } else if (problemType === 'differentSubnetMask') {
+            generateDifferentSubnetMaskProblem(categoryIndex);
         }
     } else if (category.id === 'page') {
         if (currentProblemIndex === 3) {

@@ -95,6 +95,374 @@ function generateRandomIPAllocationProblem(categoryIndex) {
     categories[categoryIndex].problems[currentProblemIndex].answer = 
         `2) ${choice2}\n4) ${choice4}\n5) ${choice6}`;
 }
+// 4번: C클래스 서브넷 마스크 계산 (호스트 수 기반)
+function generateSubnetMaskForHostsProblem(categoryIndex) {
+    // 필요한 서브넷 개수 (20~32개)
+    const requiredSubnets = 20 + Math.floor(Math.random() * 13);
+    // 필요한 호스트 개수 (4~8개)
+    const requiredHosts = 4 + Math.floor(Math.random() * 5);
+    
+    // 호스트 비트 계산 (호스트+2를 수용할 수 있는 비트)
+    const hostBits = Math.ceil(Math.log2(requiredHosts + 2));
+    // 서브넷 비트 계산
+    const subnetBits = Math.ceil(Math.log2(requiredSubnets));
+    
+    // C클래스는 8비트만 사용 가능
+    if (subnetBits + hostBits > 8) {
+        // 호스트 비트 우선
+        const adjustedHostBits = hostBits;
+        const adjustedSubnetBits = 8 - adjustedHostBits;
+    }
+    
+    // 서브넷 마스크 계산 (마지막 옥텟)
+    const maskValue = 256 - Math.pow(2, hostBits);
+    const subnetMask = `255.255.255.${maskValue}`;
+    
+    // 선택지 생성 (정답 포함)
+    const choices = [];
+    choices.push(`255.255.255.${Math.max(192, maskValue - 16)}`);
+    choices.push(`255.255.255.${maskValue - 8}`);
+    choices.push(`255.255.255.${maskValue}`); // 정답
+    choices.push(`255.255.255.${Math.min(252, maskValue + 8)}`);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `IPv4의 C클래스 네트워크를 ${requiredSubnets}개의 서브넷으로 나누고, 각 서브넷에는 ${requiredHosts}~${requiredHosts+1}개의 호스트를 연결하려고 한다. 이러한 서브넷을 구성하기 위한 서브넷 마스크 값은?\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = subnetMask;
+}
+
+// 5번: 서브넷 수와 호스트 수 계산
+function generateSubnetHostCountProblem(categoryIndex) {
+    // B클래스 기준 서브넷 마스크 선택 (/20 ~ /28)
+    const prefixOptions = [20, 22, 24, 26, 28];
+    const prefix = prefixOptions[Math.floor(Math.random() * prefixOptions.length)];
+    
+    // 서브넷 비트 (B클래스는 /16 기본)
+    const subnetBits = prefix - 16;
+    const subnetCount = Math.pow(2, subnetBits) - 2; // subnet-zero 제외
+    
+    // 호스트 비트
+    const hostBits = 32 - prefix;
+    const hostCount = Math.pow(2, hostBits) - 2;
+    
+    // 서브넷 마스크 계산
+    const thirdOctet = prefix >= 24 ? 255 : (256 - Math.pow(2, 24 - prefix));
+    const fourthOctet = prefix <= 24 ? 0 : (256 - Math.pow(2, 32 - prefix));
+    const subnetMask = `255.255.${thirdOctet}.${fourthOctet}`;
+    
+    // 오답 선택지 생성
+    const wrongChoices = [
+        `서브넷 ${Math.floor(subnetCount / 2)}, 호스트 ${hostCount * 2}`,
+        `서브넷 ${hostCount}, 호스트 ${subnetCount}`,
+        `서브넷 ${subnetCount + 2}, 호스트 ${hostCount}`
+    ];
+    
+    const correctAnswer = `서브넷 ${subnetCount}, 호스트 ${hostCount}`;
+    
+    // 선택지 섞기
+    const allChoices = [...wrongChoices, correctAnswer];
+    shuffleArray(allChoices);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `클래스 B주소를 가지고 서브넷 마스크 ${subnetMask}으로 서브넷을 만들었을 때 나오는 서브넷의 수와 호스트의 수가 맞게 짝지어진 것은?\n\n1. ${allChoices[0]}\n2. ${allChoices[1]}\n3. ${allChoices[2]}\n4. ${allChoices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctAnswer;
+}
+
+// 6번: 최적 서브넷 마스크 선택 (가장 많은 호스트)
+function generateOptimalSubnetMaskProblem(categoryIndex) {
+    // 필요한 서브넷 개수 (4~10개)
+    const requiredSubnets = 4 + Math.floor(Math.random() * 7);
+    
+    // 필요한 서브넷 비트 계산
+    const subnetBits = Math.ceil(Math.log2(requiredSubnets));
+    
+    // B클래스: /16 + 서브넷 비트
+    const prefix = 16 + subnetBits;
+    
+    // 서브넷 마스크 계산
+    const thirdOctet = 256 - Math.pow(2, 24 - prefix);
+    const subnetMask = `255.255.${thirdOctet}.0`;
+    
+    // 선택지 생성 (틀린 것들)
+    const choices = [
+        `255.255.${Math.max(128, thirdOctet - 64)}.0`,
+        `255.255.${thirdOctet - 16}.0`,
+        `255.255.${thirdOctet}.0`, // 정답
+        `255.255.${Math.min(254, thirdOctet + 8)}.0`
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `B Class 네트워크에서 ${requiredSubnets}개의 서브넷이 필요할 때, 가장 많은 호스트를 사용할 수 있는 서브넷 마스크 값은?\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = subnetMask;
+}
+
+// 7번: FLSM N번째 네트워크 M번째 사용가능 IP
+function generateFLSMSpecificIPProblem(categoryIndex) {
+    // 기본 네트워크 (C클래스)
+    const baseIP = `192.168.${Math.floor(Math.random() * 100) + 1}.0`;
+    
+    // 분할 개수 (4, 8, 16개)
+    const subnetOptions = [4, 8, 16];
+    const subnetCount = subnetOptions[Math.floor(Math.random() * subnetOptions.length)];
+    const subnetBits = Math.log2(subnetCount);
+    
+    // 몇 번째 네트워크? (2~subnetCount)
+    const whichNetwork = 2 + Math.floor(Math.random() * (subnetCount - 1));
+    
+    // 몇 번째 IP? (3~6)
+    const whichIP = 3 + Math.floor(Math.random() * 4);
+    
+    // 블록 크기 계산
+    const blockSize = 256 / subnetCount;
+    
+    // N번째 네트워크 주소 계산 (1-based)
+    const networkAddress = (whichNetwork - 1) * blockSize;
+    
+    // M번째 사용가능 IP (네트워크 주소 + M)
+    const usableIP = networkAddress + whichIP;
+    
+    const answer = baseIP.replace('.0', `.${usableIP}`);
+    
+    // 선택지 생성
+    const choices = [
+        baseIP.replace('.0', `.${networkAddress}`),
+        baseIP.replace('.0', `.${usableIP - 1}`),
+        answer, // 정답
+        baseIP.replace('.0', `.${usableIP + 2}`)
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `${baseIP}/24 네트워크를 FLSM방식으로 ${subnetCount}개의 Subnet으로 나누고 IP Subnet-zero를 적용했다. 이 때 Subnetting 된 네트워크 중 ${whichNetwork}번째 네트워크의 ${whichIP}번째 사용 가능한 IP는 무엇인가?\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = answer;
+}
+
+// 8번: FLSM N번째 네트워크 브로드캐스트 주소
+function generateFLSMBroadcastProblem(categoryIndex) {
+    // 기본 네트워크
+    const octet1 = 192 + Math.floor(Math.random() * 30);
+    const octet2 = Math.floor(Math.random() * 255);
+    const octet3 = Math.floor(Math.random() * 255);
+    const baseIP = `${octet1}.${octet2}.${octet3}.0`;
+    
+    // 분할 개수 (8~16개)
+    const subnetCount = 8 + Math.floor(Math.random() * 9);
+    const subnetBits = Math.ceil(Math.log2(subnetCount));
+    
+    // 몇 번째 네트워크? (subnetCount - 2 ~ subnetCount)
+    const whichNetwork = subnetCount - 2 + Math.floor(Math.random() * 3);
+    
+    // 블록 크기
+    const blockSize = 256 / Math.pow(2, subnetBits);
+    
+    // N번째 네트워크 브로드캐스트 주소
+    const networkStart = (whichNetwork - 1) * blockSize;
+    const broadcastIP = networkStart + blockSize - 1;
+    
+    const answer = baseIP.replace('.0', `.${Math.floor(broadcastIP)}`);
+    
+    // 선택지 생성
+    const choices = [
+        answer, // 정답
+        baseIP.replace('.0', `.${Math.floor(broadcastIP) - 16}`),
+        baseIP.replace('.0', `.${Math.floor(broadcastIP) + 16}`),
+        baseIP.replace('.0', `.255`)
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `${baseIP}/24 네트워크를 FLSM방식을 이용하여 ${subnetCount}개의 Subnet으로 나누고 IP Subnet-zero를 적용했다. 이 때 서브네팅된 네트워크 중 ${whichNetwork}번째 네트워크의 broadcast IP주소는?\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = answer;
+}
+
+// 9번: 사용 가능한 마지막 IP 주소
+function generateUsableLastIPProblem(categoryIndex) {
+    // 네트워크 주소 생성
+    const octet3 = Math.floor(Math.random() * 200) + 50;
+    
+    // 서브넷 마스크 선택 (/26, /27, /28)
+    const maskOptions = [192, 224, 240];
+    const mask = maskOptions[Math.floor(Math.random() * maskOptions.length)];
+    const blockSize = 256 - mask;
+    
+    // 네트워크 블록 계산 (128, 192 등)
+    const networkBlock = Math.floor(Math.random() * (256 / blockSize)) * blockSize;
+    
+    const networkIP = `192.168.${octet3}.${networkBlock}`;
+    const subnetMask = `255.255.255.${mask}`;
+    
+    // 브로드캐스트 주소
+    const broadcastIP = networkBlock + blockSize - 1;
+    // 마지막 사용가능 IP
+    const lastUsableIP = broadcastIP - 1;
+    
+    const answer = `192.168.${octet3}.${lastUsableIP}`;
+    
+    // 선택지 생성
+    const choices = [
+        `192.168.${octet3}.${networkBlock + 1}`,
+        answer, // 정답
+        `192.168.${octet3}.${broadcastIP}`,
+        `192.168.${octet3}.255`
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `네트워크주소가 '${networkIP}'이며, 서브넷마스크가 '${subnetMask}'인 네트워크가 있다. 이 네트워크에서 사용 가능한 마지막 IP주소는 무엇인가?\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = answer;
+}
+
+// 10번: 브로드캐스트 주소 계산
+function generateBroadcastAddressProblem(categoryIndex) {
+    // IP 주소 생성
+    const octet3 = Math.floor(Math.random() * 200) + 50;
+    
+    // 서브넷 마스크 선택
+    const maskOptions = [192, 224, 240];
+    const mask = maskOptions[Math.floor(Math.random() * maskOptions.length)];
+    const blockSize = 256 - mask;
+    
+    // 랜덤 IP 생성 (블록 중간에 위치)
+    const networkStart = Math.floor(Math.random() * (256 / blockSize)) * blockSize;
+    const randomOffset = 10 + Math.floor(Math.random() * (blockSize - 15));
+    const ipAddress = networkStart + randomOffset;
+    
+    // 브로드캐스트 계산
+    const broadcastIP = networkStart + blockSize - 1;
+    
+    const ip = `192.168.${octet3}.${ipAddress}`;
+    const subnetMask = `255.255.255.${mask}`;
+    const answer = `192.168.${octet3}.${broadcastIP}`;
+    
+    // 선택지 생성
+    const choices = [
+        `192.168.${octet3}.255`,
+        `192.168.${octet3}.${networkStart + blockSize / 2 - 1}`,
+        `192.168.${octet3}.${networkStart + blockSize - 1 - blockSize}`,
+        answer // 정답
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음 조건일 때 사용되는 브로드캐스트 주소로 알맞은 것은?\n\nIP주소: ${ip}\n서브넷마스크 값: ${subnetMask}\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = answer;
+}
+
+// 11번: 서브넷 비트 수 계산 (CIDR 표기)
+function generateSubnetBitsCountProblem(categoryIndex) {
+    // 기본 네트워크
+    const baseOctet = 100 + Math.floor(Math.random() * 100);
+    const baseIP = `${baseOctet}.${baseOctet}.${baseOctet}.0/24`;
+    
+    // 필요한 서브넷 개수 (6~14개)
+    const requiredSubnets = 6 + Math.floor(Math.random() * 9);
+    // 필요한 호스트 개수 (15~25개)
+    const requiredHosts = 15 + Math.floor(Math.random() * 11);
+    
+    // 서브넷 비트 계산
+    const subnetBits = Math.ceil(Math.log2(requiredSubnets));
+    // 호스트 비트 계산
+    const hostBits = Math.ceil(Math.log2(requiredHosts + 2));
+    
+    // CIDR 표기
+    const cidr = 24 + subnetBits;
+    const answer = cidr.toString();
+    
+    // 선택지 생성
+    const choices = [
+        (cidr - 2).toString(),
+        (cidr - 1).toString(),
+        answer, // 정답
+        (cidr + 1).toString()
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `네트워크 관리자인 A씨는 ISP로부터 ${baseIP}를 할당 받았다. 네트워크의 효율성을 위하여 최소 ${requiredSubnets}개의 서브넷으로 분리하여 네트워크를 구성하되, 각 네트워크에는 최소 ${requiredHosts}대 이상의 호스트가 존재할 수 있도록 네트워크를 구성하고자 한다. 이 때 사용해야하는 서브넷 비트의 수는 무엇인가?\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = answer;
+}
+
+// 12번: 유효한 서브넷 ID 찾기
+function generateValidSubnetIDProblem(categoryIndex) {
+    // A클래스 네트워크
+    const baseOctet = 10 + Math.floor(Math.random() * 20);
+    const baseIP = `${baseOctet}.0.0.0`;
+    
+    // 서브넷 마스크 선택 (두 번째 옥텟)
+    const maskOptions = [240, 248, 224, 192];
+    const mask = maskOptions[Math.floor(Math.random() * maskOptions.length)];
+    const subnetMask = `255.${mask}.0.0`;
+    
+    // 블록 크기 계산
+    const blockSize = 256 - mask;
+    
+    // 유효한 서브넷 ID (blockSize의 배수)
+    const validMultiple = 1 + Math.floor(Math.random() * 3); // 1~3배
+    const validSubnetID = `${baseOctet}.${blockSize * validMultiple}.0.0`;
+    
+    // 선택지 생성
+    const choices = [
+        validSubnetID, // 정답
+        `${baseOctet}.0.0.${blockSize}`,
+        `${baseOctet}.${blockSize - 16}.16.3`,
+        `${baseOctet}.${blockSize * 2 - 16}.240.0`
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `${baseIP} 네트워크 전체에서 마스크 값으로 ${subnetMask}를 사용할 경우 유효한 서브넷 ID는?\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = validSubnetID;
+}
+
+// 13번: 서로 다른 서브넷을 위한 마스크
+function generateDifferentSubnetMaskProblem(categoryIndex) {
+    // 기본 네트워크
+    const baseOctet = 192;
+    const secondOctet = 168;
+    const thirdOctet = Math.floor(Math.random() * 255);
+    
+    // 첫 번째 IP (작은 값)
+    const firstIP = 1 + Math.floor(Math.random() * 30);
+    // 두 번째 IP (큰 값, 32~96 사이)
+    const secondIP = 32 + Math.floor(Math.random() * 65);
+    
+    const ipA = `${baseOctet}.${secondOctet}.${thirdOctet}.${firstIP}`;
+    const ipB = `${baseOctet}.${secondOctet}.${thirdOctet}.${secondIP}`;
+    
+    // 두 IP를 분리할 수 있는 최소 마스크 계산
+    const diff = secondIP - firstIP;
+    let requiredBlockSize = 32;
+    while (requiredBlockSize < diff) {
+        requiredBlockSize *= 2;
+    }
+    
+    // 마스크 계산
+    const maskValue = 256 - requiredBlockSize;
+    const correctMask = `255.255.255.${maskValue}`;
+    
+    // 선택지 생성
+    const choices = [
+        `0.0.0.0`,
+        `255.255.255.0`,
+        correctMask, // 정답
+        `255.255.255.${maskValue - 64}`
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `IPv4주소체계 기반의 어떤 네트워크상에서 두 컴퓨터 A,B가 각각 ${ipA}과 ${ipB}의 주소를 사용할 때 이 두 컴퓨터가 서로 다른 서브넷(Subnet)상에 존재하기 위해 사용해야 하는 서브넷 마스크(subnet Mask)로 가장 옳은 것은?\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctMask;
+}
+
+// 배열 섞기 헬퍼 함수
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 // ========================== 서브넷/네트워크 알고리즘 끝 ==========================
 
 // ========================== 페이지 교체 알고리즘 시작 ==========================
