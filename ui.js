@@ -78,7 +78,7 @@ function createProblemContent(categoryIndex) {
 
             <div class="problem-box">
                 <h3>문제</h3>
-                <p id="questionText-${categoryIndex}" class="question-text"></p>
+                <div id="questionText-${categoryIndex}" class="question-text problem-question"></div>
             </div>
 
             <div class="answer-input-box">
@@ -194,7 +194,7 @@ document.getElementById(`problemNumber-${categoryIndex}`).textContent = problemN
     }
     
     const questionElement = document.getElementById(`questionText-${categoryIndex}`);
-    questionElement.textContent = problem.question.replace(/\\n/g, '\n');
+    questionElement.innerHTML = problem.question.replace(/\\n/g, '<br>');
 
     if (category.id === 'python' && (problem.question.includes('def ') || problem.question.includes('print(') || problem.question.includes('for ') || problem.question.includes('='))) {
         questionElement.classList.add('has-python-code');
@@ -270,8 +270,8 @@ function createProblemGrid(categoryIndex) {
         if (index === currentProblemIndex) {
             btn.classList.add('active');
         }
-        // exam이 "랜덤 생성"이면 "랜덤"으로 표시, 아니면 번호 표시
-        btn.textContent = problem.exam === '랜덤 생성' ? '랜덤' : index + 1;
+        // 항상 번호로 표시
+        btn.textContent = index + 1;
         btn.onclick = () => goToProblem(categoryIndex, index);
         grid.appendChild(btn);
     });

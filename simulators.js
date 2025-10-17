@@ -309,3 +309,321 @@ function simulateRR(processes, quantum) {
     
     return totalWaitTime / processes.length;
 }
+
+// SRT 스케줄링 시뮬레이션
+function simulateSRTScheduling(processes) {
+    const n = processes.length;
+    const remainingTime = {};
+    const completionTime = {};
+    const turnaroundTime = {};
+    
+    processes.forEach(p => {
+        remainingTime[p.name] = p.burst;
+    });
+    
+    let currentTime = 0;
+    let completed = 0;
+    
+    while (completed !== n) {
+        let shortest = null;
+        let minRemaining = Infinity;
+        
+        for (let p of processes) {
+            if (p.arrival <= currentTime && remainingTime[p.name] > 0) {
+                if (remainingTime[p.name] < minRemaining) {
+                    minRemaining = remainingTime[p.name];
+                    shortest = p;
+                }
+            }
+        }
+        
+        if (shortest === null) {
+            currentTime++;
+            continue;
+        }
+        
+        remainingTime[shortest.name]--;
+        
+        if (remainingTime[shortest.name] === 0) {
+            completed++;
+            completionTime[shortest.name] = currentTime + 1;
+            turnaroundTime[shortest.name] = completionTime[shortest.name] - shortest.arrival;
+        }
+        
+        currentTime++;
+    }
+    
+    let totalTurnaround = 0;
+    processes.forEach(p => {
+        totalTurnaround += turnaroundTime[p.name];
+    });
+    
+    return {
+        avgTurnaround: totalTurnaround / n
+    };
+}
+
+// ========================== 디스크 스케줄링 시뮬레이션 시작 ==========================
+
+// FCFS 디스크 스케줄링
+function simulateFCFSDisk(head, queue) {
+    let currentHead = head;
+    let totalDistance = 0;
+    const order = [];
+    
+    for (let track of queue) {
+        totalDistance += Math.abs(currentHead - track);
+        order.push(track);
+        currentHead = track;
+    }
+    
+    return { totalDistance, order };
+}
+
+// SSTF 디스크 스케줄링
+function simulateSSTFDisk(head, queue) {
+    let currentHead = head;
+    let totalDistance = 0;
+    const order = [];
+    const remaining = [...queue];
+    
+    while (remaining.length > 0) {
+        let minDistance = Infinity;
+        let minIndex = 0;
+        
+        for (let i = 0; i < remaining.length; i++) {
+            const distance = Math.abs(currentHead - remaining[i]);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minIndex = i;
+            }
+        }
+        
+        const nextTrack = remaining[minIndex];
+        totalDistance += minDistance;
+        order.push(nextTrack);
+        currentHead = nextTrack;
+        remaining.splice(minIndex, 1);
+    }
+    
+    return { totalDistance, order };
+}
+
+// SCAN 디스크 스케줄링
+function simulateSCANDisk(head, queue, direction, minTrack, maxTrack) {
+    let currentHead = head;
+    let totalDistance = 0;
+    const order = [];
+    const sorted = [...queue].sort((a, b) => a - b);
+    
+    if (direction === 'down') {
+        // 현재 위치보다 작거나 같은 트랙들 (내림차순)
+        const lower = sorted.filter(t => t <= currentHead).reverse();
+        // 현재 위치보다 큰 트랙들 (오름차순)
+        const upper = sorted.filter(t => t > currentHead);
+        
+        // 먼저 아래쪽으로
+        for (let track of lower) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+        
+        // 0까지 이동
+        if (lower.length > 0) {
+            totalDistance += currentHead - minTrack;
+            currentHead = minTrack;
+        }
+        
+        // 방향 전환 후 위쪽
+        for (let track of upper) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+    } else {
+        // 위쪽 방향
+        const upper = sorted.filter(t => t >= currentHead);
+        const lower = sorted.filter(t => t < currentHead).reverse();
+        
+        for (let track of upper) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+        
+        if (upper.length > 0) {
+            totalDistance += maxTrack - currentHead;
+            currentHead = maxTrack;
+        }
+        
+        for (let track of lower) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+    }
+    
+    return { totalDistance, order };
+}
+
+// C-SCAN 디스크 스케줄링
+function simulateCSCANDisk(head, queue, direction, minTrack, maxTrack) {
+    let currentHead = head;
+    let totalDistance = 0;
+    const order = [];
+    const sorted = [...queue].sort((a, b) => a - b);
+    
+    if (direction === 'up') {
+        // 현재 위치보다 크거나 같은 트랙들
+        const upper = sorted.filter(t => t >= currentHead);
+        // 현재 위치보다 작은 트랙들
+        const lower = sorted.filter(t => t < currentHead);
+        
+        // 위쪽으로 이동
+        for (let track of upper) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+        
+        // 끝까지 이동
+        totalDistance += maxTrack - currentHead;
+        order.push(maxTrack);
+        
+        // 처음으로 점프
+        totalDistance += maxTrack - minTrack;
+        order.push(minTrack);
+        currentHead = minTrack;
+        
+        // 나머지 처리
+        for (let track of lower) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+    } else {
+        // 아래쪽 방향
+        const lower = sorted.filter(t => t <= currentHead).reverse();
+        const upper = sorted.filter(t => t > currentHead);
+        
+        for (let track of lower) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+        
+        totalDistance += currentHead - minTrack;
+        order.push(minTrack);
+        
+        totalDistance += maxTrack - minTrack;
+        order.push(maxTrack);
+        currentHead = maxTrack;
+        
+        for (let track of upper.reverse()) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+    }
+    
+    return { totalDistance, order };
+}
+
+// LOOK 디스크 스케줄링
+function simulateLOOKDisk(head, queue, direction) {
+    let currentHead = head;
+    let totalDistance = 0;
+    const order = [];
+    const sorted = [...queue].sort((a, b) => a - b);
+    
+    if (direction === 'down') {
+        const lower = sorted.filter(t => t <= currentHead).reverse();
+        const upper = sorted.filter(t => t > currentHead);
+        
+        for (let track of lower) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+        
+        for (let track of upper) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+    } else {
+        const upper = sorted.filter(t => t >= currentHead);
+        const lower = sorted.filter(t => t < currentHead).reverse();
+        
+        for (let track of upper) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+        
+        for (let track of lower) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+    }
+    
+    return { totalDistance, order };
+}
+
+// C-LOOK 디스크 스케줄링
+function simulateCLOOKDisk(head, queue, direction) {
+    let currentHead = head;
+    let totalDistance = 0;
+    const order = [];
+    const sorted = [...queue].sort((a, b) => a - b);
+    
+    if (direction === 'up') {
+        const upper = sorted.filter(t => t >= currentHead);
+        const lower = sorted.filter(t => t < currentHead);
+        
+        for (let track of upper) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+        
+        if (lower.length > 0) {
+            totalDistance += Math.abs(currentHead - lower[0]);
+            currentHead = lower[0];
+            order.push(lower[0]);
+            
+            for (let i = 1; i < lower.length; i++) {
+                totalDistance += Math.abs(currentHead - lower[i]);
+                order.push(lower[i]);
+                currentHead = lower[i];
+            }
+        }
+    } else {
+        const lower = sorted.filter(t => t <= currentHead).reverse();
+        const upper = sorted.filter(t => t > currentHead);
+        
+        for (let track of lower) {
+            totalDistance += Math.abs(currentHead - track);
+            order.push(track);
+            currentHead = track;
+        }
+        
+        if (upper.length > 0) {
+            totalDistance += Math.abs(currentHead - upper[upper.length - 1]);
+            currentHead = upper[upper.length - 1];
+            order.push(upper[upper.length - 1]);
+            
+            for (let i = upper.length - 2; i >= 0; i--) {
+                totalDistance += Math.abs(currentHead - upper[i]);
+                order.push(upper[i]);
+                currentHead = upper[i];
+            }
+        }
+    }
+    
+    return { totalDistance, order };
+}
+
+// ========================== 디스크 스케줄링 시뮬레이션 끝 ==========================

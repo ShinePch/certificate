@@ -45,8 +45,82 @@ function generateRandomProblem(categoryIndex) {
         } else {
             generateRandomPageReplacementProblem(categoryIndex);
         }
-    } else if (category.id === 'schedule') {
-        generateRandomSchedulingProblem(categoryIndex);
+    } else if (category.id === 'process_schedule') {
+        // 프로세스 스케줄링: 문제 번호에 따라 해당 알고리즘 문제 생성
+        if (currentProblemIndex === 0) {
+            // 1번 문제: 기출 (랜덤 안 됨)
+        } else if (currentProblemIndex === 1) {
+            // 2번 문제: SRT
+            generateProcessSchedule2(categoryIndex);
+        } else if (currentProblemIndex === 2) {
+            // 3번 문제: FCFS 평균 대기시간
+            generateProcessSchedule3(categoryIndex);
+        } else if (currentProblemIndex === 3) {
+            // 4번 문제: FCFS T-t
+            generateProcessSchedule4(categoryIndex);
+        } else if (currentProblemIndex === 4) {
+            // 5번 문제: SJF 평균 실행시간 (테이블)
+            generateProcessSchedule5(categoryIndex);
+        } else if (currentProblemIndex === 5) {
+            // 6번 문제: SJF 평균 대기시간 (텍스트)
+            generateProcessSchedule6(categoryIndex);
+        } else if (currentProblemIndex === 6) {
+            // 7번 문제: SJF 평균 반환+대기
+            generateProcessSchedule7(categoryIndex);
+        } else if (currentProblemIndex === 7) {
+            // 8번 문제: SJF Task
+            generateProcessSchedule8(categoryIndex);
+        } else if (currentProblemIndex === 8) {
+            // 9번 문제: HRN
+            generateProcessSchedule9(categoryIndex);
+        } else if (currentProblemIndex === 9) {
+            // 10번 문제: HRN
+            generateProcessSchedule10(categoryIndex);
+        } else if (currentProblemIndex === 10) {
+            // 11번 문제: HRN
+            generateProcessSchedule11(categoryIndex);
+        }
+        updateProblemDisplay(categoryIndex);
+    } else if (category.id === 'disk_schedule') {
+        if (currentProblemIndex === 0) {
+            // 1번 문제: FCFS
+            generateDiskSchedule1(categoryIndex);
+        } else if (currentProblemIndex === 1) {
+            // 2번 문제: SSTF 가장 먼저
+            generateDiskSchedule2(categoryIndex);
+        } else if (currentProblemIndex === 2) {
+            // 3번 문제: SSTF 총 이동거리
+            generateDiskSchedule3(categoryIndex);
+        } else if (currentProblemIndex === 3) {
+            // 4번 문제: SSTF 처리 순서
+            generateDiskSchedule4(categoryIndex);
+        } else if (currentProblemIndex === 4) {
+            // 5번 문제: SCAN 총 이동거리
+            generateDiskSchedule5(categoryIndex);
+        } else if (currentProblemIndex === 5) {
+            // 6번 문제: SCAN 최후 처리
+            generateDiskSchedule6(categoryIndex);
+        } else if (currentProblemIndex === 6) {
+            // 7번 문제: SCAN 가장 먼저
+            generateDiskSchedule7(categoryIndex);
+        } else if (currentProblemIndex === 7) {
+            // 8번 문제: C-SCAN 처리 순서
+            generateDiskSchedule8(categoryIndex);
+        } else if (currentProblemIndex === 8) {
+            // 9번 문제: C-SCAN 총 이동거리
+            generateDiskSchedule9(categoryIndex);
+        } else if (currentProblemIndex === 9) {
+            // 10번 문제: LOOK 가장 먼저
+            generateDiskSchedule10(categoryIndex);
+        } else if (currentProblemIndex === 10) {
+            // 11번 문제: LOOK 총 이동
+            generateDiskSchedule11(categoryIndex);
+        } else if (currentProblemIndex === 11) {
+            // 12번 문제: C-LOOK 총 이동거리
+            generateDiskSchedule12(categoryIndex);
+        }
+        
+        updateProblemDisplay(categoryIndex);
     } else if (category.id === 'base') {
         generateRandomBaseConversionProblem(categoryIndex);
     } else if (category.id === 'python') {

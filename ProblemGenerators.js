@@ -584,149 +584,605 @@ function simulateLFU(pages, frameCount) {
 }
 // ========================== 페이지 교체 알고리즘 끝 ==========================
 
-// ========================== 스케줄링 알고리즘 시작 ==========================
-function generateRandomSchedulingProblem(categoryIndex) {
-    const algorithms = ['FCFS', 'SJF', 'RR'];
-    const algorithm = algorithms[Math.floor(Math.random() * algorithms.length)];
-    
-    const processCount = 3 + Math.floor(Math.random() * 3);
+// ========================== 프로세스 스케줄링 알고리즘 시작 ==========================
+
+// 2번 문제: SRT 평균 반환시간
+function generateProcessSchedule2(categoryIndex) {
+    const processCount = 4;
     const processes = [];
     
     for (let i = 0; i < processCount; i++) {
         processes.push({
             name: `P${i + 1}`,
-            arrival: i === 0 ? 0 : Math.floor(Math.random() * 5),
-            burst: 2 + Math.floor(Math.random() * 7)
+            arrival: i * 2,
+            burst: 1 + Math.floor(Math.random() * 7)
         });
     }
     
-    processes.sort((a, b) => a.arrival - b.arrival);
+    const result = simulateSRTScheduling(processes);
+    const avgTurnaroundTime = result.avgTurnaround;
     
-    let avgWaitTime = 0;
-    let quantum = 0;
+    const choices = [
+        (avgTurnaroundTime - 2.75).toFixed(2),
+        avgTurnaroundTime.toFixed(1),
+        (avgTurnaroundTime + 1.75).toFixed(2),
+        (avgTurnaroundTime + 3).toFixed(1)
+    ];
     
-    if (algorithm === 'FCFS') {
-        avgWaitTime = simulateFCFS(processes);
-    } else if (algorithm === 'SJF') {
-        avgWaitTime = simulateSJF(processes);
-    } else if (algorithm === 'RR') {
-        quantum = 2 + Math.floor(Math.random() * 2);
-        avgWaitTime = simulateRR(processes, quantum);
-    }
-    
-    let questionTable = '\n프로세스 | 도착시간 | 실행시간\n--------|---------|--------\n';
+    let tableHTML = '<table>\n<tr><th>프로세스</th><th>도착시간</th><th>실행시간</th></tr>\n';
     processes.forEach(p => {
-        questionTable += `${p.name}      | ${p.arrival}       | ${p.burst}\n`;
+        tableHTML += `<tr><td>${p.name}</td><td>${p.arrival}</td><td>${p.burst}</td></tr>\n`;
     });
+    tableHTML += '</table>';
     
-    let questionText = `${algorithm} 스케줄링의 평균 대기시간을 계산하시오.${questionTable}`;
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음 표는 단일 CPU에 진입한 프로세스의 도착 시간과 처리하는 데 필요한 실행 시간을 나타낸 것이다. 프로세스 간 문맥 교환에 따른 오버헤드는 무시한다고 할 때, SRT스케줄링 알고리즘을 사용한 경우 네 프로세스의 평균 반환시간은?\n\n${tableHTML}\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
     
-    if (algorithm === 'RR') {
-        questionText = `RR(Round Robin) 스케줄링의 평균 대기시간을 계산하시오. (타임 슬라이스 = ${quantum})${questionTable}`;
-    }
-    
-    categories[categoryIndex].problems[currentProblemIndex].question = questionText;
-    categories[categoryIndex].problems[currentProblemIndex].answer = avgWaitTime.toFixed(2);
+    categories[categoryIndex].problems[currentProblemIndex].answer = avgTurnaroundTime.toFixed(1);
 }
 
-function simulateFCFS(processes) {
-    let currentTime = 0;
-    let totalWaitTime = 0;
+// 3번 문제: FCFS 평균 대기시간
+function generateProcessSchedule3(categoryIndex) {
+    const processCount = 3;
+    const processes = [];
     
+    for (let i = 0; i < processCount; i++) {
+        processes.push({
+            name: `P${i + 1}`,
+            arrival: 0,
+            burst: 3 + Math.floor(Math.random() * 20)
+        });
+    }
+    
+    const avgWaitTime = simulateFCFS(processes);
+    
+    const choices = [
+        Math.max(0, Math.round(avgWaitTime - 2)),
+        Math.max(0, Math.round(avgWaitTime - 1)),
+        Math.round(avgWaitTime),
+        Math.round(avgWaitTime + 1)
+    ];
+    
+    let tableHTML = '<table>\n<tr><th>프로세스</th><th>버스트 시간(초)</th></tr>\n';
     processes.forEach(p => {
-        if (currentTime < p.arrival) {
-            currentTime = p.arrival;
-        }
-        
-        const waitTime = currentTime - p.arrival;
-        totalWaitTime += waitTime;
-        
+        tableHTML += `<tr><td>${p.name}</td><td>${p.burst}</td></tr>\n`;
+    });
+    tableHTML += '</table>';
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음은 CPU에 서비스를 받으려고 도착한 순서대로 프로세스와 그 서비스 시간을 나타낸다. FCFS CPU Scheduling에 의해서 프로세스를 처리한다고 했을 경우 프로세스의 평균 대기시간은 얼마인가?\n\n${tableHTML}\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = `${Math.round(avgWaitTime)}`;
+}
+
+// 4번 문제: FCFS T-t 값
+function generateProcessSchedule4(categoryIndex) {
+    const processCount = 3;
+    const processes = [];
+    
+    for (let i = 0; i < processCount; i++) {
+        processes.push({
+            name: `P${i + 1}`,
+            burst: 3 + Math.floor(Math.random() * 10)
+        });
+    }
+    
+    const worstOrder = [...processes].sort((a, b) => b.burst - a.burst);
+    let timeWorst = 0;
+    let totalTurnaroundWorst = 0;
+    worstOrder.forEach(p => {
+        timeWorst += p.burst;
+        totalTurnaroundWorst += timeWorst;
+    });
+    const T = totalTurnaroundWorst / processCount;
+    
+    const bestOrder = [...processes].sort((a, b) => a.burst - b.burst);
+    let timeBest = 0;
+    let totalTurnaroundBest = 0;
+    bestOrder.forEach(p => {
+        timeBest += p.burst;
+        totalTurnaroundBest += timeBest;
+    });
+    const t = totalTurnaroundBest / processCount;
+    
+    const diff = Math.round(T - t);
+    
+    const choices = [
+        Math.max(0, diff - 2),
+        Math.max(0, diff - 1),
+        diff,
+        diff + 1
+    ];
+    
+    let tableHTML = '<table>\n<tr><th>프로세스</th><th>실행시간</th></tr>\n';
+    processes.forEach(p => {
+        tableHTML += `<tr><td>${p.name}</td><td>${p.burst}</td></tr>\n`;
+    });
+    tableHTML += '</table>';
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음과 같은 3개의 작업에 대하여 FCFS 알고리즘을 사용할 때, 임의의 작업 순서로 얻을 수 있는 최대 평균 반환 시간을 T, 최소 평균 반환 시간을 t라고 가정했을 경우 T-t의 값은?\n\n${tableHTML}\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = `${diff}`;
+}
+
+// 5번 문제: SJF 평균 실행시간 (테이블)
+function generateProcessSchedule5(categoryIndex) {
+    const processCount = 3;
+    const processes = [];
+    
+    for (let i = 0; i < processCount; i++) {
+        processes.push({
+            name: `P${i + 1}`,
+            arrival: 0,
+            burst: 6 + Math.floor(Math.random() * 13)
+        });
+    }
+    
+    const sorted = [...processes].sort((a, b) => a.burst - b.burst);
+    
+    let currentTime = 0;
+    let totalTurnaroundTime = 0;
+    
+    sorted.forEach(p => {
         currentTime += p.burst;
+        totalTurnaroundTime += currentTime;
     });
     
-    return totalWaitTime / processes.length;
+    const avgTurnaroundTime = Math.round(totalTurnaroundTime / processCount);
+    
+    const choices = [
+        Math.max(0, avgTurnaroundTime - 1),
+        avgTurnaroundTime,
+        avgTurnaroundTime + 7,
+        avgTurnaroundTime + 13
+    ];
+    
+    let tableHTML = '<table>\n<tr><th>프로세스</th><th>실행시간(초)</th></tr>\n';
+    processes.forEach(p => {
+        tableHTML += `<tr><td>${p.name}</td><td>${p.burst}</td></tr>\n`;
+    });
+    tableHTML += '</table>';
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음과 같은 프로세스들이 차례로 준비상태 큐에 들어왔을 경우 SJF 스케줄링 기법을 이용하여 제출시간이 없는 경우의 평균 실행시간은?\n\n${tableHTML}\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = `${avgTurnaroundTime}`;
 }
 
-function simulateSJF(processes) {
-    const remaining = [...processes];
-    const completed = [];
+// 6번 문제: SJF 평균 대기시간 (텍스트만, 테이블 없음!)
+function generateProcessSchedule6(categoryIndex) {
+    const processCount = 4;
+    const bursts = [];
+    
+    for (let i = 0; i < processCount; i++) {
+        bursts.push(9 + Math.floor(Math.random() * 16));
+    }
+    
+    const sorted = [...bursts].sort((a, b) => a - b);
+    
     let currentTime = 0;
     let totalWaitTime = 0;
+    
+    sorted.forEach(burst => {
+        totalWaitTime += currentTime;
+        currentTime += burst;
+    });
+    
+    const avgWaitTime = totalWaitTime / processCount;
+    
+    const choices = [
+        (avgWaitTime - 7).toFixed(1),
+        (avgWaitTime - 1).toFixed(1),
+        avgWaitTime.toFixed(1),
+        (avgWaitTime + 9.75).toFixed(2)
+    ];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `대기하고 있는 프로세스 P1, P2, P3, P4의 처리시간은 ${bursts[0]}[ms], ${bursts[1]}[ms], ${bursts[2]}[ms], ${bursts[3]}[ms]일 때, 최단 작업 우선(SJF) 스케줄링으로 처리했을 때 평균 대기 시간은 얼마인가?\n\n1. ${choices[0]}[ms]\n2. ${choices[1]}[ms]\n3. ${choices[2]}[ms]\n4. ${choices[3]}[ms]`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = avgWaitTime.toFixed(1);
+}
+
+// 7번 문제: SJF 평균 반환시간과 평균 대기시간
+function generateProcessSchedule7(categoryIndex) {
+    const processCount = 4;
+    const processes = [];
+    
+    for (let i = 0; i < processCount; i++) {
+        processes.push({
+            name: `P-${i + 1}`,
+            arrival: 0,
+            burst: 3 + Math.floor(Math.random() * 6)
+        });
+    }
+    
+    const sorted = [...processes].sort((a, b) => a.burst - b.burst);
+    
+    let currentTime = 0;
+    let totalWaitTime = 0;
+    let totalTurnaroundTime = 0;
+    
+    sorted.forEach(p => {
+        totalWaitTime += currentTime;
+        currentTime += p.burst;
+        totalTurnaroundTime += currentTime;
+    });
+    
+    const avgWaitTime = Math.round(totalWaitTime / processCount);
+    const avgTurnaroundTime = Math.round(totalTurnaroundTime / processCount);
+    
+    let tableHTML = '<table>\n<tr><th>프로세스</th><th>실행시간</th></tr>\n';
+    processes.forEach(p => {
+        tableHTML += `<tr><td>${p.name}</td><td>${p.burst}</td></tr>\n`;
+    });
+    tableHTML += '</table>';
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `SJF스케줄링에서 다음과 같은 작업들이 준비상태 큐에 있을 때 평균 반환시간과 평균 대기시간은?\n\n${tableHTML}\n\n1. 평균 반환시간 : ${avgTurnaroundTime}, 평균 대기시간 : ${avgWaitTime}\n2. 평균 반환시간 : ${avgTurnaroundTime}, 평균 대기시간 : ${avgWaitTime + 2}\n3. 평균 반환시간 : ${avgTurnaroundTime + 2}, 평균 대기시간 : ${avgWaitTime}\n4. 평균 반환시간 : ${avgTurnaroundTime + 2}, 평균 대기시간 : ${avgWaitTime + 2}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = `평균 반환시간 : ${avgTurnaroundTime}, 평균 대기시간 : ${avgWaitTime}`;
+}
+
+// 8번 문제: SJF Task 종료시간
+function generateProcessSchedule8(categoryIndex) {
+    const tasks = [];
+    
+    for (let i = 0; i < 3; i++) {
+        tasks.push({
+            name: `Task${i + 1}`,
+            arrival: i,
+            burst: 3 + Math.floor(Math.random() * 4)
+        });
+    }
+    
+    const remaining = [...tasks];
+    let currentTime = 0;
+    let task2EndTime = 0;
     
     while (remaining.length > 0) {
-        const available = remaining.filter(p => p.arrival <= currentTime);
+        const available = remaining.filter(t => t.arrival <= currentTime);
         
         if (available.length === 0) {
-            currentTime = remaining[0].arrival;
+            currentTime++;
             continue;
         }
         
         available.sort((a, b) => a.burst - b.burst);
         const selected = available[0];
         
-        const waitTime = currentTime - selected.arrival;
-        totalWaitTime += waitTime;
-        
         currentTime += selected.burst;
+        
+        if (selected.name === 'Task2') {
+            task2EndTime = currentTime;
+        }
         
         const index = remaining.indexOf(selected);
         remaining.splice(index, 1);
-        completed.push(selected);
     }
     
-    return totalWaitTime / processes.length;
+    const choices = [
+        Math.max(0, task2EndTime - 6),
+        Math.max(0, task2EndTime - 3),
+        task2EndTime,
+        task2EndTime + 4
+    ];
+    
+    let tableHTML = '<table>\n<tr><th>Task</th><th>도착시간</th><th>실행시간</th></tr>\n';
+    tasks.forEach(t => {
+        tableHTML += `<tr><td>${t.name}</td><td>${t.arrival}</td><td>${t.burst}</td></tr>\n`;
+    });
+    tableHTML += '</table>';
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음과 같은 Task List에서 SJF방식으로 Scheduling할 경우 Task 2의 종료 시간을 구하면?\n\n${tableHTML}\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = `${task2EndTime}`;
 }
 
-function simulateRR(processes, quantum) {
-    const queue = [];
-    const remainingBurst = {};
-    const waitTime = {};
-    const arrivalTime = {};
+// 9, 10, 11번 문제: HRN
+function generateProcessSchedule9(categoryIndex) {
+    generateHRNProblem(categoryIndex);
+}
+
+function generateProcessSchedule10(categoryIndex) {
+    generateHRNProblem(categoryIndex);
+}
+
+function generateProcessSchedule11(categoryIndex) {
+    generateHRNProblem(categoryIndex);
+}
+
+function generateHRNProblem(categoryIndex) {
+    const processCount = 4;
+    const processes = [];
+    const processNames = ['A', 'B', 'C', 'D'];
     
-    processes.forEach(p => {
-        remainingBurst[p.name] = p.burst;
-        waitTime[p.name] = 0;
-        arrivalTime[p.name] = p.arrival;
-    });
-    
-    let currentTime = 0;
-    let index = 0;
-    
-    queue.push(processes[0]);
-    index++;
-    
-    while (queue.length > 0) {
-        const current = queue.shift();
+    for (let i = 0; i < processCount; i++) {
+        const waitTime = 5 + Math.floor(Math.random() * 116);
+        const serviceTime = 2 + Math.floor(Math.random() * 44);
         
-        if (currentTime < arrivalTime[current.name]) {
-            currentTime = arrivalTime[current.name];
-        }
-        
-        const executeTime = Math.min(quantum, remainingBurst[current.name]);
-        
-        currentTime += executeTime;
-        remainingBurst[current.name] -= executeTime;
-        
-        while (index < processes.length && processes[index].arrival <= currentTime) {
-            queue.push(processes[index]);
-            index++;
-        }
-        
-        if (remainingBurst[current.name] > 0) {
-            queue.push(current);
-        } else {
-            waitTime[current.name] = currentTime - arrivalTime[current.name] - processes.find(p => p.name === current.name).burst;
-        }
+        processes.push({
+            name: processNames[i],
+            waitTime: waitTime,
+            serviceTime: serviceTime,
+            priority: (waitTime + serviceTime) / serviceTime
+        });
     }
     
-    let totalWaitTime = 0;
-    processes.forEach(p => {
-        totalWaitTime += waitTime[p.name];
-    });
+    const sorted = [...processes].sort((a, b) => b.priority - a.priority);
+    const highestPriority = sorted[0].name;
     
-    return totalWaitTime / processes.length;
+    let tableHTML = '<table>\n<tr><th>작업</th><th>대기시간</th><th>서비스';
+    
+    if (currentProblemIndex === 8) {
+        tableHTML += '시간</th></tr>\n';
+    } else {
+        tableHTML += '(실행)시간</th></tr>\n';
+    }
+    
+    processes.forEach(p => {
+        tableHTML += `<tr><td>${p.name}</td><td>${p.waitTime}</td><td>${p.serviceTime}</td></tr>\n`;
+    });
+    tableHTML += '</table>';
+    
+    if (currentProblemIndex === 8) {
+        categories[categoryIndex].problems[currentProblemIndex].question = 
+            `HRN방식으로 스케줄링 할 경우, 입력된 작업이 다음과 같을 때 우선순위가 가장 높은 작업은?\n\n${tableHTML}\n\n1. A\n2. B\n3. C\n4. D`;
+    } else if (currentProblemIndex === 9) {
+        categories[categoryIndex].problems[currentProblemIndex].question = 
+            `HRN스케줄링 방식에서 입력된 작업이 다음과 같을 때 우선순위가 가장 높은것은?\n\n${tableHTML}\n\n1. A\n2. B\n3. C\n4. D`;
+    } else {
+        // 11번: 우선순위 순서
+        sorted.sort((a, b) => b.priority - a.priority);
+        const order = sorted.map(p => p.name).join(' > ');
+        
+        categories[categoryIndex].problems[currentProblemIndex].question = 
+            `HRN방식으로 스케줄링 할 경우, 입력된 작업이 다음과 같을 때 우선순위가 높은 순서부터 차례로 옳게 나열한 것은?\n\n${tableHTML}\n\n1. B > A > C > D\n2. B > A > D > C\n3. C > D > A > B\n4. D > C > A > B`;
+        
+        categories[categoryIndex].problems[currentProblemIndex].answer = order;
+        return;
+    }
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = highestPriority;
 }
-// ========================== 스케줄링 알고리즘 끝 ==========================
+
+// ========================== 프로세스 스케줄링 알고리즘 끝 ==========================
+
+// ========================== 디스크 스케줄링 알고리즘 시작 ==========================
+
+// 1번 문제: FCFS 총 이동거리
+function generateDiskSchedule1(categoryIndex) {
+    const headStart = 30 + Math.floor(Math.random() * 70);
+    const queueSize = 6 + Math.floor(Math.random() * 3);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 200));
+    }
+    
+    const result = simulateFCFSDisk(headStart, queue);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `디스크 입/출력 요청 대기 큐에 다음과 같은 순서로 기억되어 있다. 현재 헤드가 ${headStart}에 있을 때, 이들 모두를 처리하기 위한 총 이동거리는 얼마인가?\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = result.totalDistance.toString();
+}
+
+// 2번 문제: SSTF 가장 먼저 처리되는 트랙
+function generateDiskSchedule2(categoryIndex) {
+    const headStart = 40 + Math.floor(Math.random() * 30);
+    const queueSize = 8 + Math.floor(Math.random() * 3);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 200));
+    }
+    
+    const result = simulateSSTFDisk(headStart, queue);
+    const firstTrack = result.order[0];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `초기 헤드 위치가 ${headStart}이며 트랙 0방향으로 이동중이다. 디스크 대기 큐에 다음과 같은 순서의 액세스 요청이 대기 중일 때 SSTF 스케줄링을 사용하여 모든 처리를 완료하고자 한다. 가장 먼저 처리되는 트랙을 쓰시오.\n(단, 가장 안쪽 트랙 0, 가장 바깥쪽 트랙 200)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = firstTrack.toString();
+}
+
+// 3번 문제: SSTF 총 헤드 이동거리
+function generateDiskSchedule3(categoryIndex) {
+    const headStart = 40 + Math.floor(Math.random() * 30);
+    const maxTrack = 150;
+    const queueSize = 6 + Math.floor(Math.random() * 2);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * maxTrack));
+    }
+    
+    const result = simulateSSTFDisk(headStart, queue);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `디스크 큐에 다음과 같이 I/O 요청이 들어와 있다. 최소탐색시간 우선(SSTF)스케줄링 적용 시 발생하는 총 헤드 이동 거리를 구하시오.\n(단, 추가 I/O 요청은 없다고 가정한다. 디스크 헤드는 0부터 ${maxTrack}까지 이동 가능하며, 현재 위치는 ${headStart}이다.)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = result.totalDistance.toString();
+}
+
+// 4번 문제: SSTF 처리 순서
+function generateDiskSchedule4(categoryIndex) {
+    const headStart = 40 + Math.floor(Math.random() * 30);
+    const queueSize = 6 + Math.floor(Math.random() * 3);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 200));
+    }
+    
+    const result = simulateSSTFDisk(headStart, queue);
+    const orderString = `${headStart}-${result.order.join('-')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `사용자가 요청한 디스크 입,출력 내용이 다음과 같은 순서로 큐에 들어 있을 때 SSTF 스케줄링을 사용한 경우의 처리 순서를 쓰시오.\n(단, 현재 헤드 위치는 ${headStart}이고, 제일 안쪽이 1번, 바깥쪽이 200번 트랙이다.)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = orderString;
+}
+
+// 5번 문제: SCAN 총 트랙 이동거리
+function generateDiskSchedule5(categoryIndex) {
+    const headStart = 20 + Math.floor(Math.random() * 30);
+    const direction = 'down';
+    const queueSize = 4 + Math.floor(Math.random() * 2);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * headStart * 2));
+    }
+    
+    const result = simulateSCANDisk(headStart, queue, direction, 0, 200);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `디스크 스케줄링에서 SCAN기법을 사용할 경우, 다음과 같은 작업대기 큐의 작업들을 수행하기 위한 헤드의 총 트랙 이동 거리는?\n(단, 초기 헤드의 위치는 ${headStart}이고, 현재 0번 트랙으로 이동 중이다.)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = result.totalDistance.toString();
+}
+
+// 6번 문제: SCAN 최후 처리 트랙
+function generateDiskSchedule6(categoryIndex) {
+    const headStart = 40 + Math.floor(Math.random() * 20);
+    const direction = 'down';
+    const queueSize = 4 + Math.floor(Math.random() * 2);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 60));
+    }
+    
+    const result = simulateSCANDisk(headStart, queue, direction, 0, 200);
+    const lastTrack = result.order[result.order.length - 1];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `디스크 스케줄링 기법 중 SCAN을 사용하여 다음 작업대기 큐의 작업을 모두 처리하고자 할 경우, 가장 최후에 처리되는 트랙은?\n(단, 현재 디스크 헤드는 ${headStart + 10} 트랙에서 ${headStart}트랙으로 이동해 왔다고 가정한다.)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = lastTrack.toString();
+}
+
+// 7번 문제: SCAN 가장 먼저 처리되는 트랙
+function generateDiskSchedule7(categoryIndex) {
+    const headStart = 50 + Math.floor(Math.random() * 30);
+    const direction = 'down';
+    const queueSize = 4;
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 100));
+    }
+    
+    const result = simulateSCANDisk(headStart, queue, direction, 0, 200);
+    const firstTrack = result.order[0];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `디스크에서 헤드가 ${headStart + 10}트랙을 처리하고 ${headStart}트랙으로 이동해 왔다. 디스크 스케줄링 기법으로 SCAN 방식을 사용할 때 다음 디스크 대기큐에서 가장 먼저 처리되는 트랙은?\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = firstTrack.toString();
+}
+
+// 8번 문제: C-SCAN 처리 순서
+function generateDiskSchedule8(categoryIndex) {
+    const headStart = 30 + Math.floor(Math.random() * 30);
+    const direction = 'up';
+    const maxTrack = 199;
+    const queueSize = 5 + Math.floor(Math.random() * 2);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 200));
+    }
+    
+    const result = simulateCSCANDisk(headStart, queue, direction, 0, maxTrack);
+    const orderString = result.order.map(t => t.toString()).join(' > ');
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `트랙 번호가 0부터 ${maxTrack}인 ${maxTrack + 1}개의 트랙을 가진 디스크가 있다. 디스크 스케줄링 기법 중 C-SCAN을 사용하여 다음과 같은 작업 대기 큐(디스크 큐)의 작업을 처리하고자 하는 경우 처리되는 트랙의 순서를 바르게 나열하시오.\n(단, 현재 디스크 헤드는 트랙 ${headStart - 12}에서 트랙 ${headStart}로 이동해 왔다고 가정한다.)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = `${headStart} > ${orderString}`;
+}
+
+// 9번 문제: C-SCAN 총 이동거리
+function generateDiskSchedule9(categoryIndex) {
+    const headStart = 40 + Math.floor(Math.random() * 20);
+    const direction = 'down';
+    const queueSize = 8 + Math.floor(Math.random() * 3);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 200));
+    }
+    
+    const result = simulateCSCANDisk(headStart, queue, direction, 0, 200);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `현재 헤드의 위치가 ${headStart}에 있고, 요청 대기열의 순서가 다음과 같을 경우 C-SCAN 스케줄링 알고리즘에 의한 헤드의 총 이동거리는 얼마인가?\n(단, 현재 헤드의 이동 방향은 안쪽이며, 안쪽의 위치는 0으로 가정한다.)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = result.totalDistance.toString();
+}
+
+// 10번 문제: LOOK 가장 먼저 처리되는 트랙
+function generateDiskSchedule10(categoryIndex) {
+    const headStart = 40 + Math.floor(Math.random() * 30);
+    const direction = 'up';
+    const queueSize = 4;
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(headStart + 10 + Math.floor(Math.random() * 50));
+    }
+    
+    const result = simulateLOOKDisk(headStart, queue, direction);
+    const firstTrack = result.order[0];
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `디스크 스케줄링 방법 중 LOOK 방식을 사용할 때 현재 헤드가 ${headStart + 10}에서 ${headStart}으로 이동해 왔다고 가정할 경우 다음과 같은 디스크 큐에서 가장 먼저 처리되는 것은?\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = firstTrack.toString();
+}
+
+// 11번 문제: LOOK 총 헤드 이동
+function generateDiskSchedule11(categoryIndex) {
+    const headStart = 40 + Math.floor(Math.random() * 20);
+    const direction = 'down';
+    const queueSize = 4;
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 60));
+    }
+    
+    const result = simulateLOOKDisk(headStart, queue, direction);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음과 같은 트랙이 요청되어 큐에 도착하였다. 모든 트랙을 서비스하기 위하여 LOOK 스케줄링 기법이 사용되었을 때 모두 몇 트랙의 헤드 이동이 생기는가?\n(단, 현재 헤드의 위치는 ${headStart} 트랙이고 헤드는 트랙 0 방향으로 움직이고 있다.)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = result.totalDistance.toString();
+}
+
+// 12번 문제: C-LOOK 총 이동거리
+function generateDiskSchedule12(categoryIndex) {
+    const headStart = 40 + Math.floor(Math.random() * 20);
+    const direction = 'up';
+    const queueSize = 7 + Math.floor(Math.random() * 3);
+    const queue = [];
+    
+    for (let i = 0; i < queueSize; i++) {
+        queue.push(Math.floor(Math.random() * 200));
+    }
+    
+    const result = simulateCLOOKDisk(headStart, queue, direction);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+    `디스크의 서비스 요청 대기 큐에 도착한 요청이 다음과 같을 때 C-LOOK 스케줄링 알고리즘에 의한 헤드의 총 이동거리는 얼마인가?\n(단, 현재 헤드의 위치는 ${headStart}에 있고, 헤드의 이동방향은 0에서 199방향이다.)\n\n대기큐: ${queue.join(', ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = result.totalDistance.toString();
+}
+
 
 // ========================== 진법 변환 알고리즘 시작 ==========================
 function generateRandomBaseConversionProblem(categoryIndex) {

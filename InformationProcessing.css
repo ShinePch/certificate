@@ -691,3 +691,39 @@ body {
         font-size: 0.75rem;
     }
 }
+
+/* 프로세스 스케줄링 테이블 스타일 - 기존 page-table 스타일 재사용 */
+.problem-question table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.875rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.problem-question table thead {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: white;
+}
+
+.problem-question table th {
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #e5e7eb;
+}
+
+.problem-question table td {
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.problem-question table tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.problem-question table tr:hover {
+    background-color: #f0f8ff;
+}
