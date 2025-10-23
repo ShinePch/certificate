@@ -38,12 +38,55 @@ function generateRandomProblem(categoryIndex) {
             generateDifferentSubnetMaskProblem(categoryIndex);
         }
     } else if (category.id === 'page') {
-        if (currentProblemIndex === 3) {
+        // 1번: LRU 기출 문제
+        if (currentProblemIndex === 0) {
+            generatePageProblem1(categoryIndex);
+        }
+        // 2번: LRU+LFU 비교 기출 문제
+        else if (currentProblemIndex === 1) {
+            generatePageProblem2(categoryIndex);
+        }
+        // 3번: FIFO 연습 문제
+        else if (currentProblemIndex === 2) {
+            generatePageProblem3(categoryIndex);
+        }
+        // 4번: FIFO 문제 1
+        else if (currentProblemIndex === 3) {
+            generatePageProblem4(categoryIndex);
+        }
+        // 5번: FIFO 문제 2
+        else if (currentProblemIndex === 4) {
+            generatePageProblem5(categoryIndex);
+        }
+        // 6번: FIFO 문제 3
+        else if (currentProblemIndex === 5) {
+            generatePageProblem6(categoryIndex);
+        }
+        // 7번: LRU 문제 1
+        else if (currentProblemIndex === 6) {
+            generatePageProblem7(categoryIndex);
+        }
+        // 8번: LRU 문제 2
+        else if (currentProblemIndex === 7) {
+            generatePageProblem8(categoryIndex);
+        }
+        // 9번: LRU 문제 3
+        else if (currentProblemIndex === 8) {
+            generatePageProblem9(categoryIndex);
+        }
+        // 10번: LFU 문제 1
+        else if (currentProblemIndex === 9) {
+            generatePageProblem10(categoryIndex);
+        }
+        // 11번: LFU 문제 2
+        else if (currentProblemIndex === 10) {
+            generatePageProblem11(categoryIndex);
+        }
+        // 12번: 완전 랜덤 (드랍다운)
+        else if (currentProblemIndex === 11) {
             const algorithmSelect = document.getElementById(`pageAlgorithm-${categoryIndex}`);
             const selectedAlgorithm = algorithmSelect ? algorithmSelect.value : 'FIFO';
             generateCategorizedPageProblem(categoryIndex, selectedAlgorithm);
-        } else {
-            generateRandomPageReplacementProblem(categoryIndex);
         }
     } else if (category.id === 'process_schedule') {
         // 프로세스 스케줄링: 문제 번호에 따라 해당 알고리즘 문제 생성

@@ -465,124 +465,322 @@ function shuffleArray(array) {
 }
 // ========================== 서브넷/네트워크 알고리즘 끝 ==========================
 
-// ========================== 페이지 교체 알고리즘 시작 ==========================
-function generateRandomPageReplacementProblem(categoryIndex) {
-    const algorithms = ['FIFO', 'LRU', 'LFU'];
-    const algorithm = algorithms[Math.floor(Math.random() * algorithms.length)];
-    
-    const frameCount = 3 + Math.floor(Math.random() * 2);
-    
-    const pageCount = 12 + Math.floor(Math.random() * 9);
+// ========================== 페이지 교체 알고리즘 문제 생성 함수들 ==========================
+
+// 1번 문제: 2024년 3회 기출 - LRU 페이지 부재 횟수
+function generatePageProblem1(categoryIndex) {
+    const frameCount = 3;
     const pages = [];
-    for (let i = 0; i < pageCount; i++) {
-        pages.push(Math.floor(Math.random() * 10));
+    
+    // 20개의 랜덤 페이지 생성
+    for (let i = 0; i < 20; i++) {
+        pages.push(Math.floor(Math.random() * 8));
     }
     
-    const pageString = pages.join(' ');
-    
-    let faults = 0;
-    if (algorithm === 'FIFO') {
-        faults = simulateFIFO(pages, frameCount);
-    } else if (algorithm === 'LRU') {
-        faults = simulateLRU(pages, frameCount);
-    } else if (algorithm === 'LFU') {
-        faults = simulateLFU(pages, frameCount);
-    }
+    const faults = simulateLRU(pages, frameCount);
     
     categories[categoryIndex].problems[currentProblemIndex].question = 
-        `${algorithm} 페이지 교체 알고리즘에 따른 페이지 부재 횟수를 작성하시오. (프레임 ${frameCount}개)\n\n페이지 참조 순서: ${pageString}`;
+        `LRU 페이지 교체 알고리즘에 따른 페이지 부재 횟수를 작성하시오. (프레임 ${frameCount}개)\n\n페이지 참조 순서: ${pages.join(' ')}`;
     
-    categories[categoryIndex].problems[currentProblemIndex].answer = `${faults}`;
+    categories[categoryIndex].problems[currentProblemIndex].answer = faults.toString();
 }
 
-function simulateFIFO(pages, frameCount) {
-    const frames = [];
-    let pageFaults = 0;
+// 2번 문제: 2024년 1회 기출 - LRU와 LFU 비교
+function generatePageProblem2(categoryIndex) {
+    const frameCount = 3;
+    const pages = [];
     
-    for (let page of pages) {
-        if (!frames.includes(page)) {
-            pageFaults++;
-            if (frames.length < frameCount) {
-                frames.push(page);
-            } else {
-                frames.shift();
-                frames.push(page);
-            }
-        }
+    // 10개의 랜덤 페이지 생성
+    for (let i = 0; i < 10; i++) {
+        pages.push(Math.floor(Math.random() * 8) + 1);
     }
     
-    return pageFaults;
+    const lruFaults = simulateLRU(pages, frameCount);
+    const lfuFaults = simulateLFU(pages, frameCount);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음은 운영체제 페이지 순서를 참고하여 할당된 프레임의 수가 ${frameCount}개일 때 LRU와 LFU 알고리즘의 페이지 부재 횟수를 작성하시오.\n\n페이지 참조 순서: ${pages.join(', ')}\n\n(1) LRU: \n(2) LFU:`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = 
+        `(1) LRU: ${lruFaults}\n(2) LFU: ${lfuFaults}`;
 }
 
-function simulateLRU(pages, frameCount) {
-    const frames = [];
-    let pageFaults = 0;
+// 3번 문제: 연습 문제 - FIFO 페이지 부재 횟수
+function generatePageProblem3(categoryIndex) {
+    const frameCount = 3;
+    const pages = [];
     
-    for (let i = 0; i < pages.length; i++) {
-        const page = pages[i];
+    // 12개의 랜덤 페이지 생성
+    for (let i = 0; i < 12; i++) {
+        pages.push(Math.floor(Math.random() * 6) + 1);
+    }
+    
+    const faults = simulateFIFO(pages, frameCount);
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `FIFO 페이지 교체 알고리즘에 따른 페이지 부재 횟수를 작성하시오. (프레임 ${frameCount}개)\n\n페이지 참조 순서: ${pages.join(' ')}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = faults.toString();
+}
+
+// 4번 문제: FIFO 최종상태 ✅ 진짜 제대로 수정
+function generatePageProblem4(categoryIndex) {
+    const frameCount = 3;
+    const pages = [];
+    
+    // 7개의 랜덤 페이지 생성 (0~4 사이)
+    for (let i = 0; i < 7; i++) {
+        pages.push(Math.floor(Math.random() * 5));
+    }
+    
+    const result = simulateFIFODetailed(pages, frameCount);
+    const finalFrames = result.finalFrames;  // 배열: [2, 4, 3]
+    const correctAnswer = finalFrames.join(',');  // "2,4,3"
+    
+    // 🔥 오답 보기 생성: 정답과 완전히 다른 값들로 만들기
+    const wrongChoices = [];
+    const maxAttempts = 100;
+    let attempts = 0;
+    
+    while (wrongChoices.length < 3 && attempts < maxAttempts) {
+        attempts++;
         
-        if (!frames.includes(page)) {
-            pageFaults++;
-            if (frames.length < frameCount) {
-                frames.push(page);
-            } else {
-                let lruIndex = 0;
-                let minLastUsed = i;
-                
-                for (let j = 0; j < frames.length; j++) {
-                    let lastUsed = -1;
-                    for (let k = i - 1; k >= 0; k--) {
-                        if (pages[k] === frames[j]) {
-                            lastUsed = k;
-                            break;
-                        }
-                    }
-                    
-                    if (lastUsed < minLastUsed) {
-                        minLastUsed = lastUsed;
-                        lruIndex = j;
-                    }
-                }
-                
-                frames[lruIndex] = page;
-            }
+        const wrong = [
+            Math.floor(Math.random() * 5),
+            Math.floor(Math.random() * 5),
+            Math.floor(Math.random() * 5)
+        ];
+        
+        const wrongStr = wrong.join(',');
+        
+        // 정답과 다르고, 중복도 아닌지 확인
+        if (wrongStr !== correctAnswer && !wrongChoices.includes(wrongStr)) {
+            wrongChoices.push(wrongStr);
         }
     }
     
-    return pageFaults;
+    // 충분한 오답 생성 실패 시 강제 생성
+    while (wrongChoices.length < 3) {
+        const filler = `${Math.floor(Math.random() * 5)},${Math.floor(Math.random() * 5)},${Math.floor(Math.random() * 5)}`;
+        if (!wrongChoices.includes(filler) && filler !== correctAnswer) {
+            wrongChoices.push(filler);
+        }
+    }
+    
+    // ✅ 보기 배열 생성 (정답 + 오답 3개)
+    const allChoices = [correctAnswer, wrongChoices[0], wrongChoices[1], wrongChoices[2]];
+    
+    // 🔥 보기 섞기!
+    shuffleArray(allChoices);
+    
+    // 🔥 섞인 후 정답이 몇 번 보기인지 찾기
+    const correctIndex = allChoices.indexOf(correctAnswer) + 1;  // 1, 2, 3, 4 중 하나
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `3개의 페이지 프레임을 갖는 시스템에서 페이지 참조 순서가 ${pages.join(',')} 일 경우 FIFO 알고리즘에 의한 페이지 교체의 경우 프레임의 최종상태는?\n1. ${allChoices[0]}\n2. ${allChoices[1]}\n3. ${allChoices[2]}\n4. ${allChoices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctIndex.toString();
 }
 
-function simulateLFU(pages, frameCount) {
-    const frames = [];
-    const frequency = {};
-    let pageFaults = 0;
+// 5번 문제: FIFO 페이지 부재 횟수 ✅ 수정됨
+function generatePageProblem5(categoryIndex) {
+    const frameCount = 3;
+    const pages = [];
     
-    for (let page of pages) {
-        frequency[page] = (frequency[page] || 0) + 1;
-        
-        if (!frames.includes(page)) {
-            pageFaults++;
-            if (frames.length < frameCount) {
-                frames.push(page);
-            } else {
-                let lfuIndex = 0;
-                let minFreq = frequency[frames[0]];
-                
-                for (let j = 1; j < frames.length; j++) {
-                    if (frequency[frames[j]] < minFreq) {
-                        minFreq = frequency[frames[j]];
-                        lfuIndex = j;
-                    }
-                }
-                
-                frames[lfuIndex] = page;
-            }
-        }
+    // 12개의 랜덤 페이지 생성
+    for (let i = 0; i < 12; i++) {
+        pages.push(Math.floor(Math.random() * 6) + 1);
     }
     
-    return pageFaults;
+    const faults = simulateFIFO(pages, frameCount);
+    
+    // 🔥 정답을 3번 보기에 고정
+    const choices = [
+        faults - 2,
+        faults - 1,
+        faults,  // ✅ 정답
+        faults + 1
+    ];
+    
+    const correctAnswer = '3';  // ✅ 항상 3번이 정답
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `3개의 페이지 프레임을 가진 기억장치에서 페이지 요청을 다음과 같은 페이지 번호 순으로 요청했을 때 교체 알고리즘으로 FIFO방법을 사용한다면 몇번의 페이지 부재가 발생하는가? (단, 현재 기억장치는 모두 비어 있다고 가정한다.)\n요청된 페이지 번호의 순서 : ${pages.join(',')}\n1. ${choices[0]}번\n2. ${choices[1]}번\n3. ${choices[2]}번\n4. ${choices[3]}번`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctAnswer;
+}
+
+// 6번 문제: FIFO 페이지 결함 ✅ 수정됨
+function generatePageProblem6(categoryIndex) {
+    const frameCount = 3;
+    const pages = [];
+    
+    // 9개의 랜덤 페이지 생성
+    for (let i = 0; i < 9; i++) {
+        pages.push(Math.floor(Math.random() * 6) + 1);
+    }
+    
+    const faults = simulateFIFO(pages, frameCount);
+    
+    // 🔥 정답을 3번 보기에 고정
+    const choices = [
+        faults - 2,
+        faults - 1,
+        faults,  // ✅ 정답
+        faults + 1
+    ];
+    
+    const correctAnswer = '3';  // ✅ 항상 3번이 정답
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `3개의 페이지를 수용할 수 있는 주기억장치가 있으며, 초기에는 모두 비어 있다고 가정한다. 다음의 순서로 페이지 참조가 발생할 때, FIFO 페이지 교체 알고리즘을 사용할 경우 몇 번의 페이지 결함이 발생하는가?\n페이지 참조 순서 : ${pages.join(',')}\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctAnswer;
+}
+
+// 7번 문제: LRU 페이지 결함 ✅ 수정됨
+function generatePageProblem7(categoryIndex) {
+    const frameCount = 3;
+    const pages = [];
+    
+    // 10개의 랜덤 페이지 생성
+    for (let i = 0; i < 10; i++) {
+        pages.push(Math.floor(Math.random() * 6) + 1);
+    }
+    
+    const faults = simulateLRU(pages, frameCount);
+    
+    // 🔥 정답을 3번 보기에 고정
+    const choices = [
+        faults - 2,
+        faults - 1,
+        faults,  // ✅ 정답
+        faults + 1
+    ];
+    
+    const correctAnswer = '3';  // ✅ 항상 3번이 정답
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `3개의 페이지를 수용할 수 있는 주기억장치가 있으며, 초기에는 모두 비어 있다고 가정한다. 다음의 순서로 페이지 참조가 발생할 때, LRU페이지 교체 알고리즘을 사용할 경우 몇 번의 페이지 결함이 발생하는가?\n페이지 참조 순서 : ${pages.join(',')}\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctAnswer;
+}
+
+// 8번 문제: LRU 최종 결과 ✅ 수정됨
+function generatePageProblem8(categoryIndex) {
+    const frameCount = 3;
+    const pages = [];
+    
+    // 7개의 랜덤 페이지 생성
+    for (let i = 0; i < 7; i++) {
+        pages.push(Math.floor(Math.random() * 5));
+    }
+    
+    const result = simulateLRUDetailed(pages, frameCount);
+    const finalFrames = result.finalFrames.join(',');
+    
+    // 🔥 정답을 2번 보기에 고정
+    const choices = [
+        `${pages[0]},${pages[1]},${Math.floor(Math.random() * 5)}`,
+        finalFrames,  // ✅ 정답
+        `${Math.floor(Math.random() * 5)},${pages[pages.length-1]},${pages[1]}`,
+        `${pages[pages.length-2]},${pages[0]},${pages[2]}`
+    ];
+    
+    const correctAnswer = '2';  // ✅ 항상 2번이 정답
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `3개의 페이지 프레임을 갖는 시스템에서 페이지 참조 순서가 ${pages.join(',')} 일 경우 LRU 알고리즘에 의한 페이지 대치의 최종 결과는?\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctAnswer;
+}
+
+// 9번 문제: LRU 4개 프레임 ✅ 수정됨
+function generatePageProblem9(categoryIndex) {
+    const frameCount = 4;
+    const pages = [];
+    
+    // 9개의 랜덤 페이지 생성
+    for (let i = 0; i < 9; i++) {
+        pages.push(Math.floor(Math.random() * 6) + 1);
+    }
+    
+    const faults = simulateLRU(pages, frameCount);
+    
+    // 🔥 정답을 3번 보기에 고정
+    const choices = [
+        `${faults - 2}회`,
+        `${faults - 1}회`,
+        `${faults}회`,  // ✅ 정답
+        `${faults + 1}회`
+    ];
+    
+    const correctAnswer = '3';  // ✅ 항상 3번이 정답
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `4개의 페이지를 수용할 수 있는 주기억장치가 있으며, 초기에는 모두 비어 있다고 가정한다. 다음의 순서로 페이지 참조가 발생할 때, LRU 페이지 교체 알고리즘을 사용할 경우 몇 번의 페이지 결함이 발생하는가?\n페이지 참조 순서 : ${pages.join(',')}\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctAnswer;
+}
+
+// 10번 문제: LFU 페이지 부재 ✅ 수정됨
+function generatePageProblem10(categoryIndex) {
+    const frameCount = 3;
+    const pages = [];
+    
+    // 11개의 랜덤 페이지 생성
+    for (let i = 0; i < 11; i++) {
+        pages.push(Math.floor(Math.random() * 5) + 1);
+    }
+    
+    const faults = simulateLFU(pages, frameCount);
+    
+    // 🔥 정답을 3번 보기에 고정
+    const choices = [
+        `${faults - 2}회`,
+        `${faults - 1}회`,
+        `${faults}회`,  // ✅ 정답
+        `${faults + 1}회`
+    ];
+    
+    const correctAnswer = '3';  // ✅ 항상 3번이 정답
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `3개의 페이지 프레임으로 구성된 기억장치에서 다음과 같은 순서대로 페이지 요청이 일어날 때, 페이지 교체 알고리즘으로 LFU를 사용한다면 몇번의 페이지 부재가 발생하는가? (단, 초기 페이지 프레임은 비어있다고 가정한다.)\n요청된 페이지 번호의 순서 : ${pages.join(',')}\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctAnswer;
+}
+
+// 11번 문제: LFU 최종 결과 ✅ 수정됨
+function generatePageProblem11(categoryIndex) {
+    const frameCount = 4;
+    const pages = [];
+    
+    // 8개의 랜덤 페이지 생성
+    for (let i = 0; i < 8; i++) {
+        pages.push(Math.floor(Math.random() * 6) + 1);
+    }
+    
+    const result = simulateLFUDetailed(pages, frameCount);
+    const finalFrames = result.finalFrames.join(',');
+    
+    // 🔥 정답을 2번 보기에 고정
+    const choices = [
+        `${pages[0]},${pages[1]},${pages[2]},${Math.floor(Math.random() * 6) + 1}`,
+        finalFrames,  // ✅ 정답
+        `${pages[1]},${pages[2]},${Math.floor(Math.random() * 6) + 1},${pages[pages.length-1]}`,
+        `${Math.floor(Math.random() * 6) + 1},${pages[2]},${pages[3]},${pages[pages.length-2]}`
+    ];
+    
+    const correctAnswer = '2';  // ✅ 항상 2번이 정답
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `4개의 페이지 프레임으로 구성된 기억장치에서 다음과 같은 순서대로 페이지 요청이 일어날 때, 페이지 교체 알고리즘으로 LFU를 사용한다면 페이지 대치의 최종 결과는?(단, 초기 페이지 프레임은 비어있다고 가정한다.)\n요청된 페이지 번호의 순서 : ${pages.join(',')}\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = correctAnswer;
 }
 // ========================== 페이지 교체 알고리즘 끝 ==========================
+
 
 // ========================== 프로세스 스케줄링 알고리즘 시작 ==========================
 
@@ -719,23 +917,19 @@ function generateProcessSchedule5(categoryIndex) {
         });
     }
     
-    const sorted = [...processes].sort((a, b) => a.burst - b.burst);
-    
-    let currentTime = 0;
-    let totalTurnaroundTime = 0;
-    
-    sorted.forEach(p => {
-        currentTime += p.burst;
-        totalTurnaroundTime += currentTime;
+    // 평균 실행시간 계산 (실행시간들의 평균)
+    let totalBurstTime = 0;
+    processes.forEach(p => {
+        totalBurstTime += p.burst;
     });
     
-    const avgTurnaroundTime = Math.round(totalTurnaroundTime / processCount);
+    const avgBurstTime = Math.round(totalBurstTime / processCount);
     
     const choices = [
-        Math.max(0, avgTurnaroundTime - 1),
-        avgTurnaroundTime,
-        avgTurnaroundTime + 7,
-        avgTurnaroundTime + 13
+        Math.max(0, avgBurstTime - 1),
+        avgBurstTime,
+        avgBurstTime + 7,
+        avgBurstTime + 13
     ];
     
     let tableHTML = '<table>\n<tr><th>프로세스</th><th>실행시간(초)</th></tr>\n';
@@ -747,7 +941,7 @@ function generateProcessSchedule5(categoryIndex) {
     categories[categoryIndex].problems[currentProblemIndex].question = 
         `다음과 같은 프로세스들이 차례로 준비상태 큐에 들어왔을 경우 SJF 스케줄링 기법을 이용하여 제출시간이 없는 경우의 평균 실행시간은?\n\n${tableHTML}\n\n1. ${choices[0]}\n2. ${choices[1]}\n3. ${choices[2]}\n4. ${choices[3]}`;
     
-    categories[categoryIndex].problems[currentProblemIndex].answer = `${avgTurnaroundTime}`;
+    categories[categoryIndex].problems[currentProblemIndex].answer = `${avgBurstTime}`;
 }
 
 // 6번 문제: SJF 평균 대기시간 (텍스트만, 테이블 없음!)
@@ -935,12 +1129,41 @@ function generateHRNProblem(categoryIndex) {
     } else {
         // 11번: 우선순위 순서
         sorted.sort((a, b) => b.priority - a.priority);
-        const order = sorted.map(p => p.name).join(' > ');
+        const correctOrder = sorted.map(p => p.name).join(' > ');
+        
+        // ✅ 오답 보기 3개 생성
+        const wrongChoices = [];
+        
+        // 오답 1: 랜덤 섞기
+        const shuffle1 = [...processNames].sort(() => Math.random() - 0.5).join(' > ');
+        if (shuffle1 !== correctOrder) wrongChoices.push(shuffle1);
+        
+        // 오답 2: 역순
+        const reverse = [...sorted].reverse().map(p => p.name).join(' > ');
+        if (reverse !== correctOrder && !wrongChoices.includes(reverse)) {
+            wrongChoices.push(reverse);
+        }
+        
+        // 오답 3: 랜덤 섞기 2
+        while (wrongChoices.length < 3) {
+            const shuffle = [...processNames].sort(() => Math.random() - 0.5).join(' > ');
+            if (shuffle !== correctOrder && !wrongChoices.includes(shuffle)) {
+                wrongChoices.push(shuffle);
+            }
+        }
+        
+        // ✅ 정답 + 오답 3개를 합쳐서 섞기
+        const allChoices = [correctOrder, ...wrongChoices];
+        shuffleArray(allChoices);
+        
+        // ✅ 정답이 몇 번 보기인지 찾기
+        const correctIndex = allChoices.indexOf(correctOrder) + 1;
         
         categories[categoryIndex].problems[currentProblemIndex].question = 
-            `HRN방식으로 스케줄링 할 경우, 입력된 작업이 다음과 같을 때 우선순위가 높은 순서부터 차례로 옳게 나열한 것은?\n\n${tableHTML}\n\n1. B > A > C > D\n2. B > A > D > C\n3. C > D > A > B\n4. D > C > A > B`;
+            `HRN방식으로 스케줄링 할 경우, 입력된 작업이 다음과 같을 때 우선순위가 높은 순서부터 차례로 옳게 나열한 것은?\n\n${tableHTML}\n\n1. ${allChoices[0]}\n2. ${allChoices[1]}\n3. ${allChoices[2]}\n4. ${allChoices[3]}`;
         
-        categories[categoryIndex].problems[currentProblemIndex].answer = order;
+        // ✅ 정답을 보기 번호로 저장
+        categories[categoryIndex].problems[currentProblemIndex].answer = correctIndex.toString();
         return;
     }
     

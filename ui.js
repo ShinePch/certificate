@@ -235,7 +235,7 @@ document.getElementById(`problemNumber-${categoryIndex}`).textContent = problemN
     
     const algorithmSelector = document.getElementById(`algorithmSelector-${categoryIndex}`);
     if (algorithmSelector) {
-        if (category.id === 'page' && currentProblemIndex === 3) {
+        if (category.id === 'page' && currentProblemIndex === 11) {
             algorithmSelector.style.display = 'block';
         } else {
             algorithmSelector.style.display = 'none';
@@ -244,7 +244,7 @@ document.getElementById(`problemNumber-${categoryIndex}`).textContent = problemN
     
     const answerInputBox = document.querySelector(`#problem-container-${categoryIndex} .answer-input-box`);
     
-    if (category.id === 'page' && currentProblemIndex === 3 && problem.pages) {
+    if (category.id === 'page' && currentProblemIndex === 11 && problem.pages) {
         answerInputBox.innerHTML = createPageAnswerForm(categoryIndex, problem);
     } else {
         answerInputBox.innerHTML = `
@@ -310,7 +310,7 @@ function toggleAnswer(categoryIndex) {
     const category = categories[categoryIndex];
     
     if (answerBox.classList.contains('hidden')) {
-        if (category.id === 'page' && currentProblemIndex === 3) {
+        if (category.id === 'page' && currentProblemIndex === 11) {
             answerText.innerHTML = category.problems[currentProblemIndex].answer;
         } else {
             answerText.textContent = category.problems[currentProblemIndex].answer;
