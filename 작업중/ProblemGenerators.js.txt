@@ -1,4 +1,4 @@
-// ========================== 서브넷/네트워크 알고리즘 시작 ==========================
+﻿// ========================== 서브넷/네트워크 알고리즘 시작 ==========================
 function generateRandomSubnetProblem(categoryIndex) {
     const octets = [
         Math.floor(Math.random() * 256),
