@@ -1,4 +1,4 @@
-// 메인로직, 메인 로직 (문제 생성, 정답 체크)
+﻿// 메인로직, 메인 로직 (문제 생성, 정답 체크)
 function generateRandomProblem(categoryIndex) {
     const category = categories[categoryIndex];
     const problem = category.problems[currentProblemIndex];

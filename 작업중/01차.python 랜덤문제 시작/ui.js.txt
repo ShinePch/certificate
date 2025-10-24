@@ -1,4 +1,4 @@
-// UI 렌더링 및 네비게이션, 아코디언, 문제 표시, 네비게이션 등 UI 렌더링
+﻿// UI 렌더링 및 네비게이션, 아코디언, 문제 표시, 네비게이션 등 UI 렌더링
 function renderAccordion() {
     const container = document.getElementById('accordionContainer');
     container.innerHTML = '';
