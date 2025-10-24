@@ -1,4 +1,4 @@
-// 메인로직, 메인 로직 (문제 생성, 정답 체크)
+﻿// 메인로직, 메인 로직 (문제 생성, 정답 체크)
 function generateRandomProblem(categoryIndex) {
     const category = categories[categoryIndex];
     const problem = category.problems[currentProblemIndex];
@@ -198,132 +198,15 @@ function generateRandomProblem(categoryIndex) {
             const selectedCategory = categorySelect ? categorySelect.value : 'functionDefault';
             generateCategorizedPythonProblem(categoryIndex, selectedCategory);
         }
-    } else if (category.id === 'java') {
-        if (currentProblemIndex === 0) {
-            generateJavaProblem1(categoryIndex);
-        } else if (currentProblemIndex === 1) {
-            generateJavaProblem2(categoryIndex);
-        } else if (currentProblemIndex === 2) {
-            generateJavaProblem3(categoryIndex);
-        } else if (currentProblemIndex === 3) {
-            generateJavaProblem4(categoryIndex);
-        } else if (currentProblemIndex === 4) {
-            generateJavaProblem5(categoryIndex);
-        } else if (currentProblemIndex === 5) {
-            generateJavaProblem6(categoryIndex);
-        } else if (currentProblemIndex === 6) {
-            generateJavaProblem7(categoryIndex);
-        } else if (currentProblemIndex === 7) {
-            generateJavaProblem8(categoryIndex);
-        } else if (currentProblemIndex === 8) {
-            generateJavaProblem9(categoryIndex);
-        } else if (currentProblemIndex === 9) {
-            generateJavaProblem10(categoryIndex);
-        } else if (currentProblemIndex === 10) {
-            generateJavaProblem11(categoryIndex);
-        } else if (currentProblemIndex === 11) {
-            generateJavaProblem12(categoryIndex);
-        } else if (currentProblemIndex === 12) {
-            generateJavaProblem13(categoryIndex);
-        } else if (currentProblemIndex === 13) {
-            generateJavaProblem14(categoryIndex);
-        } else if (currentProblemIndex === 14) {
-            generateJavaProblem15(categoryIndex);
-        } else if (currentProblemIndex === 15) {
-            generateJavaProblem16(categoryIndex);
-        }
-    }else if (category.id === 'c') {
-        // C언어 문제 1~45번 분기 처리
-        if (currentProblemIndex === 0) {
-            generateCProblem1(categoryIndex);
-        } else if (currentProblemIndex === 1) {
-            generateCProblem2(categoryIndex);
-        } else if (currentProblemIndex === 2) {
-            generateCProblem3(categoryIndex);
-        } else if (currentProblemIndex === 3) {
-            generateCProblem4(categoryIndex);
-        } else if (currentProblemIndex === 4) {
-            generateCProblem5(categoryIndex);
-        } else if (currentProblemIndex === 5) {
-            generateCProblem6(categoryIndex);
-        } else if (currentProblemIndex === 6) {
-            generateCProblem7(categoryIndex);
-        } else if (currentProblemIndex === 7) {
-            generateCProblem8(categoryIndex);
-        } else if (currentProblemIndex === 8) {
-            generateCProblem9(categoryIndex);
-        } else if (currentProblemIndex === 9) {
-            generateCProblem10(categoryIndex);
-        } else if (currentProblemIndex === 10) {
-            generateCProblem11(categoryIndex);
-        } else if (currentProblemIndex === 11) {
-            generateCProblem12(categoryIndex);
-        } else if (currentProblemIndex === 12) {
-            generateCProblem13(categoryIndex);
-        } else if (currentProblemIndex === 13) {
-            generateCProblem14(categoryIndex);
-        } else if (currentProblemIndex === 14) {
-            generateCProblem15(categoryIndex);
-        } else if (currentProblemIndex === 15) {
-            generateCProblem16(categoryIndex);
-        } else if (currentProblemIndex === 16) {
-            generateCProblem17(categoryIndex);
-        } else if (currentProblemIndex === 17) {
-            generateCProblem18(categoryIndex);
-        } else if (currentProblemIndex === 18) {
-            generateCProblem19(categoryIndex);
-        } else if (currentProblemIndex === 19) {
-            generateCProblem20(categoryIndex);
-        } else if (currentProblemIndex === 20) {
-            generateCProblem21(categoryIndex);
-        } else if (currentProblemIndex === 21) {
-            generateCProblem22(categoryIndex);
-        } else if (currentProblemIndex === 22) {
-            generateCProblem23(categoryIndex);
-        } else if (currentProblemIndex === 23) {
-            generateCProblem24(categoryIndex);
-        } else if (currentProblemIndex === 24) {
-            generateCProblem25(categoryIndex);
-        } else if (currentProblemIndex === 25) {
-            generateCProblem26(categoryIndex);
-        } else if (currentProblemIndex === 26) {
-            generateCProblem27(categoryIndex);
-        } else if (currentProblemIndex === 27) {
-            generateCProblem28(categoryIndex);
-        } else if (currentProblemIndex === 28) {
-            generateCProblem29(categoryIndex);
-        } else if (currentProblemIndex === 29) {
-            generateCProblem30(categoryIndex);
-        } else if (currentProblemIndex === 30) {
-            generateCProblem31(categoryIndex);
-        } else if (currentProblemIndex === 31) {
-            generateCProblem32(categoryIndex);
-        } else if (currentProblemIndex === 32) {
-            generateCProblem33(categoryIndex);
-        } else if (currentProblemIndex === 33) {
-            generateCProblem34(categoryIndex);
-        } else if (currentProblemIndex === 34) {
-            generateCProblem35(categoryIndex);
-        } else if (currentProblemIndex === 35) {
-            generateCProblem36(categoryIndex);
-        } else if (currentProblemIndex === 36) {
-            generateCProblem37(categoryIndex);
-        } else if (currentProblemIndex === 37) {
-            generateCProblem38(categoryIndex);
-        } else if (currentProblemIndex === 38) {
-            generateCProblem39(categoryIndex);
-        } else if (currentProblemIndex === 39) {
-            generateCProblem40(categoryIndex);
-        } else if (currentProblemIndex === 40) {
-            generateCProblem41(categoryIndex);
-        } else if (currentProblemIndex === 41) {
-            generateCProblem42(categoryIndex);
-        } else if (currentProblemIndex === 42) {
-            generateCProblem43(categoryIndex);
-        } else if (currentProblemIndex === 43) {
-            generateCProblem44(categoryIndex);
-        } else if (currentProblemIndex === 44) {
-            generateCProblem45(categoryIndex);
+    } else if (category.id === 'java') { 
+        generateRandomJavaProblem(categoryIndex);
+    } else if (category.id === 'c') {
+        if (currentProblemIndex === 28) {
+            const categorySelect = document.getElementById(`cCategory-${categoryIndex}`);
+            const selectedCategory = categorySelect ? categorySelect.value : 'forLoop';
+            generateCategorizedCProblem(categoryIndex, selectedCategory);
+        } else {
+            generateRandomCProblem(categoryIndex);
         }
     }
     

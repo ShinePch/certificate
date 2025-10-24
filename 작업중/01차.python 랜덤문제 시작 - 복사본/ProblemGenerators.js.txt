@@ -1,4 +1,4 @@
-// ========================== 서브넷/네트워크 알고리즘 시작 ==========================
+﻿// ========================== 서브넷/네트워크 알고리즘 시작 ==========================
 function generateRandomSubnetProblem(categoryIndex) {
     const octets = [
         Math.floor(Math.random() * 256),
@@ -464,261 +464,6 @@ function shuffleArray(array) {
     }
 }
 // ========================== 서브넷/네트워크 알고리즘 끝 ==========================
-
-// ========================== Java 알고리즘 시작 ==========================
-
-// 1번 문제: 배열과 메소드 (참조 전달)
-function generateJavaProblem1(categoryIndex) {
-    const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
-    const idx1 = Math.floor(Math.random() * letters.length);
-    const idx2 = Math.floor(Math.random() * letters.length);
-    const letter1 = letters[idx1];
-    const letter2 = letters[idx2];
-    
-    const code = `public class Main {\n    public static void change(String[] data, String s){\n        data[0] = s;\n        s = "Z";\n    }\n    \n    public static void main(String[] args) {\n        String data[] = { "${letter1}" };\n        String s = "${letter2}";\n        \n        change(data, s);\n        System.out.print(data[0] + s);\n    }\n}`;
-    
-    const answer = letter2 + letter2;
-    
-    categories[categoryIndex].problems[0].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[0].answer = answer;
-}
-
-// 2번 문제: 람다와 예외처리
-function generateJavaProblem2(categoryIndex) {
-    const threshold = 2 + Math.floor(Math.random() * 3);
-    const applyVal = threshold + Math.floor(Math.random() * 2);
-    const exceptionReturn = 5 + Math.floor(Math.random() * 5);
-    const addVal = 5 + Math.floor(Math.random() * 10);
-    
-    const result1 = applyVal > threshold ? exceptionReturn : applyVal * 2;
-    const result2 = applyVal + addVal;
-    
-    const code = `public class Main {\n \n    static interface F {\n        int apply(int x) throws Exception;\n    }\n \n    public static int run(F f) {\n        try {\n            return f.apply(${applyVal});\n        } catch (Exception e) {\n            return ${exceptionReturn};\n        }\n    }\n \n    public static void main(String[] args) {\n \n        F f = (x) -> {\n            if (x > ${threshold}) {\n                throw new Exception();\n            }\n            return x * 2;\n        };\n \n        System.out.print(run(f) + run((int n) -> n + ${addVal}));\n    }\n \n}`;
-    
-    categories[categoryIndex].problems[1].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[1].answer = (result1 + result2).toString();
-}
-
-// 3번 문제: 상속과 오버라이딩
-function generateJavaProblem3(categoryIndex) {
-    const addVal1 = 2 + Math.floor(Math.random() * 3);
-    const addVal2 = 3 + Math.floor(Math.random() * 3);
-    const inputVal = 2 + Math.floor(Math.random() * 5);
-    const letters = ['P', 'Q', 'R'];
-    const letter = letters[Math.floor(Math.random() * letters.length)];
-    
-    const result = inputVal + addVal2;
-    
-    const code = `public class Main{\n \n    public static class Parent {\n \n        public int x(int i) { return i + ${addVal1}; }\n        public static String id() { return "${letter}";}\n        \n    }\n \n    public static class Child extends Parent {\n        \n        public int x(int i) { return i + ${addVal2}; }\n        public String x(String s) { return s + "R"; }\n        public static String id() { return "C"; }\n        \n    }\n \n    public static void main(String[] args) {\n \n        Parent ref = new Child();\n        System.out.println(ref.x(${inputVal}) + ref.id());\n        \n    }\n    \n}`;
-    
-    categories[categoryIndex].problems[2].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[2].answer = result + letter;
-}
-
-// 4번 문제: 객체 배열과 참조
-function generateJavaProblem4(categoryIndex) {
-    const val1 = 1 + Math.floor(Math.random() * 3);
-    const val2 = 4 + Math.floor(Math.random() * 3);
-    const val3 = 7 + Math.floor(Math.random() * 3);
-    
-    const code = `public class Main{\n    public static class BO {\n        public int v;\n        public BO(int v) {\n            this.v = v;\n        }\n    }\n    public static void main(String[] args) {\n        BO a = new BO(${val1});\n        BO b = new BO(${val2});\n        BO c = new BO(${val3});\n        BO[] arr = {a, b, c};\n        BO t = arr[0];\n        arr[0] = arr[2];\n        arr[2] = t;\n        arr[1].v = arr[0].v;\n        System.out.println(a.v + "a" + b.v + "b" + c.v);\n    }\n}`;
-    
-    const answer = `${val1}a${val3}b${val3}`;
-    
-    categories[categoryIndex].problems[3].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[3].answer = answer;
-}
-
-// 5번 문제: 스위치와 반복문
-function generateJavaProblem5(categoryIndex) {
-    const initA = 0;
-    const initB = 1;
-    const loopEnd = 4 + Math.floor(Math.random() * 3);
-    
-    let a = initA;
-    let b = initB;
-    
-    for(let i = 0; i <= loopEnd; i++) {
-        if(i % 2 === 0) {
-            a += i;
-        } else {
-            b += i;
-        }
-    }
-    
-    const code = `public class Main {\n \n    public static void main(String[] args) {\n        int a = ${initA};\n        int b = ${initB};\n        \n        for (int i = 0; i <= ${loopEnd}; i++) {\n            switch(i % 2){\n                case 0:\n                    a += i;\n                    break;\n                case 1:\n                    b += i;\n                    break;\n            }\n        }\n        \n        System.out.printf("%d %d", a, b);\n    }\n}`;
-    
-    categories[categoryIndex].problems[4].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[4].answer = `${a} ${b}`;
-}
-
-// 6번 문제: 클래스와 상속
-function generateJavaProblem6(categoryIndex) {
-    const inputVal = 3 + Math.floor(Math.random() * 5);
-    const result = (inputVal + 1) * inputVal;
-    
-    const code = `class Parent {\n    int x, y;\n \n    Parent(int x, int y) {\n        this.x=x;\n        this.y=y;\n    }\n \n    int getT() {\n        return x*y;\n    }\n}\n \nclass Child extends Parent {\n    int x;\n \n    Child (int x) {\n        super(x+1, x);\n        this.x=x;\n    }\n \n    int getT(int n){\n        return super.getT()+n;\n    }\n}\n \nclass Main {\n    public static void main(String[] args) {\n        Parent parent = new Child(${inputVal});\n        System.out.println(parent.getT());\n    }\n}`;
-    
-    categories[categoryIndex].problems[5].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[5].answer = result.toString();
-}
-
-// 7번 문제: 메소드 오버라이딩
-function generateJavaProblem7(categoryIndex) {
-    const inputVal = 5 + Math.floor(Math.random() * 10);
-    const po = 3 + Math.floor(Math.random() * 3);
-    const result = po * po;
-    
-    const code = `class classOne {\n    int a, b;\n \n    public classOne(int a, int b) {\n        this.a = a;\n        this.b = b;\n    }\n \n    public void print() {\n        System.out.println(a + b);\n    }\n \n}\nclass classTwo extends classOne {\n    int po = ${po};\n    \n    public classTwo(int i) {\n        super(i, i+1);\n    }\n \n    public void print() {\n        System.out.println(po*po);\n    }\n}\n \npublic class main {  \n    public static void main(String[] args) {\n        classOne one = new classTwo(${inputVal});\n        one.print();\n    }\n}`;
-    
-    categories[categoryIndex].problems[6].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[6].answer = result.toString();
-}
-
-// 8번 문제: 배열 탐색 (10진수 -> 2진수)
-function generateJavaProblem8(categoryIndex) {
-    const n = 5 + Math.floor(Math.random() * 20);
-    
-    let binary = '';
-    let temp = n;
-    while(temp > 0) {
-        binary = (temp % 2) + binary;
-        temp = Math.floor(temp / 2);
-    }
-    
-    const reversedBinary = binary.split('').reverse().join('') + '0'.repeat(8 - binary.length);
-    
-    const code = `public class Main {\n    public static void main(String[] args){\n        int[]a = new int[8];\n        int i = 0;\n        int n = ${n};\n        while (n>0) {\n            a[i++] = n%2;\n            n/=2;\n        }\n        for (int k=0; k<i; k++){\n            System.out.print(a[k]);\n        }\n    }\n}`;
-    
-    categories[categoryIndex].problems[7].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[7].answer = binary.split('').reverse().join('');
-}
-
-// 9번 문제: 추상 클래스
-function generateJavaProblem9(categoryIndex) {
-    const names = ['Spark', 'Avante', 'Sonata', 'K5', 'Genesis'];
-    const name = names[Math.floor(Math.random() * names.length)];
-    
-    const code = `abstract class Vehicle{\n    String name;\n    abstract public String getName(String n);\n    \n    public String getName(){\n        return "Vehicle name: " + name;\n    }\n}\n \nclass Car extends Vehicle{\n    public Car(String n){\n        name = n;\n    }\n    public String getName(String n){\n        return "Car name: " + n;\n    }\n    public String getName(byte[] n){\n        return "Car name: " + n;\n    }\n}\n \npublic class Main {\n    public static void main(String[] args){\n        Vehicle obj = new Car("${name}");\n        System.out.print(obj.getName());\n    }\n}`;
-    
-    categories[categoryIndex].problems[8].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[8].answer = `Vehicle name: ${name}`;
-}
-
-// 10번 문제: 문자열 처리
-function generateJavaProblem10(categoryIndex) {
-    const strings = ['Programming', 'Information', 'Javascript', 'Development', 'Engineering'];
-    const str = strings[Math.floor(Math.random() * strings.length)];
-    const start = 1 + Math.floor(Math.random() * 3);
-    const end = start + 3 + Math.floor(Math.random() * 3);
-    
-    const result = str.substring(start, Math.min(end, str.length));
-    
-    const code = `public class Main {\n    public static void main(String[] args) {\n        String str = "${str}";\n        System.out.println(str.substring(${start},${end}));\n    }\n}`;
-    
-    categories[categoryIndex].problems[9].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[9].answer = result;
-}
-
-// 11번 문제: 스위치문
-function generateJavaProblem11(categoryIndex) {
-    const i = 2 + Math.floor(Math.random() * 4);
-    const k = 1;
-    
-    let result = k;
-    switch(i) {
-        case 0:
-        case 1:
-        case 2:
-        case 3: result = 0;
-        case 4: result += 3;
-        case 5: result -= 10;
-        default: result--;
-    }
-    
-    const code = `public class Main {\n    public static void main(String[] args) {\n        int i = ${i};\n        int k = ${k};\n        switch(i) {\n            case 0:\n            case 1:\n            case 2:\n            case 3: k=0;\n            case 4: k+=3;\n            case 5: k-=10;\n            default: k--;\n        }\n        System.out.print(k);\n    }\n}`;
-    
-    categories[categoryIndex].problems[10].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[10].answer = result.toString();
-}
-
-// 12번 문제: 싱글톤 패턴
-function generateJavaProblem12(categoryIndex) {
-    const callCount = 2 + Math.floor(Math.random() * 4);
-    
-    const code = `class Connection {\n    private static Connection _inst = null;\n    private int count = 0;\n    \n    public static Connection get() {\n        if(_inst == null) {\n            _inst = new Connection();\n            return _inst;\n        }\n        return _inst;\n    }\n    \n    public void count() { count++; }\n    public int getCount() { return count; }\n}\n \npublic class Main {\n    public static void main(String[] args) {\n${Array.from({length: callCount}, (_, i) => `        Connection conn${i+1} = Connection.get();\n        conn${i+1}.count();`).join('\n')}\n        System.out.print(conn1.getCount());\n    }\n}`;
-    
-    categories[categoryIndex].problems[11].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[11].answer = callCount.toString();
-}
-
-// 13번 문제: 인터페이스
-function generateJavaProblem13(categoryIndex) {
-    const name = ['Kim', 'Lee', 'Park', 'Choi'][Math.floor(Math.random() * 4)];
-    const age = 18 + Math.floor(Math.random() * 10);
-    const subtract = 2 + Math.floor(Math.random() * 3);
-    
-    const code = `interface Studentinterface {\n    public abstract void printName(String name);\n    \n    default void printAge(int age) {\n        System.out.println("age: " + age);\n    }\n}\n \nclass StudentClass implements Studentinterface {\n    public void printName(String name) {\n        System.out.println("name: " + name);\n    }\n \n    public void printAge(int age) {\n        System.out.println("age: " + (age-${subtract}));\n    }\n}\n \npublic class Main {\n    public static void main(String[] args) {\n        StudentClass st = new StudentClass();\n        st.printName("${name}");\n        st.printAge(${age});\n    }\n}`;
-    
-    categories[categoryIndex].problems[12].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[12].answer = `name: ${name}\\nage: ${age - subtract}`;
-}
-
-// 14번 문제: 재귀함수
-function generateJavaProblem14(categoryIndex) {
-    const num = 3 + Math.floor(Math.random() * 4);
-    
-    function compute(n) {
-        if(n <= 1) return n;
-        return compute(n - 1) + compute(n - 3);
-    }
-    
-    const result = compute(num);
-    
-    const code = `class Parent {\n    public int compute(int num) {\n        if(num <= 1) return num;\n        return compute(num - 1) + compute(num - 2);\n    }\n}\n \nclass Child extends Parent {\n    public int compute(int num) {\n        if(num <= 1) return num;\n        return compute(num - 1) + compute(num - 3);\n    }\n}\n \npublic class Main {\n    public static void main(String args[]) {\n        Parent obj = new Child();\n        System.out.print(obj.compute(${num}));\n    }\n}`;
-    
-    categories[categoryIndex].problems[13].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[13].answer = result.toString();
-}
-
-// 15번 문제: 2차원 배열
-function generateJavaProblem15(categoryIndex) {
-    const size = 3 + Math.floor(Math.random() * 4); // 3~6 범위로 확장
-    
-    // a[row][col] 위치를 랜덤으로 선택
-    const row1 = Math.floor(Math.random() * (size - 1)) + 1; // 1 ~ size-1
-    const col1 = Math.floor(Math.random() * (size - 1)) + 1; // 1 ~ size-1
-    
-    // 두 번째 위치는 첫 번째와 다르게
-    let row2, col2;
-    do {
-        row2 = Math.floor(Math.random() * (size - 1)) + 1;
-        col2 = Math.floor(Math.random() * (size - 1)) + 1;
-    } while (row1 === row2 && col1 === col2); // 같은 위치 방지
-    
-    // 배열 값 계산: a[i][j] = (i * size) + j + 1
-    const val1 = (row1 * size) + col1 + 1;
-    const val2 = (row2 * size) + col2 + 1;
-    const result = val1 + val2;
-    
-    const code = `public class Main {\n    public static void main(String[] args) {\n        int[][] a = new int[${size}][${size}];\n        int n=1;\n        for(int i=0; i<${size}; i++) {\n            for(int j=0; j<${size}; j++) {\n                a[i][j]=n++;\n            }\n        }\n        System.out.print(a[${row1}][${col1}]+a[${row2}][${col2}]);\n    }\n}`;
-    
-    categories[categoryIndex].problems[14].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[14].answer = result.toString();
-}
-
-// 16번 문제: super 키워드
-function generateJavaProblem16(categoryIndex) {
-    const inputVal = 5 + Math.floor(Math.random() * 15);
-    const result = inputVal + 1;
-    
-    const code = `class A {\n    int a;\n    public A(int a) {\n        this.a = a;\n    }\n    void display() {\n        System.out.println("a=" + a);\n    }\n}\n \nclass B extends A {\n    public B(int a) {\n        super(a);\n        super.a = a + 1;\n    }\n}\n \npublic class Main {\n    public static void main(String[] args) {\n        B obj = new B(${inputVal});\n        obj.display();\n    }\n}`;
-    
-    categories[categoryIndex].problems[15].question = `다음 Java 코드의 출력값을 작성하시오.\n\n${code}`;
-    categories[categoryIndex].problems[15].answer = `a=${result}`;
-}
-
-// ========================== Java 알고리즘 끝 ==========================
 
 // ========================== 페이지 교체 알고리즘 문제 생성 함수들 ==========================
 
@@ -2170,726 +1915,331 @@ function generateCategorizedPythonProblem(categoryIndex, selectedType) {
 
 // ========================== Python 알고리즘 끝 ==========================
 
-// ====================== C언어 랜덤 문제 생성 ======================
-
-// 1번 문제: switch문 - 2020년 1회
-function generateCProblem1(categoryIndex) {
-    const caseNum = 1 + Math.floor(Math.random() * 5);
-    const initC = Math.floor(Math.random() * 3) + 1;
+// ========================== C언어 알고리즘 시작 ==========================
+function generateRandomCProblem(categoryIndex) {
+    const problemTypes = ['loop', 'array', 'pointer', 'conditional'];
+    const type = problemTypes[Math.floor(Math.random() * problemTypes.length)];
     
-    let c = initC;
-    switch(caseNum) {
-        case 1: c += 3;
-        case 2: c++;
-        case 3: c = 0;
-        case 4: c += 3;
-        case 5: c -= 10;
-        default: c--;
-    }
+    let code = '';
+    let answer = '';
     
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int c = ${initC};\\n  switch(${caseNum}) {\\n    case 1: c += 3;\\n    case 2: c++;\\n    case 3: c = 0;\\n    case 4: c += 3;\\n    case 5: c -= 10;\\n    default: c--;\\n  }\\n  printf(\\\"%d\\\", c);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[0].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[0].answer = c.toString();
-}
-
-// 2번 문제: 배열 정렬 (버블소트) - 2020년 1회
-function generateCProblem2(categoryIndex) {
-    const arr = Array.from({length: 5}, () => Math.floor(Math.random() * 50) + 50);
-    const sorted = [...arr].sort((a, b) => a - b);
-    
-    const code = `#include <stdio.h>\\n\\nvoid align(int a[]) {\\n  int temp;\\n  for(int i = 0; i < 4; i++) {\\n    for(int j = 0; j < 4 - i; j++) {\\n      if(a[j] > a[j+1]) {\\n        temp = a[j];\\n        a[j] = a[j+1];\\n        a[j+1] = temp;\\n      }\\n    }\\n  }\\n}\\n\\nint main() {\\n  int a[] = {${arr.join(', ')}};\\n  align(a);\\n  for(int i = 0; i < 5; i++)\\n    printf(\\\"%d \\\", a[i]);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[1].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[1].answer = sorted.join(' ');
-}
-
-// 3번 문제: while문 - 2020년 3회
-function generateCProblem3(categoryIndex) {
-    const maxIter = 5 + Math.floor(Math.random() * 5);
-    
-    let c = 0;
-    let i = 0;
-    while(i < maxIter) {
-        i++;
-        c *= i;
-    }
-    
-    const code = `#include <stdio.h>\\n\\nvoid main() {\\n  int c = 0;\\n  int i = 0;\\n  while(i < ${maxIter}) {\\n    i++;\\n    c *= i;\\n  }\\n  printf(\\\"%d\\\", c);\\n}`;
-    
-    categories[categoryIndex].problems[2].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[2].answer = c.toString();
-}
-
-// 4번 문제: 문자열 포인터 - 2020년 4회
-function generateCProblem4(categoryIndex) {
-    const strings = ['KOREA', 'PYTHON', 'HELLO', 'WORLD', 'CODER'];
-    const str = strings[Math.floor(Math.random() * strings.length)];
-    const offset = 1 + Math.floor(Math.random() * 3);
-    
-    const result = str + str.substring(offset) + str[0] + str[offset] + String.fromCharCode(str.charCodeAt(0) + 2);
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  char *p = \\\"${str}\\\";\\n  printf(\\\"%s\\\", p);\\n  printf(\\\"%s\\\", p + ${offset});\\n  printf(\\\"%c\\\", *p);\\n  printf(\\\"%c\\\", *(p + ${offset}));\\n  printf(\\\"%c\\\", *p + 2);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[3].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[3].answer = result;
-}
-
-// 5번 문제: 구조체 - 2021년 2회
-function generateCProblem5(categoryIndex) {
-    const age = 18 + Math.floor(Math.random() * 10);
-    const score = 80 + Math.floor(Math.random() * 20);
-    const result = age + score;
-    
-    const code = `#include <stdio.h>\\n\\nstruct Student {\\n  int age;\\n  int score;\\n};\\n\\nint main() {\\n  struct Student s;\\n  s.age = ${age};\\n  s.score = ${score};\\n  \\n  printf(\\\"%d\\\", s.age + s.score);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[4].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[4].answer = result.toString();
-}
-
-// 6번 문제: 포인터 배열 - 2021년 2회
-function generateCProblem6(categoryIndex) {
-    const val1 = Math.floor(Math.random() * 3) + 1;
-    const val2 = val1 + 1;
-    const val3 = val2 + 2;
-    
-    const sum = val1 + val2 + val3;
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int ary[3];\\n  int s = 0;\\n  *(ary + 0) = ${val1};\\n  ary[1] = *(ary + 0) + ${val2 - val1};\\n  ary[2] = *ary + ${val3 - val1};\\n  for(int i = 0; i < 3; i++) {\\n    s = s + ary[i];\\n  }\\n  printf(\\\"%d\\\", s);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[5].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[5].answer = sum.toString();
-}
-
-// 7번 문제: 배열 최댓값 찾기 - 2021년 3회
-function generateCProblem7(categoryIndex) {
-    const arr = Array.from({length: 5}, () => Math.floor(Math.random() * 20) + 1);
-    const max = Math.max(...arr);
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {${arr.join(', ')}};\\n  int max = arr[0];\\n  int i;\\n  \\n  for(i = 1; i < 5; i++) {\\n    if(arr[i] > max)\\n      max = arr[i];\\n  }\\n  \\n  printf(\\\"%d\\\", max);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[6].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[6].answer = max.toString();
-}
-
-// 8번 문제: swap 함수 (포인터) - 2021년 3회
-function generateCProblem8(categoryIndex) {
-    const x = 10 + Math.floor(Math.random() * 20);
-    const y = x + 10 + Math.floor(Math.random() * 10);
-    
-    const code = `#include <stdio.h>\\n\\nvoid swap(int *a, int *b) {\\n  int temp = *a;\\n  *a = *b;\\n  *b = temp;\\n}\\n\\nint main() {\\n  int x = ${x}, y = ${y};\\n  swap(&x, &y);\\n  printf(\\\"%d %d\\\", x, y);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[7].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[7].answer = `${y} ${x}`;
-}
-
-// 9번 문제: 포인터 배열 연산 - 2021년 3회
-function generateCProblem9(categoryIndex) {
-    const a = 10 + Math.floor(Math.random() * 10);
-    const b = a + 10 + Math.floor(Math.random() * 10);
-    const c = b + 10 + Math.floor(Math.random() * 10);
-    const result = b + a + 1;
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int *arr[3];\\n  int a = ${a}, b = ${b}, c = ${c};\\n  arr[0] = &a;\\n  arr[1] = &b;\\n  arr[2] = &c;\\n  printf(\\\"%d\\\", *arr[1] + **arr + 1);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[8].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[8].answer = result.toString();
-}
-
-// 10번 문제: 비트 AND 연산 - 2022년 1회
-function generateCProblem10(categoryIndex) {
-    const a = 8 + Math.floor(Math.random() * 10);
-    const b = 5 + Math.floor(Math.random() * 10);
-    const result = a & b;
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a};\\n  int b = ${b};\\n  \\n  printf(\\\"%d\\\", a & b);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[9].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[9].answer = result.toString();
-}
-
-// 11번 문제: 삼항 연산자 (빈칸) - 2022년 1회
-function generateCProblem11(categoryIndex) {
-    const a = 5 + Math.floor(Math.random() * 10);
-    const b = a + 5 + Math.floor(Math.random() * 10);
-    const c = a;
-    const result = Math.floor(c / 2);
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a};\\n  int b = ${b};\\n  int c;\\n  \\n  c = (a ( ① ) b) ? a : b;\\n  printf(\\\"%d\\\", c / 2);\\n  \\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[10].question = `다음 C언어 프로그램의 괄호 안에 들어갈 알맞은 연산자를 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[10].answer = '>';
-}
-
-// 12번 문제: 숫자 역순 (빈칸) - 2022년 1회
-function generateCProblem12(categoryIndex) {
-    const number = 1000 + Math.floor(Math.random() * 9000);
-    const reversed = parseInt(number.toString().split('').reverse().join(''));
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int number = ${number};\\n  int div = 10;\\n  int result = 0;\\n  while(number ( ① ) 0) {\\n    result = result * div;\\n    result = result + number ( ② ) div;\\n    number = number ( ③ ) div;\\n  }\\n  printf(\\\"%d\\\", result);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[11].question = `다음 C언어 프로그램의 괄호 안에 들어갈 알맞은 연산자를 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[11].answer = '1. > 2. % 3. /';
-}
-
-// 13번 문제: 재귀 팩토리얼 (입력) - 2022년 1회
-function generateCProblem13(categoryIndex) {
-    const inputNum = 4 + Math.floor(Math.random() * 3);
-    
-    function factorial(n) {
-        if(n <= 1) return 1;
-        return n * factorial(n - 1);
-    }
-    
-    const result = factorial(inputNum);
-    
-    const code = `#include <stdio.h>\\n\\nint func(int a) {\\n  if(a <= 1)\\n    return 1;\\n  return a * func(a - 1);\\n}\\n\\nint main() {\\n  int a;\\n  scanf(\\\"%d\\\", &a);\\n  printf(\\\"%d\\\", func(a));\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[12].question = `다음 C언어 코드에서 입력값이 ${inputNum}가 들어왔을 때 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[12].answer = result.toString();
-}
-
-// 14번 문제: 재귀 팩토리얼 (동일) - 2022년 1회
-function generateCProblem14(categoryIndex) {
-    const inputNum = 4 + Math.floor(Math.random() * 3);
-    
-    function factorial(n) {
-        if(n <= 1) return 1;
-        return n * factorial(n - 1);
-    }
-    
-    const result = factorial(inputNum);
-    
-    const code = `#include <stdio.h>\\n\\nint func(int a) {\\n  if(a <= 1)\\n    return 1;\\n  return a * func(a - 1);\\n}\\n\\nint main() {\\n  int a;\\n  scanf(\\\"%d\\\", &a);\\n  printf(\\\"%d\\\", func(a));\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[13].question = `다음 C언어 코드에서 입력값이 ${inputNum}일 때 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[13].answer = result.toString();
-}
-
-// 15번 문제: 배열과 포인터 연산 - 2022년 2회
-function generateCProblem15(categoryIndex) {
-    const base = 2 + Math.floor(Math.random() * 3);
-    const arr = [0, base, base * 2, base * 4];
-    
-    let sum = 0;
-    for(let i = 1; i < 4; i++) {
-        const diff = arr[i] - arr[i-1];
-        sum = sum + diff + arr[i];
-    }
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int a[4] = {${arr.join(', ')}};\\n  int b[3] = {};\\n  int i = 1;\\n  int sum = 0;\\n  int *p1;\\n  for(i; i < 4; i++) {\\n    p1 = a + i;\\n    b[i-1] = *p1 - a[i-1];\\n    sum = sum + b[i-1] + a[i];\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[14].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[14].answer = sum.toString();
-}
-
-// 16번 문제: 문자열 인덱싱 - 2023년 1회
-function generateCProblem16(categoryIndex) {
-    const strings = ['Programming', 'Information', 'Javascript', 'Development', 'Algorithm'];
-    const str = strings[Math.floor(Math.random() * strings.length)];
-    const idx = 3 + Math.floor(Math.random() * (str.length - 5));
-    const result = str[idx];
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  char str[] = \\\"${str}\\\";\\n  printf(\\\"%c\\\", str[${idx}]);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[15].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[15].answer = result;
-}
-
-// 17번 문제: 문자열 포인터 출력 - 2023년 1회 (다양한 길이)
-function generateCProblem17(categoryIndex) {
-    const strings = ['Art', 'Cat', 'Dog', 'Sun', 'Joy', 'Code', 'Test', 'Work', 'Game', 'Data'];
-    const str = strings[Math.floor(Math.random() * strings.length)];
-    const result = str + str[0] + str[0] + str + str;
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  char a[] = \\\"${str}\\\";\\n  char* p = a;\\n  printf(\\\"%s\\\", a);\\n  printf(\\\"%c\\\", *p);\\n  printf(\\\"%c\\\", *a);\\n  printf(\\\"%s\\\", p);\\n  for(int i = 0; a[i] != '\\\\0'; i++)\\n    printf(\\\"%c\\\", a[i]);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[16].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[16].answer = result;
-}
-
-// 18번 문제: 문자열 비교 (중복 문자 출력) - 2023년 1회
-function generateCProblem18(categoryIndex) {
-    const pairs = [
-        {a: 'qwer', b: 'qwtety', result: 'qwe'},
-        {a: 'abcd', b: 'acef', result: 'ac'},
-        {a: 'hello', b: 'world', result: 'llo'},
-        {a: 'test', b: 'best', result: 'est'}
-    ];
-    const selected = pairs[Math.floor(Math.random() * pairs.length)];
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  char* a = \\\"${selected.a}\\\";\\n  char* b = \\\"${selected.b}\\\";\\n  for(int i = 0; a[i] != '\\\\0'; i++) {\\n    for(int j = 0; b[j] != '\\\\0'; j++) {\\n      if(a[i] == b[j])\\n        printf(\\\"%c\\\", a[i]);\\n    }\\n  }\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[17].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[17].answer = selected.result;
-}
-
-// 19번 문제: 반복문 continue - 2023년 1회
-function generateCProblem19(categoryIndex) {
-    const maxNum = 8 + Math.floor(Math.random() * 5);
-    
-    let sum = 0;
-    for(let i = 1; i <= maxNum; i++) {
-        if(i % 2 == 1) continue;
-        sum += i;
-    }
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int i, sum = 0;\\n  \\n  for(i = 1; i <= ${maxNum}; i++) {\\n    if(i % 2 == 1)\\n      continue;\\n    sum += i;\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[18].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[18].answer = sum.toString();
-}
-
-// 20번 문제: 삼항 연산자 - 2023년 1회
-function generateCProblem20(categoryIndex) {
-    const a = 3 + Math.floor(Math.random() * 5);
-    const b = 2 + Math.floor(Math.random() * 4);
-    const c = (a > b) ? a * 2 : b * 2;
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a};\\n  int b = ${b};\\n  int c;\\n  \\n  c = (a > b) ? a * 2 : b * 2;\\n  printf(\\\"%d\\\", c);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[19].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[19].answer = c.toString();
-}
-
-// 21번 문제: 포인터 문자열 - 2023년 3회
-function generateCProblem21(categoryIndex) {
-    const strings = ['KOREA', 'HELLO', 'WORLD', 'CODER'];
-    const str = strings[Math.floor(Math.random() * strings.length)];
-    const result = `${str} ${str.substring(1)} ${str[0]} ${str[3]} ${String.fromCharCode(str.charCodeAt(0) + 4)}`;
-    
-    const code = `#include\\n \\nint main() {\\n    char* p = \\\"${str}\\\";\\n    printf(\\\"%s\\\\n\\\", p);\\n    printf(\\\"%s\\\\n\\\", p+1);\\n    printf(\\\"%c\\\\n\\\", *p);\\n    printf(\\\"%c\\\\n\\\", *(p+3));\\n    printf(\\\"%c\\\\n\\\", *p+4);\\n}`;
-    
-    categories[categoryIndex].problems[20].question = `다음은 C언어의 포인터 문제이다. 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[20].answer = result;
-}
-
-// 22번 문제: strlen 함수 - 2024년 1회
-function generateCProblem22(categoryIndex) {
-    const strings = ['Hello', 'World', 'Code', 'Test', 'Work'];
-    const str = strings[Math.floor(Math.random() * strings.length)];
-    const result = str.length;
-    
-    const code = `#include <stdio.h>\\n#include <string.h>\\n\\nint main() {\\n  char str[] = \\\"${str}\\\";\\n  printf(\\\"%d\\\", strlen(str));\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[21].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[21].answer = result.toString();
-}
-
-// 23번 문제: 2차원 배열 대각선 합 - 2024년 1회 (수정)
-function generateCProblem23(categoryIndex) {
-    const size = 3;
-    const baseNum = 1 + Math.floor(Math.random() * 3);
-    const arr = [];
-    let num = baseNum;
-    
-    for(let i = 0; i < size; i++) {
-        arr[i] = [];
-        for(let j = 0; j < size; j++) {
-            arr[i][j] = num++;
+    if (type === 'loop') {
+        // 반복문 문제
+        const start = Math.floor(Math.random() * 3);
+        const end = 5 + Math.floor(Math.random() * 6);
+        
+        let sum = 0;
+        for (let i = start; i <= end; i++) {
+            sum += i;
         }
-    }
-    
-    let sum = 0;
-    for(let i = 0; i < size; i++) {
-        sum += arr[i][i];
-    }
-    
-    const arrStr = arr.map(row => `{${row.join(',')}}`).join(',');
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[3][3] = {${arrStr}};\\n  int sum = 0;\\n  int i, j;\\n  \\n  for(i = 0; i < 3; i++) {\\n    for(j = 0; j < 3; j++) {\\n      if(i == j)\\n        sum += arr[i][j];\\n    }\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[22].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[22].answer = sum.toString();
-}
-
-// 24번 문제: 비트 시프트 연산 - 2024년 1회
-function generateCProblem24(categoryIndex) {
-    const v1 = 0;
-    const v2 = 30 + Math.floor(Math.random() * 10);
-    const v3 = 25 + Math.floor(Math.random() * 10);
-    
-    let result;
-    if(v1 > v2) {
-        result = (v2 << 2) + v3;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int sum = 0;\\n  for(int i = ${start}; i <= ${end}; i++) {\\n    sum += i;\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
+        
+    } else if (type === 'array') {
+        // 배열 문제
+        const length = 4 + Math.floor(Math.random() * 4);
+        const arr = Array.from({length}, (_, i) => (i + 1) * 10);
+        const sum = arr.reduce((a, b) => a + b, 0);
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {${arr.join(', ')}};\\n  int sum = 0;\\n  for(int i = 0; i < ${length}; i++) {\\n    sum += arr[i];\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
+        
+    } else if (type === 'pointer') {
+        // 포인터 문제
+        const a = 10 + Math.floor(Math.random() * 20);
+        const b = 10 + Math.floor(Math.random() * 20);
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a};\\n  int *p = &a;\\n  *p = ${b};\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}`;
+        answer = b.toString();
+        
     } else {
-        result = v2 + (v3 << 2);
+        // 조건문 문제
+        const a = 5 + Math.floor(Math.random() * 10);
+        const b = 5 + Math.floor(Math.random() * 10);
+        const result = a > b ? a * 2 : b * 2;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a};\\n  int b = ${b};\\n  int c = (a > b) ? a * 2 : b * 2;\\n  printf(\\\"%d\\\", c);\\n  return 0;\\n}`;
+        answer = result.toString();
     }
     
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int v1 = ${v1}, v2 = ${v2}, v3 = ${v3};\\n  if(v1 > v2 ? v2 : v1) {\\n    v2 = v2 << 2;\\n  } else {\\n    v3 = v3 << 2;\\n  }\\n  printf(\\\"%d\\\", v2 + v3);\\n  return 0;\\n}`;
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
     
-    categories[categoryIndex].problems[23].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[23].answer = result.toString();
+    categories[categoryIndex].problems[currentProblemIndex].answer = answer;
 }
+// ========================== C언어 알고리즘 끝 ==========================
 
-// 25번 문제: 배열 포인터 접근 - 2024년 1회
-function generateCProblem25(categoryIndex) {
-    const base = 10;
-    const arr = [base, base * 2, base * 3];
-    const idx = Math.floor(Math.random() * 3);
-    const result = arr[idx];
+// ========================== C언어 세분화 알고리즘 시작 ==========================
+function generateCategorizedCProblem(categoryIndex, selectedType) {
+    let code = '';
+    let answer = '';
     
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int a[] = {${arr.join(', ')}};\\n  int *p = a;\\n  \\n  printf(\\\"%d\\\", *(p + ${idx}));\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[24].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[24].answer = result.toString();
-}
-
-// 26번 문제: 문자열 역순 출력 - 2024년 1회
-function generateCProblem26(categoryIndex) {
-    const strings = ['ABCDEFGH', 'COMPUTER', 'KEYBOARD', 'MONITOR'];
-    const str = strings[Math.floor(Math.random() * strings.length)];
-    const reversed = str.split('').reverse().join('');
-    
-    let result = '';
-    for(let i = 1; i < reversed.length; i += 2) {
-        result += reversed[i];
+    // ========== 정렬 알고리즘 ==========
+    if (selectedType === 'selectionSort') {
+        const arr = Array.from({length: 5}, () => Math.floor(Math.random() * 50) + 10);
+        const sorted = [...arr].sort((a, b) => a - b);
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {${arr.join(', ')}};\\n  int i, j, min, temp;\\n  for(i = 0; i < 4; i++) {\\n    min = i;\\n    for(j = i + 1; j < 5; j++) {\\n      if(arr[j] < arr[min])\\n        min = j;\\n    }\\n    temp = arr[i];\\n    arr[i] = arr[min];\\n    arr[min] = temp;\\n  }\\n  for(i = 0; i < 5; i++)\\n    printf(\\\"%d \\\", arr[i]);\\n  return 0;\\n}`;
+        answer = sorted.join(' ');
     }
     
-    const code = `#include <stdio.h>\\n#include <string.h>\\n \\nvoid reverse(char* str){\\n    int len = strlen(str);\\n    char temp;\\n    char*p1 = str;\\n    char*p2 = str + len - 1;\\n    while(p1<p2){\\n        temp = *p1;\\n        *p1 = *p2;\\n        *p2 = temp;\\n        p1++;\\n        p2--;\\n    }\\n}\\n \\nint main(int argc, char* argv[]){\\n    char str[100] = \\\"${str}\\\";\\n \\n    reverse(str);\\n \\n    int len = strlen(str);\\n \\n    for(int i=1; i<len; i+=2){\\n        printf(\\\"%c\\\",str[i]);\\n    }\\n \\n    printf(\\\"\\\\n\\\");\\n \\n    return 0;\\n \\n}`;
+    else if (selectedType === 'bubbleSort') {
+        const arr = Array.from({length: 5}, () => Math.floor(Math.random() * 50) + 10);
+        const sorted = [...arr].sort((a, b) => a - b);
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {${arr.join(', ')}};\\n  int i, j, temp;\\n  for(i = 0; i < 4; i++) {\\n    for(j = 0; j < 4 - i; j++) {\\n      if(arr[j] > arr[j+1]) {\\n        temp = arr[j];\\n        arr[j] = arr[j+1];\\n        arr[j+1] = temp;\\n      }\\n    }\\n  }\\n  for(i = 0; i < 5; i++)\\n    printf(\\\"%d \\\", arr[i]);\\n  return 0;\\n}`;
+        answer = sorted.join(' ');
+    }
     
-    categories[categoryIndex].problems[25].question = `다음은 C언어에 대한 문제이다. 알맞는 출력 값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[25].answer = result;
-}
-
-// 27번 문제: 연결 리스트 (구조체) - 2024년 2회 (랜덤화)
-function generateCProblem27(categoryIndex) {
-    const val1 = 10 + Math.floor(Math.random() * 10);
-    const val2 = val1 + 5 + Math.floor(Math.random() * 10);
-    const val3 = val2 + 5 + Math.floor(Math.random() * 10);
-    const result = val2;
+    else if (selectedType === 'insertionSort') {
+        const arr = Array.from({length: 5}, () => Math.floor(Math.random() * 50) + 10);
+        const sorted = [...arr].sort((a, b) => a - b);
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {${arr.join(', ')}};\\n  int i, j, key;\\n  for(i = 1; i < 5; i++) {\\n    key = arr[i];\\n    j = i - 1;\\n    while(j >= 0 && arr[j] > key) {\\n      arr[j+1] = arr[j];\\n      j--;\\n    }\\n    arr[j+1] = key;\\n  }\\n  for(i = 0; i < 5; i++)\\n    printf(\\\"%d \\\", arr[i]);\\n  return 0;\\n}`;
+        answer = sorted.join(' ');
+    }
     
-    const code = `#include <stdio.h>\\n \\nstruct node {\\n    int n1;\\n    struct node *n2;\\n};\\n \\nint main() {\\n \\n    struct node a = {${val1}, NULL};\\n    struct node b = {${val2}, NULL};\\n    struct node c = {${val3}, NULL};\\n \\n    struct node *head = &a;\\n    a.n2 = &b;\\n    b.n2 = &c;\\n \\n    printf(\\\"%d\\\\n\\\", head->n2->n1);\\n \\n    return 0;\\n}`;
+    // ========== 연산 ==========
+    else if (selectedType === 'logicalOp') {
+        const a = Math.floor(Math.random() * 10) + 5;
+        const b = Math.floor(Math.random() * 10) + 5;
+        const result = (a > 10 && b > 10) ? 1 : (a > 5 || b > 5) ? 2 : 0;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a}, b = ${b};\\n  int result;\\n  if(a > 10 && b > 10)\\n    result = 1;\\n  else if(a > 5 || b > 5)\\n    result = 2;\\n  else\\n    result = 0;\\n  printf(\\\"%d\\\", result);\\n  return 0;\\n}`;
+        answer = result.toString();
+    }
     
-    categories[categoryIndex].problems[26].question = `다음은 C언어의 구조체에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력 값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[26].answer = result.toString();
-}
-
-// 28번 문제: swap 함수 + switch문 - 2024년 2회
-function generateCProblem28(categoryIndex) {
-    const a = 10 + Math.floor(Math.random() * 5);
-    const b = 15 + Math.floor(Math.random() * 10);
+    else if (selectedType === 'bitOp') {
+        const a = Math.floor(Math.random() * 16) + 10;
+        const shift = Math.floor(Math.random() * 2) + 1;
+        const result = a << shift;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a};\\n  int result = a << ${shift};\\n  printf(\\\"%d\\\", result);\\n  return 0;\\n}`;
+        answer = result.toString();
+    }
     
-    let bResult = b;
-    bResult += 2;
-    bResult += 3;
+    // ========== 조건문 ==========
+    else if (selectedType === 'ifStmt') {
+        const a = Math.floor(Math.random() * 20) + 10;
+        const b = Math.floor(Math.random() * 20) + 10;
+        const result = a > b ? a * 2 : b * 2;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a}, b = ${b};\\n  int result;\\n  if(a > b)\\n    result = a * 2;\\n  else\\n    result = b * 2;\\n  printf(\\\"%d\\\", result);\\n  return 0;\\n}`;
+        answer = result.toString();
+    }
     
-    const result = a - bResult;
-    
-    const code = `#include <stdio.h>\\n \\nvoid swap(int a, int b) {\\n    int t = a;\\n    a = b;\\n    b = t;\\n}\\n \\nint main() {\\n    \\n    int a = ${a};\\n    int b = ${b};\\n    swap(a, b);\\n    \\n    switch(a) {\\n        case 1:\\n            b += 1;\\n        case 11:\\n            b += 2;\\n        default:\\n            b += 3;\\n        break;\\n    }\\n    \\n    printf(\\\"%d\\\", a-b);\\n}`;
-    
-    categories[categoryIndex].problems[27].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력 값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[27].answer = result.toString();
-}
-
-// 29번 문제: 짝수 합 - 2024년 2회
-function generateCProblem29(categoryIndex) {
-    const maxNum = 8 + Math.floor(Math.random() * 5);
-    
-    let a = 0;
-    for(let i = 1; i < maxNum; i++) {
-        if(i % 2 == 0) {
-            a += i;
+    else if (selectedType === 'switchStmt') {
+        const num = Math.floor(Math.random() * 5) + 1;
+        let result = 0;
+        switch(num) {
+            case 1: result = 10; break;
+            case 2: result = 20; break;
+            case 3: result = 30; break;
+            case 4: result = 40; break;
+            default: result = 50;
         }
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int num = ${num};\\n  int result;\\n  switch(num) {\\n    case 1: result = 10; break;\\n    case 2: result = 20; break;\\n    case 3: result = 30; break;\\n    case 4: result = 40; break;\\n    default: result = 50;\\n  }\\n  printf(\\\"%d\\\", result);\\n  return 0;\\n}`;
+        answer = result.toString();
     }
     
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int i;\\n  int a = 0;\\n  for(i = 1; i < ${maxNum}; i++) {\\n    if(i % 2 == 0)\\n      a += i;\\n  }\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[28].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[28].answer = a.toString();
-}
-
-// 30번 문제: 배열 합 - 2024년 2회 (랜덤화)
-function generateCProblem30(categoryIndex) {
-    const start = 1 + Math.floor(Math.random() * 3);
-    const arr = Array.from({length: 5}, (_, i) => start + i);
-    const sum = arr.reduce((a, b) => a + b, 0);
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[5] = {${arr.join(', ')}};\\n  int sum = 0;\\n  int i;\\n  \\n  for(i = 0; i < 5; i++) {\\n    sum += arr[i];\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[29].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[29].answer = sum.toString();
-}
-
-// 31번 문제: 재귀 팩토리얼 - 2024년 2회 (랜덤화)
-function generateCProblem31(categoryIndex) {
-    const n = 4 + Math.floor(Math.random() * 3);
-    
-    function factorial(num) {
-        if(num <= 1) return 1;
-        return num * factorial(num - 1);
+    // ========== 반복문 ==========
+    else if (selectedType === 'forLoop') {
+        const start = Math.floor(Math.random() * 3);
+        const end = 5 + Math.floor(Math.random() * 6);
+        let sum = 0;
+        for(let i = start; i <= end; i++) sum += i;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int sum = 0;\\n  for(int i = ${start}; i <= ${end}; i++) {\\n    sum += i;\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
     }
     
-    const result = factorial(n);
-    
-    const code = `#include <stdio.h>\\n\\nint factorial(int n) {\\n  if(n <= 1) return 1;\\n  return n * factorial(n - 1);\\n}\\n\\nint main() {\\n  printf(\\\"%d\\\", factorial(${n}));\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[30].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[30].answer = result.toString();
-}
-
-// 32번 문제: 포인터로 값 변경 - 2024년 2회
-function generateCProblem32(categoryIndex) {
-    const initVal = 10 + Math.floor(Math.random() * 10);
-    const newVal = 15 + Math.floor(Math.random() * 15);
-    
-    const code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${initVal};\\n  int *p = &a;\\n  \\n  *p = ${newVal};\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[31].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[31].answer = newVal.toString();
-}
-
-// 33번 문제: 2차원 배열 포인터 - 2024년 2회 (랜덤화)
-function generateCProblem33(categoryIndex) {
-    const base = 1 + Math.floor(Math.random() * 3);
-    const arr = [];
-    let num = base;
-    
-    for(let i = 0; i < 3; i++) {
-        arr[i] = [];
-        for(let j = 0; j < 3; j++) {
-            arr[i][j] = num++;
+    else if (selectedType === 'whileLoop') {
+        const limit = 5 + Math.floor(Math.random() * 6);
+        let sum = 0, i = 0;
+        while(i <= limit) {
+            sum += i;
+            i++;
         }
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int sum = 0, i = 0;\\n  while(i <= ${limit}) {\\n    sum += i;\\n    i++;\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
     }
     
-    const result = arr[2][1] + arr[2][2] + arr[1][0];
-    
-    const code = `#include <stdio.h>\\n \\nint main() {\\n    int arr[3][3] = {${arr[0].join(', ')}, ${arr[1].join(', ')}, ${arr[2].join(', ')}};\\n    int* parr[2] = {arr[1], arr[2]};\\n    printf(\\\"%d\\\", parr[1][1] + *(parr[1]+2) + **parr);\\n    \\n    return 0;\\n}`;
-    
-    categories[categoryIndex].problems[32].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[32].answer = result.toString();
-}
-
-// 34번 문제: 문자열 복사 함수 - 2024년 2회 (다양한 길이)
-function generateCProblem34(categoryIndex) {
-    const strings = ['first', 'hello', 'world', 'cloud', 'python', 'code', 'test'];
-    const str1 = strings[Math.floor(Math.random() * strings.length)];
-    
-    let result = 0;
-    for(let i = 0; i < str1.length; i++) {
-        result += i;
+    else if (selectedType === 'doWhile') {
+        const limit = 3 + Math.floor(Math.random() * 5);
+        let sum = 0, i = 1;
+        do {
+            sum += i;
+            i++;
+        } while(i <= limit);
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int sum = 0, i = 1;\\n  do {\\n    sum += i;\\n    i++;\\n  } while(i <= ${limit});\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
     }
     
-    const code = `#include <stdio.h>\\n#include <string.h>\\n \\nvoid sumFn(char* d, const char* s) {\\n \\n    while (*s) {\\n        *d = *s;\\n        d++;\\n        s++;\\n    }\\n    *d = '\\\\0'; \\n}\\n \\nint main() {\\n   const char* str1 = \\\"${str1}\\\";\\n    char str2[50] = \\\"teststring\\\";  \\n    int result=0;\\n    sumFn(str2, str1);\\n \\n    for (int i = 0; str2[i] != '\\\\0'; i++) {\\n        result += i;\\n    }\\n    printf(\\\"%d\\\", result);\\n    \\n    return 0;\\n}`;
-    
-    categories[categoryIndex].problems[33].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[33].answer = result.toString();
-}
-
-// 35번 문제: 연결 리스트 값 교환 - 2024년 3회 (랜덤화)
-function generateCProblem35(categoryIndex) {
-    const val1 = 1 + Math.floor(Math.random() * 3);
-    const val2 = val1 + 1;
-    const val3 = val2 + 1;
-    
-    // func 실행 후: n1과 n3 교환, n3과 n2는 교환 안 됨
-    const result = `${val3}${val1}${val2}`;
-    
-    const code = `#include <stdio.h>\\n \\nstruct Node {\\n int value;\\n struct Node* next;\\n};\\n \\nvoid func(struct Node* node){\\n  while(node != NULL && node->next != NULL){\\n     int t = node->value;\\n     node->value = node->next->value;\\n     node->next->value = t;\\n     node = node->next->next;\\n  }\\n}\\n \\nint main(){\\n  struct Node n1 = {${val1}, NULL};\\n  struct Node n2 = {${val2}, NULL};\\n  struct Node n3 = {${val3}, NULL};\\n  \\n  n1.next = &n3;\\n  n3.next = &n2;\\n \\n  func(&n1);  \\n \\n  struct Node* current = &n1;\\n \\n  while(current != NULL){\\n    printf(\\\"%d\\\", current->value);\\n    current = current->next;\\n }\\n \\n return 0;\\n \\n}`;
-    
-    categories[categoryIndex].problems[34].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[34].answer = result;
-}
-
-// 36번 문제: static 변수 - 2024년 3회
-function generateCProblem36(categoryIndex) {
-    const iterations = 3 + Math.floor(Math.random() * 3);
-    const increment = 2;
-    
-    let sum = 0;
-    for(let i = 0; i < iterations; i++) {
-        sum += (i + 1) * increment;
-    }
-    
-    const code = `#include <stdio.h>\\n \\nint func(){\\n static int x =0; \\n  x+=${increment}; \\n  return x;\\n}\\n \\nint main(){\\n  int x = 1; \\n  int sum=0; \\n  for(int i=0;i<${iterations};i++) {\\n    x++; \\n    sum+=func();\\n  } \\n  printf(\\\"%d\\\", sum);\\n \\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[35].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[35].answer = sum.toString();
-}
-
-// 37번 문제: 이중 포인터 배열 - 2024년 3회 (랜덤화)
-function generateCProblem37(categoryIndex) {
-    const arr = Array.from({length: 5}, () => Math.floor(Math.random() * 6) + 1);
-    const size = 5;
-    
-    let result = [];
-    for(let i = 0; i < size; i++) {
-        result[i] = (arr[i] + i) % size;
-    }
-    
-    const answer = result[2];
-    
-    const code = `#include <stdio.h>\\n \\nvoid func(int** arr, int size){\\n  for(int i=0; i<size; i++){\\n     *(*arr + i) = (*(*arr+i) + i) % size;\\n  }\\n}\\n \\nint main(){\\n  int arr[] = {${arr.join(', ')}};\\n  int* p = arr;\\n  int** pp = &p;\\n  int num = 6;\\n  \\n  func(pp, ${size});  \\n  num = arr[2];\\n  printf(\\\"%d\\\", num);  \\n \\n  return 0;\\n}`;
-    
-    categories[categoryIndex].problems[36].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[36].answer = answer.toString();
-}
-
-// 38번 문제: 연결 리스트 재연결 - 2025년 1회 (랜덤화)
-function generateCProblem38(categoryIndex) {
-    const maxVal = 4 + Math.floor(Math.random() * 3);
-    const targetVal = 2 + Math.floor(Math.random() * (maxVal - 2));
-    
-    // 리스트: maxVal, maxVal-1, ..., 1
-    // reconnect 후: targetVal이 맨 앞으로
-    let list = [];
-    for(let i = maxVal; i >= 1; i--) {
-        list.push(i);
-    }
-    
-    // targetVal을 찾아서 맨 앞으로
-    const idx = list.indexOf(targetVal);
-    if(idx > 0) {
-        list.splice(idx, 1);
-        list.unshift(targetVal);
-    }
-    
-    const result = list.join('');
-    
-    const code = `#include <stdio.h>   \\n#include <stdlib.h>  \\n \\ntypedef struct Data {\\n    int value;\\n    struct Data *next;\\n} Data;\\n \\nData* insert(Data* head, int value) {\\n    Data* new_node = (Data*)malloc(sizeof(Data));\\n    new_node->value = value;\\n    new_node->next = head;\\n    return new_node;\\n}\\n \\nData* reconnect(Data* head, int value) {\\n    if (head == NULL || head->value == value) return head;\\n    Data *prev = NULL, *curr = head;\\n    while (curr != NULL && curr->value != value) {\\n        prev = curr;\\n        curr = curr->next;\\n    }\\n \\n    if (curr != NULL && prev != NULL) {\\n        prev->next = curr->next;\\n        curr->next = head;\\n        head = curr;\\n    }\\n    return head;\\n}\\n \\nint main() {\\n \\n    Data *head = NULL, *curr;\\n    for (int i = 1; i <= ${maxVal}; i++)\\n        head = insert(head, i);\\n    head = reconnect(head, ${targetVal});\\n    for (curr = head; curr != NULL; curr = curr->next)\\n        printf(\\\"%d\\\", curr->value);\\n    return 0; \\n}`;
-    
-    categories[categoryIndex].problems[37].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[37].answer = result;
-}
-// 39번 문제: 구조체 비트 연산 - 2025년 1회
-function generateCProblem39(categoryIndex) {
-    const scores1 = [0xA0, 0xA5, 0xDB];
-    const scores2 = [0xA0, 0xED, 0x81];
-    
-    function dec(enc) {
-        return enc & 0xA5;
-    }
-    
-    const sum1 = dec(scores1[0]) + dec(scores1[1]) + dec(scores1[2]);
-    const sum2 = dec(scores2[0]) + dec(scores2[1]) + dec(scores2[2]);
-    const result = sum1 + sum2;
-    
-    const code = `#include <stdio.h>\\n \\ntypedef struct student {\\n    char* name;\\n    int score[3];\\n} Student;\\n \\nint dec(int enc) {\\n    return enc & 0xA5;\\n}\\n \\nint sum(Student* p) {\\n    return dec(p->score[0]) + dec(p->score[1]) + dec(p->score[2]);\\n}\\n \\nint main() {\\n    Student s[2] = { \\\"Kim\\\", {0xA0, 0xA5, 0xDB}, \\\"Lee\\\", {0xA0, 0xED, 0x81} };\\n    Student* p = s;\\n    int result = 0;\\n \\n    for (int i = 0; i < 2; i++) {\\n        result += sum(&s[i]);\\n    }\\n    printf(\\\"%d\\\", result);\\n    return 0;\\n}`;
-    
-    categories[categoryIndex].problems[38].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[38].answer = result.toString();
-}
-
-// 40번 문제: 배열 정렬 및 삽입 - 2025년 1회 (랜덤화)
-function generateCProblem40(categoryIndex) {
-    const chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-    const shuffled = chars.sort(() => Math.random() - 0.5).slice(0, 4);
-    const data = shuffled.sort();
-    const insertChar = String.fromCharCode(data[0].charCodeAt(0) + Math.floor(Math.random() * 3) + 1);
-    
-    const diff = data[3].charCodeAt(0) - data[1].charCodeAt(0);
-    
-    // 삽입 로직
-    const resultArr = [...data];
-    let insertIdx = 0;
-    for(let i = 0; i < 4; i++) {
-        if(resultArr[i] > insertChar) {
-            insertIdx = i;
-            break;
+    else if (selectedType === 'breakContinue') {
+        let sum = 0;
+        for(let i = 1; i <= 10; i++) {
+            if(i % 2 === 1) continue;
+            sum += i;
         }
-    }
-    resultArr.splice(insertIdx, 0, insertChar);
-    
-    const result = `${diff} ${resultArr.join('')}`;
-    
-    const code = `#include <stdio.h>\\nchar Data[5] = {'${data[0]}', '${data[1]}', '${data[2]}', '${data[3]}'};\\nchar c;\\n \\nint main(){\\n    int i, temp, temp2;\\n \\n    c = '${insertChar}';\\n    printf(\\\"%d\\\\n\\\", Data[3]-Data[1]);\\n \\n    for(i=0;i<5;++i){\\n        if(Data[i]>c)\\n            break;\\n    }\\n \\n    temp = Data[i];\\n    Data[i] = c;\\n    i++;\\n \\n    for(;i<5;++i){\\n        temp2 = Data[i];\\n        Data[i] = temp;\\n        temp = temp2;\\n    }\\n \\n    for(i=0;i<5;i++){\\n        printf(\\\"%c\\\", Data[i]);\\n    }\\n}`;
-    
-    categories[categoryIndex].problems[39].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[39].answer = result;
-}
-
-// 41번 문제: 2차원 배열 동적 할당 - 2025년 1회 (랜덤화)
-function generateCProblem41(categoryIndex) {
-    const rows = 3;
-    const cols = 3;
-    const data = Array.from({length: 9}, (_, i) => i + 1 + Math.floor(Math.random() * 3));
-    
-    const arr = Array(rows).fill(null).map(() => Array(cols).fill(0));
-    
-    for(let i = 0; i < rows * cols; i++) {
-        const row = Math.floor(((i + 1) / rows) % rows);
-        const col = (i + 1) % cols;
-        arr[row][col] = data[i];
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int sum = 0;\\n  for(int i = 1; i <= 10; i++) {\\n    if(i % 2 == 1)\\n      continue;\\n    sum += i;\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
     }
     
-    let sum = 0;
-    for(let i = 0; i < rows * cols; i++) {
-        const val = arr[Math.floor(i / rows)][i % cols];
-        sum += val * (i % 2 === 0 ? 1 : -1);
+    else if (selectedType === 'nestedLoop') {
+        const n = 3 + Math.floor(Math.random() * 2);
+        let sum = 0;
+        for(let i = 1; i <= n; i++) {
+            for(let j = 1; j <= n; j++) {
+                sum += i * j;
+            }
+        }
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int sum = 0;\\n  for(int i = 1; i <= ${n}; i++) {\\n    for(int j = 1; j <= ${n}; j++) {\\n      sum += i * j;\\n    }\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
     }
     
-    const code = `#include <stdio.h>\\n#include <stdlib.h>\\n \\nvoid set(int** arr, int* data, int rows, int cols) {\\n    for (int i = 0; i < rows * cols; ++i) {\\n        arr[((i + 1) / rows) % rows][(i + 1) % cols] = data[i];\\n    }\\n}\\n \\nint main() {\\n    int rows = ${rows}, cols = ${cols}, sum = 0;\\n    int data[] = {${data.join(', ')}}; \\n    int** arr;\\n    arr = (int**) malloc(sizeof(int*) * rows);\\n    for (int i = 0; i < cols; i++) {\\n        arr[i] = (int*) malloc(sizeof(int) * cols);\\n    }\\n \\n    set(arr, data, rows, cols);\\n \\n    for (int i = 0; i < rows * cols; i++) {\\n        sum += arr[i / rows][i % cols] * (i % 2 == 0 ? 1 : -1);\\n    }\\n \\n    for(int i=0; i<rows; i++) {\\n        free(arr[i]);\\n    }\\n    free(arr);\\n \\n    printf(\\\"%d\\\", sum);\\n}`;
+    // ========== 배열 & 포인터 ==========
+    else if (selectedType === 'array') {
+        const len = 4 + Math.floor(Math.random() * 3);
+        const arr = Array.from({length: len}, (_, i) => (i + 1) * 10);
+        const sum = arr.reduce((a, b) => a + b, 0);
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {${arr.join(', ')}};\\n  int sum = 0;\\n  for(int i = 0; i < ${len}; i++) {\\n    sum += arr[i];\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
+    }
     
-    categories[categoryIndex].problems[40].question = `다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[40].answer = sum.toString();
+    else if (selectedType === 'pointer') {
+        const a = 10 + Math.floor(Math.random() * 30);
+        const b = 20 + Math.floor(Math.random() * 30);
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a};\\n  int *p = &a;\\n  *p = ${b};\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}`;
+        answer = b.toString();
+    }
+    
+    else if (selectedType === 'arrayPointer') {
+        const arr = [10, 20, 30, 40];
+        const idx = Math.floor(Math.random() * 3) + 1;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {${arr.join(', ')}};\\n  int *p = arr;\\n  printf(\\\"%d\\\", *(p + ${idx}));\\n  return 0;\\n}`;
+        answer = arr[idx].toString();
+    }
+    
+    else if (selectedType === 'array2d') {
+        const sum = 1 + 5 + 9;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int arr[3][3] = {{1,2,3},{4,5,6},{7,8,9}};\\n  int sum = 0;\\n  for(int i = 0; i < 3; i++) {\\n    sum += arr[i][i];\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
+    }
+    
+    else if (selectedType === 'pointerArray') {
+        const a = 10, b = 20, c = 30;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a}, b = ${b}, c = ${c};\\n  int *arr[3] = {&a, &b, &c};\\n  printf(\\\"%d\\\", *arr[1] + *arr[2]);\\n  return 0;\\n}`;
+        answer = (b + c).toString();
+    }
+    
+    // ========== 구조체 ==========
+    else if (selectedType === 'struct') {
+        const age = 15 + Math.floor(Math.random() * 10);
+        const score = 70 + Math.floor(Math.random() * 30);
+        
+        code = `#include <stdio.h>\\n\\nstruct Student {\\n  int age;\\n  int score;\\n};\\n\\nint main() {\\n  struct Student s;\\n  s.age = ${age};\\n  s.score = ${score};\\n  printf(\\\"%d\\\", s.age + s.score);\\n  return 0;\\n}`;
+        answer = (age + score).toString();
+    }
+    
+    else if (selectedType === 'arrayPointerStruct') {
+        const scores = [80, 90, 100];
+        const sum = scores.reduce((a, b) => a + b, 0);
+        
+        code = `#include <stdio.h>\\n\\nstruct Student {\\n  int score[3];\\n};\\n\\nint main() {\\n  struct Student s;\\n  s.score[0] = ${scores[0]};\\n  s.score[1] = ${scores[1]};\\n  s.score[2] = ${scores[2]};\\n  int sum = 0;\\n  for(int i = 0; i < 3; i++)\\n    sum += s.score[i];\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}`;
+        answer = sum.toString();
+    }
+    
+    // ========== 함수 ==========
+    else if (selectedType === 'function') {
+        const a = 5 + Math.floor(Math.random() * 10);
+        const b = 5 + Math.floor(Math.random() * 10);
+        
+        code = `#include <stdio.h>\\n\\nint add(int x, int y) {\\n  return x + y;\\n}\\n\\nint main() {\\n  printf(\\\"%d\\\", add(${a}, ${b}));\\n  return 0;\\n}`;
+        answer = (a + b).toString();
+    }
+    
+    else if (selectedType === 'functionLoop') {
+        const n = 3 + Math.floor(Math.random() * 4);
+        let sum = 0;
+        for(let i = 1; i <= n; i++) sum += i;
+        
+        code = `#include <stdio.h>\\n\\nint sumN(int n) {\\n  int sum = 0;\\n  for(int i = 1; i <= n; i++)\\n    sum += i;\\n  return sum;\\n}\\n\\nint main() {\\n  printf(\\\"%d\\\", sumN(${n}));\\n  return 0;\\n}`;
+        answer = sum.toString();
+    }
+    
+    else if (selectedType === 'functionAddress') {
+        const a = 5, b = 10;
+        
+        code = `#include <stdio.h>\\n\\nvoid swap(int *x, int *y) {\\n  int temp = *x;\\n  *x = *y;\\n  *y = temp;\\n}\\n\\nint main() {\\n  int a = ${a}, b = ${b};\\n  swap(&a, &b);\\n  printf(\\\"%d %d\\\", a, b);\\n  return 0;\\n}`;
+        answer = `${b} ${a}`;
+    }
+    
+    else if (selectedType === 'functionScope') {
+        const global = 100;
+        const local = 50;
+        
+        code = `#include <stdio.h>\\n\\nint g = ${global};\\n\\nvoid func() {\\n  int g = ${local};\\n  printf(\\\"%d \\\", g);\\n}\\n\\nint main() {\\n  func();\\n  printf(\\\"%d\\\", g);\\n  return 0;\\n}`;
+        answer = `${local} ${global}`;
+    }
+    
+    else if (selectedType === 'functionReturnAddress') {
+        const arr = [10, 20, 30];
+        const idx = Math.floor(Math.random() * 3);
+        
+        code = `#include <stdio.h>\\n\\nint* getElement(int arr[], int idx) {\\n  return &arr[idx];\\n}\\n\\nint main() {\\n  int arr[] = {${arr.join(', ')}};\\n  int *p = getElement(arr, ${idx});\\n  printf(\\\"%d\\\", *p);\\n  return 0;\\n}`;
+        answer = arr[idx].toString();
+    }
+    
+    else if (selectedType === 'staticVar') {
+        let count = 0;
+        for(let i = 0; i < 3; i++) count++;
+        
+        code = `#include <stdio.h>\\n\\nvoid counter() {\\n  static int count = 0;\\n  count++;\\n  printf(\\\"%d \\\", count);\\n}\\n\\nint main() {\\n  counter();\\n  counter();\\n  counter();\\n  return 0;\\n}`;
+        answer = '1 2 3';
+    }
+    
+    else if (selectedType === 'recursion') {
+        const n = 3 + Math.floor(Math.random() * 3);
+        let fact = 1;
+        for(let i = 1; i <= n; i++) fact *= i;
+        
+        code = `#include <stdio.h>\\n\\nint factorial(int n) {\\n  if(n <= 1) return 1;\\n  return n * factorial(n - 1);\\n}\\n\\nint main() {\\n  printf(\\\"%d\\\", factorial(${n}));\\n  return 0;\\n}`;
+        answer = fact.toString();
+    }
+    
+    else if (selectedType === 'multiRecursion') {
+        const n = 5 + Math.floor(Math.random() * 3);
+        function fib(n) {
+            if(n <= 1) return n;
+            return fib(n-1) + fib(n-2);
+        }
+        
+        code = `#include <stdio.h>\\n\\nint fibonacci(int n) {\\n  if(n <= 1) return n;\\n  return fibonacci(n-1) + fibonacci(n-2);\\n}\\n\\nint main() {\\n  printf(\\\"%d\\\", fibonacci(${n}));\\n  return 0;\\n}`;
+        answer = fib(n).toString();
+    }
+    
+    // ========== 기타 ==========
+    else {
+        const a = 5, b = 10;
+        
+        code = `#include <stdio.h>\\n\\nint main() {\\n  int a = ${a}, b = ${b};\\n  printf(\\\"%d %d\\\", a++, ++b);\\n  return 0;\\n}`;
+        answer = `${a} ${b + 1}`;
+    }
+    
+    categories[categoryIndex].problems[currentProblemIndex].question = 
+        `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
+    
+    categories[categoryIndex].problems[currentProblemIndex].answer = answer;
 }
-
-// 42번 문제: 큐 구조체 - 2025년 2회 (랜덤화)
-function generateCProblem42(categoryIndex) {
-    const size = 3;
-    const val1 = 1 + Math.floor(Math.random() * 5);
-    const val2 = val1 + 1 + Math.floor(Math.random() * 5);
-    const val3 = val2 + 1 + Math.floor(Math.random() * 5);
-    
-    const operations = [val1, val2, val3];
-    
-    const queue = [];
-    queue.push(operations[0]);
-    queue.push(operations[1]);
-    queue.shift();
-    queue.push(operations[2]);
-    
-    const first = queue.shift();
-    const second = queue.shift();
-    
-    const result = `${first} 그리고 ${second}`;
-    
-    const code = `#include <stdio.h>\\n#define SIZE ${size}\\n \\ntypedef struct {\\n    int a[SIZE];\\n    int front;\\n    int rear;\\n} Queue;\\n \\nvoid enq(Queue* q, int val){\\n    q->a[q->rear] = val; \\n    q->rear = (q->rear + 1) % SIZE;\\n}\\n \\nint deq(Queue* q) {\\n    int val = q->a[q->front];\\n    q->front = (q->front + 1) % SIZE;\\n    return val;\\n}\\n \\nint main() {\\n    Queue q = {{0}, 0, 0};\\n \\n    enq(&q,${operations[0]}); enq(&q,${operations[1]}); deq(&q); enq(&q, ${operations[2]});\\n    \\n    int first = deq(&q);\\n    int second = deq(&q);\\n    printf(\\\"%d 그리고 %d\\\", first, second);\\n    \\n    return 0;\\n}`;
-    
-    categories[categoryIndex].problems[41].question = `다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[41].answer = result;
-}
-
-// 43번 문제: 구조체 배열 포인터 - 2025년 2회
-function generateCProblem43(categoryIndex) {
-    const vals = Array.from({length: 3}, (_, i) => ({
-        x: (i + 1) * 2 - 1 + Math.floor(Math.random() * 3),
-        y: (i + 1) * 2 + Math.floor(Math.random() * 3)
-    }));
-    
-    const code = `#include <stdio.h>\\n \\nstruct dat {\\n    int x;\\n    int y;\\n};\\n \\nint main() {\\n    struct dat a[] = {{${vals[0].x}, ${vals[0].y}}, {${vals[1].x}, ${vals[1].y}}, {${vals[2].x}, ${vals[2].y}}};\\n    struct dat* ptr = a;\\n    struct dat** pptr = &ptr;\\n \\n    (*pptr)[1] = (*pptr)[2];\\n    printf(\\\"%d 그리고 %d\\\", a[1].x, a[1].y);\\n \\n    return 0;\\n}`;
-    
-    const result = `${vals[2].x} 그리고 ${vals[2].y}`;
-    
-    categories[categoryIndex].problems[42].question = `다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[42].answer = result;
-}
-
-// 44번 문제: 연결 리스트 재배치 - 2025년 2회
-function generateCProblem44(categoryIndex) {
-    const val1 = 1 + Math.floor(Math.random() * 3);
-    const val2 = val1 + 1;
-    const val3 = val2 + 1;
-    
-    // 코드 로직: c.n = &a; a.n = &b; b.n = NULL; head = &c;
-    // 결과: c -> a -> b
-    const result = `${val3} ${val1} ${val2}`;
-    
-    const code = `#include <stdio.h>\\n#include <stdlib.h>\\n \\nstruct node {\\n    int p;\\n    struct node* n;\\n};\\n \\nint main() {\\n    struct node a = {${val1}, NULL};\\n    struct node b = {${val2}, NULL};\\n    struct node c = {${val3}, NULL};\\n \\n    a.n = &b; b.n = &c; c.n = NULL;\\n    c.n = &a; a.n = &b; b.n = NULL;\\n    struct node* head = &c;\\n    printf(\\\"%d %d %d\\\", head->p, head->n->p, head->n->n->p);\\n    return 0;\\n}`;
-    
-    categories[categoryIndex].problems[43].question = `다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[43].answer = result;
-}
-
-// 45번 문제: 문자열 역순 연결 리스트 - 2025년 2회
-function generateCProblem45(categoryIndex) {
-    const strings = ['BEST', 'CODE', 'WORK', 'TEST', 'PASS', 'GOOD', 'NICE', 'COOL'];
-    const str = strings[Math.floor(Math.random() * strings.length)];
-    const result = str.split('').reverse().join('');
-    
-    const code = `#include <stdio.h>\\n#include <stdlib.h>\\n \\nstruct node {\\n    char c;\\n    struct node* p;\\n};\\n \\nstruct node* func(char* s) {\\n    struct node* h = NULL, *n;\\n    \\n    while(*s) {\\n        n = malloc(sizeof(struct node));\\n        n->c = *s++;\\n        n->p = h;\\n        h = n;\\n    }\\n    \\n    return h;\\n}\\n \\nint main() {\\n    struct node* n = func(\\\"${str}\\\");\\n    \\n    while(n) {\\n        putchar(n->c);\\n        struct node* t = n;\\n        n = n->p;\\n        free(t);\\n    }\\n    \\n    return 0;\\n}`;
-    
-    categories[categoryIndex].problems[44].question = `다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n${code}`;
-    categories[categoryIndex].problems[44].answer = result;
-}
-// ====================== C언어 랜덤 문제 생성 ======================
+// ========================== C언어 세분화 알고리즘 끝 ==========================

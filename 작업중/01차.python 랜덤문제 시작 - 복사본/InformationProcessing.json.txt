@@ -1,0 +1,861 @@
+﻿{
+  "title": "정보처리기사 실기 - 문제 풀이",
+  "categories": [
+    {
+      "id": "subnet",
+      "name": "서브넷/네트워크 계산",
+      "icon": "🌐",
+      "problems": [
+        {
+          "id": 1,
+          "exam": "2024년 1회",
+          "question": "네트워크에서 라우터를 통한 할당 가능한 2번, 4번, 5번의 IP를 작성하시오.\n1) 192.168.35.3/24\n3) 129.200.10.16/22\n6) 192.168.36.24/24\n\n보기\n192.168.35.0,\n192.168.35.72,\n192.168.36.0,\n192.168.36.249,\n129.200.8.0,\n129.200.8.249",
+          "answer": "2) 192.168.35.72\n4) 129.200.8.249\n5) 192.168.36.249"
+        },
+        {
+          "id": 2,
+          "exam": "2022년 3회",
+          "question": "192.168.1.0/24인 네트워크를 FLSM 4개로 분할하였다. 두번째 네트워크 브로드캐스트 IP를 10진수로 변환한 값을 작성하시오.",
+          "answer": "192.168.1.127"
+        },
+        {
+          "id": 3,
+          "exam": "2022년 2회",
+          "question": "IP 주소가 139.127.19.132이고 서브넷마스크 255.255.255.192일 때 아래의 답을 작성하시오.\n(1) 괄호안에 들어갈 네트워크 주소 : 139.127.19.( )\n(2) 해당 네트워크 주소와 브로드캐스트 주소를 제외한 호스트 개수",
+          "answer": "(1) 128\n(2) 62"
+        },
+        {
+          "id": 4,
+          "exam": "연습문제",
+          "category": "서브넷마스크 계산",
+          "problemType": "subnetMaskForHosts",
+          "question": "IPv4의 C클래스 네트워크를 26개의 서브넷으로 나누고, 각 서브넷에는 4~5개의 호스트를 연결하려고 한다. 이러한 서브넷을 구성하기 위한 서브넷 마스크 값은?\n\n1. 255.255.255.192\n2. 255.255.255.221\n3. 255.255.255.240\n4. 255.255.255.248",
+          "answer": "255.255.255.248"
+        },
+        {
+          "id": 5,
+          "exam": "연습문제",
+          "category": "서브넷/호스트 수 계산",
+          "problemType": "subnetHostCount",
+          "question": "클래스 B주소를 가지고 서브넷 마스크 255.255.255.240으로 서브넷을 만들었을 때 나오는 서브넷의 수와 호스트의 수가 맞게 짝지어진 것은?\n\n1. 서브넷 2,048, 호스트 14\n2. 서브넷 14, 호스트 2,048\n3. 서브넷 4,094, 호스트 14\n4. 서브넷 14, 호스트 4,094",
+          "answer": "서브넷 4,094, 호스트 14"
+        },
+        {
+          "id": 6,
+          "exam": "연습문제",
+          "category": "최적 마스크 선택",
+          "problemType": "optimalSubnetMask",
+          "question": "B Class 네트워크에서 6개의 서브넷이 필요할 때, 가장 많은 호스트를 사용할 수 있는 서브넷 마스크 값은?\n\n1. 255.255.192.0\n2. 255.255.224.0\n3. 255.255.240.0\n4. 255.255.248.0",
+          "answer": "255.255.248.0"
+        },
+        {
+          "id": 7,
+          "exam": "연습문제",
+          "category": "FLSM 특정 IP",
+          "problemType": "flsmSpecificIP",
+          "question": "192.168.1.0/24 네트워크를 FLSM방식으로 4개의 Subnet으로 나누고 IP Subnet-zero를 적용했다. 이 때 Subnetting 된 네트워크 중 4번째 네트워크의 4번째 사용 가능한 IP는 무엇인가?\n\n1. 192.168.1.192\n2. 192.168.1.195\n3. 192.168.1.196\n4. 192.168.1.198",
+          "answer": "192.168.1.196"
+        },
+        {
+          "id": 8,
+          "exam": "연습문제",
+          "category": "브로드캐스트 주소",
+          "problemType": "flsmBroadcast",
+          "question": "200.1.1.0/24 네트워크를 FLSM방식을 이용하여 10개의 Subnet으로 나누고 IP Subnet-zero를 적용했다. 이 때 서브네팅된 네트워크 중 10번째 네트워크의 broadcast IP주소는?\n\n1. 200.1.1.159\n2. 200.1.5.175\n3. 202.1.11.191\n4. 203.1.255.256",
+          "answer": "200.1.1.159"
+        },
+        {
+          "id": 9,
+          "exam": "연습문제",
+          "category": "사용가능 마지막 IP",
+          "problemType": "usableLastIP",
+          "question": "네트워크주소가 '192.168.100.128'이며, 서브넷마스크가 '255.255.255.192'인 네트워크가 있다. 이 네트워크에서 사용 가능한 마지막 IP주소는 무엇인가?\n\n1. 192.168.100.129\n2. 192.168.100.190\n3. 192.168.100.191\n4. 192.168.100.255",
+          "answer": "192.168.100.190"
+        },
+        {
+          "id": 10,
+          "exam": "연습문제",
+          "category": "브로드캐스트 계산",
+          "problemType": "broadcastAddress",
+          "question": "다음 조건일 때 사용되는 브로드캐스트 주소로 알맞은 것은?\n\nIP주소: 192.168.3.157\n서브넷마스크 값: 255.255.255.192\n\n1. 192.168.3.255\n2. 192.168.3.63\n3. 192.168.3.127\n4. 192.168.3.191",
+          "answer": "192.168.3.191"
+        },
+        {
+          "id": 11,
+          "exam": "연습문제",
+          "category": "서브넷 비트 수",
+          "problemType": "subnetBitsCount",
+          "question": "네트워크 관리자인 A씨는 ISP로부터 100.100.100.0/24를 할당 받았다. 네트워크의 효율성을 위하여 최소 6개의 서브넷으로 분리하여 네트워크를 구성하되, 각 네트워크에는 최소 20대 이상의 호스트가 존재할 수 있도록 네트워크를 구성하고자 한다. 이 때 사용해야하는 서브넷 비트의 수는 무엇인가?\n\n1. 25\n2. 26\n3. 27\n4. 28",
+          "answer": "27"
+        },
+        {
+          "id": 12,
+          "exam": "연습문제",
+          "category": "유효 서브넷 ID",
+          "problemType": "validSubnetID",
+          "question": "10.0.0.0 네트워크 전체에서 마스크 값으로 255.240.0.0를 사용할 경우 유효한 서브넷 ID는?\n\n1. 10.16.0.0\n2. 10.0.0.32\n3. 10.1.16.3\n4. 10.29.240.0",
+          "answer": "10.16.0.0"
+        },
+        {
+          "id": 13,
+          "exam": "연습문제",
+          "category": "서브넷 분리 마스크",
+          "problemType": "differentSubnetMask",
+          "question": "IPv4주소체계 기반의 어떤 네트워크상에서 두 컴퓨터 A,B가 각각 192.168.0.1과 192.168.0.65의 주소를 사용할 때 이 두 컴퓨터가 서로 다른 서브넷(Subnet)상에 존재하기 위해 사용해야 하는 서브넷 마스크(subnet Mask)로 가장 옳은 것은?\n\n1. 0.0.0.0\n2. 255.255.255.0\n3. 255.255.255.192\n4. 255.255.255.128",
+          "answer": "255.255.255.192"
+        }
+      ]
+    },
+    {
+      "id": "java",
+      "name": "Java 코드 실행",
+      "icon": "☕",
+      "problems": [
+        {
+          "id": 1,
+          "exam": "2021년 3회",
+          "category": "조건문 & 비트연산",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class testco {...}",
+          "answer": "7"
+        },
+        {
+          "id": 2,
+          "exam": "2022년 1회",
+          "category": "스레드",
+          "question": "다음 Java 코드 중에서 밑줄에 들어갈 알맞는 코드를 작성하시오.\\n\\nclass Car implements Runnable {...}",
+          "answer": "Car"
+        },
+        {
+          "id": 3,
+          "exam": "2021년 2회",
+          "category": "상속",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class ovr1 {...}",
+          "answer": "11"
+        },
+        {
+          "id": 4,
+          "exam": "2021년 1회",
+          "category": "배열",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class QfranTest {...}",
+          "answer": "31455089"
+        },
+        {
+          "id": 5,
+          "exam": "2021년 1회",
+          "category": "반복문",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class good {...}",
+          "answer": "0+1+2+3+4+5=15"
+        },
+        {
+          "id": 6,
+          "exam": "2020년 4회",
+          "category": "재귀함수",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass Parent {...}",
+          "answer": "1"
+        },
+        {
+          "id": 7,
+          "exam": "2020년 3회",
+          "category": "추상클래스",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nabstract class Vehicle {...}",
+          "answer": "Vehicle name: Spark"
+        },
+        {
+          "id": 8,
+          "exam": "2020년 3회",
+          "category": "반복문",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Test {...}",
+          "answer": "30"
+        },
+        {
+          "id": 9,
+          "exam": "2020년 2회",
+          "category": "빈칸",
+          "question": "다음 Java 코드 중에서 밑줄에 들어갈 알맞은 표현을 작성하시오.\\n\\nclass Parent {...}",
+          "answer": "new"
+        },
+        {
+          "id": 10,
+          "exam": "2020년 2회",
+          "category": "생성자",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass A {...}",
+          "answer": "a=10"
+        },
+        {
+          "id": 11,
+          "exam": "2020년 1회",
+          "category": "배열",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Test {...}",
+          "answer": "0 1 2 3"
+        },
+        {
+          "id": 12,
+          "exam": "2024년 2회",
+          "category": "배열",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Main {...}",
+          "answer": "NNN"
+        },
+        {
+          "id": 13,
+          "exam": "2024년 2회",
+          "category": "배열",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass OENumber {...}",
+          "answer": "25, 20"
+        },
+        {
+          "id": 14,
+          "exam": "2024년 2회",
+          "category": "재귀함수",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Main {...}",
+          "answer": "dcba"
+        },
+        {
+          "id": 15,
+          "exam": "2024년 2회",
+          "category": "문자열",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Main {...}",
+          "answer": "S"
+        },
+        {
+          "id": 16,
+          "exam": "2024년 1회",
+          "category": "싱글톤",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass Connection {...}",
+          "answer": "4"
+        },
+        {
+          "id": 17,
+          "exam": "2024년 1회",
+          "category": "빈칸",
+          "question": "다음 Java 코드의 실행 순서를 중복 번호 없이 작성하시오.\\n\\nclass Parent {...}",
+          "answer": "6 3 1 7 2"
+        },
+        {
+          "id": 18,
+          "exam": "2024년 1회",
+          "category": "생성자",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass classOne {...}",
+          "answer": "9"
+        },
+        {
+          "id": 19,
+          "exam": "2023년 1회",
+          "category": "추상클래스",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nabstract class Vehicle {...}",
+          "answer": "Vehicle name: Spark"
+        },
+        {
+          "id": 20,
+          "exam": "2023년 1회",
+          "category": "생성자",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass Parent {...}",
+          "answer": "500"
+        },
+        {
+          "id": 21,
+          "exam": "2023년 2회",
+          "category": "빈칸",
+          "question": "다음 JAVA 코드 문제에서 빈 괄호 안을 채우시오.\\n\\n가지고 있는 돈이 총 4620원일 경우...",
+          "answer": "m / 1000, (m % 1000) / 500, (m % 500) / 100, (m % 100) / 10"
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "name": "C언어 코드 실행",
+      "icon": "🔤",
+      "problems": [
+        {
+          "id": 1,
+          "exam": "2024년 2회",
+          "category": "반복문",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int i;\\n  int a = 0;\\n  for(i = 1; i < 11; i++) {\\n    if(i % 2 == 0)\\n      a += i;\\n  }\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}",
+          "answer": "30"
+        },
+        {
+          "id": 2,
+          "exam": "2024년 2회",
+          "category": "배열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[5] = {1, 2, 3, 4, 5};\\n  int sum = 0;\\n  int i;\\n  \\n  for(i = 0; i < 5; i++) {\\n    sum += arr[i];\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
+          "answer": "15"
+        },
+        {
+          "id": 3,
+          "exam": "2024년 2회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 10;\\n  int *p = &a;\\n  \\n  *p = 20;\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}",
+          "answer": "20"
+        },
+        {
+          "id": 4,
+          "exam": "2024년 2회",
+          "category": "재귀함수",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint factorial(int n) {\\n  if(n <= 1) return 1;\\n  return n * factorial(n - 1);\\n}\\n\\nint main() {\\n  printf(\\\"%d\\\", factorial(5));\\n  return 0;\\n}",
+          "answer": "120"
+        },
+        {
+          "id": 5,
+          "exam": "2022년 1회",
+          "category": "재귀함수",
+          "question": "다음 C언어 코드에서 입력값이 5가 들어왔을 때 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint func(int a) {\\n  if(a <= 1)\\n    return 1;\\n  return a * func(a - 1);\\n}\\n\\nint main() {\\n  int a;\\n  scanf(\\\"%d\\\", &a);\\n  printf(\\\"%d\\\", func(a));\\n  return 0;\\n}",
+          "answer": "120"
+        },
+        {
+          "id": 6,
+          "exam": "2022년 1회",
+          "category": "빈칸",
+          "question": "다음 C언어 프로그램의 괄호 안에 들어갈 알맞은 연산자를 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 10;\\n  int b = 20;\\n  int c;\\n  \\n  c = (a ( ① ) b) ? a : b;\\n  printf(\\\"%d\\\", c / 2);\\n  \\n  return 0;\\n}",
+          "answer": ">"
+        },
+        {
+          "id": 7,
+          "exam": "2022년 1회",
+          "category": "비트연산",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 12;\\n  int b = 7;\\n  \\n  printf(\\\"%d\\\", a & b);\\n  return 0;\\n}",
+          "answer": "4"
+        },
+        {
+          "id": 8,
+          "exam": "2024년 1회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <string.h>\\n\\nint main() {\\n  char str[] = \\\"Hello\\\";\\n  printf(\\\"%d\\\", strlen(str));\\n  return 0;\\n}",
+          "answer": "5"
+        },
+        {
+          "id": 9,
+          "exam": "2024년 1회",
+          "category": "배열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[3][3] = {{1,2,3},{4,5,6},{7,8,9}};\\n  int sum = 0;\\n  int i, j;\\n  \\n  for(i = 0; i < 3; i++) {\\n    for(j = 0; j < 3; j++) {\\n      if(i == j)\\n        sum += arr[i][j];\\n    }\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
+          "answer": "15"
+        },
+        {
+          "id": 10,
+          "exam": "2024년 1회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a[] = {10, 20, 30};\\n  int *p = a;\\n  \\n  printf(\\\"%d\\\", *(p + 2));\\n  return 0;\\n}",
+          "answer": "30"
+        },
+        {
+          "id": 11,
+          "exam": "2023년 1회",
+          "category": "반복문",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int i, sum = 0;\\n  \\n  for(i = 1; i <= 10; i++) {\\n    if(i % 2 == 1)\\n      continue;\\n    sum += i;\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
+          "answer": "30"
+        },
+        {
+          "id": 12,
+          "exam": "2023년 1회",
+          "category": "조건문",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 5;\\n  int b = 3;\\n  int c;\\n  \\n  c = (a > b) ? a * 2 : b * 2;\\n  printf(\\\"%d\\\", c);\\n  return 0;\\n}",
+          "answer": "10"
+        },
+        {
+          "id": 13,
+          "exam": "2023년 1회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char str[] = \\\"Programming\\\";\\n  printf(\\\"%c\\\", str[5]);\\n  return 0;\\n}",
+          "answer": "a"
+        },
+        {
+          "id": 14,
+          "exam": "2021년 3회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid swap(int *a, int *b) {\\n  int temp = *a;\\n  *a = *b;\\n  *b = temp;\\n}\\n\\nint main() {\\n  int x = 10, y = 20;\\n  swap(&x, &y);\\n  printf(\\\"%d %d\\\", x, y);\\n  return 0;\\n}",
+          "answer": "20 10"
+        },
+        {
+          "id": 15,
+          "exam": "2021년 3회",
+          "category": "배열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {5, 3, 8, 1, 9};\\n  int max = arr[0];\\n  int i;\\n  \\n  for(i = 1; i < 5; i++) {\\n    if(arr[i] > max)\\n      max = arr[i];\\n  }\\n  \\n  printf(\\\"%d\\\", max);\\n  return 0;\\n}",
+          "answer": "9"
+        },
+        {
+          "id": 16,
+          "exam": "2021년 2회",
+          "category": "구조체",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nstruct Student {\\n  int age;\\n  int score;\\n};\\n\\nint main() {\\n  struct Student s;\\n  s.age = 20;\\n  s.score = 95;\\n  \\n  printf(\\\"%d\\\", s.age + s.score);\\n  return 0;\\n}",
+          "answer": "115"
+        },
+        {
+        "id": 17,
+        "exam": "2021년 2회",
+        "category": "포인터",
+        "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int ary[3];\\n  int s = 0;\\n  *(ary + 0) = 1;\\n  ary[1] = *(ary + 0) + 2;\\n  ary[2] = *ary + 3;\\n  for(int i = 0; i < 3; i++) {\\n    s = s + ary[i];\\n  }\\n  printf(\\\"%d\\\", s);\\n  return 0;\\n}",
+        "answer": "8"
+        },
+        {
+          "id": 18,
+          "exam": "2021년 3회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int *arr[3];\\n  int a = 12, b = 24, c = 36;\\n  arr[0] = &a;\\n  arr[1] = &b;\\n  arr[2] = &c;\\n  printf(\\\"%d\\\", *arr[1] + **arr + 1);\\n  return 0;\\n}",
+          "answer": "37"
+        },
+        {
+          "id": 19,
+          "exam": "2022년 1회",
+          "category": "재귀함수",
+          "question": "다음 C언어 코드에서 입력값이 5일 때 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint func(int a) {\\n  if(a <= 1)\\n    return 1;\\n  return a * func(a - 1);\\n}\\n\\nint main() {\\n  int a;\\n  scanf(\\\"%d\\\", &a);\\n  printf(\\\"%d\\\", func(a));\\n  return 0;\\n}",
+          "answer": "120"
+        },
+        {
+          "id": 20,
+          "exam": "2022년 1회",
+          "category": "빈칸",
+          "question": "다음 C언어 프로그램의 괄호 안에 들어갈 알맞은 연산자를 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int number = 1234;\\n  int div = 10;\\n  int result = 0;\\n  while(number ( ① ) 0) {\\n    result = result * div;\\n    result = result + number ( ② ) div;\\n    number = number ( ③ ) div;\\n  }\\n  printf(\\\"%d\\\", result);\\n  return 0;\\n}",
+          "answer": "1. > 2. % 3. /"
+        },
+        {
+          "id": 21,
+          "exam": "2020년 4회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char *p = \\\"KOREA\\\";\\n  printf(\\\"%s\\\", p);\\n  printf(\\\"%s\\\", p + 3);\\n  printf(\\\"%c\\\", *p);\\n  printf(\\\"%c\\\", *(p + 3));\\n  printf(\\\"%c\\\", *p + 2);\\n  return 0;\\n}",
+          "answer": "KOREAEAKEM"
+        },
+        {
+          "id": 22,
+          "exam": "2020년 3회",
+          "category": "반복문",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid main() {\\n  int c = 0;\\n  int i = 0;\\n  while(i < 10) {\\n    i++;\\n    c *= i;\\n  }\\n  printf(\\\"%d\\\", c);\\n}",
+          "answer": "0"
+        },
+        {
+          "id": 23,
+          "exam": "2020년 1회",
+          "category": "배열정렬",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid align(int a[]) {\\n  int temp;\\n  for(int i = 0; i < 4; i++) {\\n    for(int j = 0; j < 4 - i; j++) {\\n      if(a[j] > a[j+1]) {\\n        temp = a[j];\\n        a[j] = a[j+1];\\n        a[j+1] = temp;\\n      }\\n    }\\n  }\\n}\\n\\nint main() {\\n  int a[] = {85, 75, 50, 100, 95};\\n  align(a);\\n  for(int i = 0; i < 5; i++)\\n    printf(\\\"%d \\\", a[i]);\\n  return 0;\\n}",
+          "answer": "50 75 85 95 100"
+        },
+        {
+          "id": 24,
+          "exam": "2020년 1회",
+          "category": "switch",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int c = 1;\\n  switch(3) {\\n    case 1: c += 3;\\n    case 2: c++;\\n    case 3: c = 0;\\n    case 4: c += 3;\\n    case 5: c -= 10;\\n    default: c--;\\n  }\\n  printf(\\\"%d\\\", c);\\n  return 0;\\n}",
+          "answer": "-8"
+        },
+        {
+          "id": 25,
+          "exam": "2024년 1회",
+          "category": "비트연산",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int v1 = 0, v2 = 35, v3 = 29;\\n  if(v1 > v2 ? v2 : v1) {\\n    v2 = v2 << 2;\\n  } else {\\n    v3 = v3 << 2;\\n  }\\n  printf(\\\"%d\\\", v2 + v3);\\n  return 0;\\n}",
+          "answer": "151"
+        },
+        {
+          "id": 26,
+          "exam": "2023년 1회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char a[] = \\\"Art\\\";\\n  char* p = a;\\n  printf(\\\"%s\\\", a);\\n  printf(\\\"%c\\\", *p);\\n  printf(\\\"%c\\\", *a);\\n  printf(\\\"%s\\\", p);\\n  for(int i = 0; a[i] != '\\\\0'; i++)\\n    printf(\\\"%c\\\", a[i]);\\n  return 0;\\n}",
+          "answer": "ArtAAArtArt"
+        },
+        {
+          "id": 27,
+          "exam": "2023년 1회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char* a = \\\"qwer\\\";\\n  char* b = \\\"qwtety\\\";\\n  for(int i = 0; a[i] != '\\\\0'; i++) {\\n    for(int j = 0; b[j] != '\\\\0'; j++) {\\n      if(a[i] == b[j])\\n        printf(\\\"%c\\\", a[i]);\\n    }\\n  }\\n  return 0;\\n}",
+          "answer": "qwe"
+        },
+        {
+          "id": 28,
+          "exam": "2022년 2회",
+          "category": "배열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a[4] = {0, 2, 4, 8};\\n  int b[3] = {};\\n  int i = 1;\\n  int sum = 0;\\n  int *p1;\\n  for(i; i < 4; i++) {\\n    p1 = a + i;\\n    b[i-1] = *p1 - a[i-1];\\n    sum = sum + b[i-1] + a[i];\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
+          "answer": "22"
+        },
+        {
+          "id": 29,
+          "exam": "랜덤 생성",
+          "category": "유형선택",
+          "question": "문제 유형을 선택하고 '새 문제 만들기' 버튼을 클릭하세요.",
+          "answer": "?"
+        }
+      ]
+    },
+    {
+      "id": "python",
+      "name": "Python 코드 실행",
+      "icon": "🐍",
+      "problems": [
+        {
+          "id": 1,
+          "exam": "2022년 1회",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\n\ndef exam(num1, num2=2):\n    print('a=', num1, 'b=', num2)\n\nexam(20)",
+          "answer": "a= 20 b= 2"
+        },
+        {
+          "id": 2,
+          "exam": "2021년 2회",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\n\na = 100\nresult = 0\nfor i in range(1, 3):\n    result = a >> i\n    result = result + 1\nprint(result)",
+          "answer": "26"
+        },
+        {
+          "id": 3,
+          "exam": "2021년 1회",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\n\nclass good:\n    li = [\"seoul\", \"kyeonggi\", \"inchon\", \"daejeon\", \"daegu\", \"pusan\"]\n\ng = good()\nstr01 = ''\nfor i in g.li:\n    str01 = str01 + i[0]\n\nprint(str01)",
+          "answer": "skiddp"
+        },
+        {
+          "id": 4,
+          "exam": "2025년 2회",
+          "category": "리스트/딕셔너리/Set",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\\n\\nlst = [1, 2, 3]\\ndst = {i : i * 2 for i in lst}\\ns = set(dst.values())\\nlst[0] = 99\\ndst[2] = 7\\ns.add(99)\\nprint(len(s & set(dst.values())))",
+          "answer": "2"
+        },
+        {
+          "id": 5,
+          "exam": "2023년 3회",
+          "category": "문자열",
+          "question": "다음 Python 코드에서 빈칸에 들어갈 알맞은 답을 작성하시오.\\n\\nprint(\\\"파이썬 입출력에 대한 문제입니다.\\\")\\n\\nnum1, num2 = input()._______()\\nnum1 = int(num1)\\nnum2 = int(num2)\\nprint(num1, num2)\\n\\nnum3 = num1 + num2\\nprint(str(num1) + \\\" + \\\" + str(num2) + \\\" = \\\" + str(num3))\\n\\n# 입력값: 2 3\\n# 출력: 파이썬 입출력에 대한 문제입니다.\\n# 2 3\\n# 2 + 3 = 5",
+          "answer": "split"
+        },
+        {
+          "id": 6,
+          "exam": "2024년 1회",
+          "category": "리스트/문자열",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\\n\\na = [\\\"Seoul\\\", \\\"Kyeonggi\\\", \\\"Incheon\\\", \\\"Daejun\\\", \\\"Daegu\\\", \\\"Pusan\\\"]\\nstr = \\\"S\\\"\\n\\nfor i in a:\\n    str = str + i[1]\\n\\nprint(str)",
+          "answer": "Seynaeu"
+        },
+        {
+          "id": 7,
+          "exam": "2025년 2회",
+          "category": "코드 추적",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\\n\\nlst = [1,2,3]\ndst = {i : i* 2 for i in lst}\ns = set(dst.values())\nlst[0] = 99 \ndst[2]=7\ns.add(99)\nprint(len(s & set(dst.values())))",
+          "answer": "2"
+        },
+        {
+          "id": 8,
+          "exam": "2025년 1회",
+          "category": "코드 추적",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\\n\\nclass Node:\n    def __init__(self, value):\n        self.value = value\n        self.children = []\n \ndef tree(li):\n    nodes = [Node(i) for i in li]\n    for i in range(1, len(li)):\n        nodes[(i - 1) // 2].children.append(nodes[i])\n    return nodes[0]\n \ndef calc(node, level=0):\n    if node is None:\n        return 0\n    return (node.value if level % 2 == 1 else 0) + sum(calc(n, level + 1) for n in node.children)\n \nli = [3, 5, 8, 12, 15, 18, 21]\n \nroot = tree(li)\n \nprint(calc(root))",
+          "answer": "13"
+        },
+        {
+          "id": 9,
+          "exam": "2024년 3회",
+          "category": "코드 추적",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\\n\\ndef func(lst):\n  for i in range(len(lst) //2):\n    lst[i], lst[-i-1] = lst[-i-1], lst[i]\n \nlst = [1,2,3,4,5,6] \nfunc(lst)\nprint(sum(lst[::2]) - sum(lst[1::2]))",
+          "answer": "312"
+        },
+        {
+          "id": 10,
+          "exam": "2024년 3회",
+          "category": "코드 추적",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\\n\\ndef func(value):\n    if type(value) == type(100):\n        return 100\n    elif type(value) == type(\"\"):\n        return len(value) \n    else:\n        return 20\n \n \na = '100.0'\nb = 100.0\nc = (100, 200)\n \nprint(func(a) + func(b) + func(c))",
+          "answer": "45"
+        },
+        {
+          "id": 11,
+          "exam": "2024년 2회",
+          "category": "코드 추적",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\\n\\ndef fnCalculation(x,y):\n    result = 0;\n    for i in range(len(x)):\n     temp = x[i:i+len(y)] \n     if temp == y:\n       result += 1;\n    return result\n \na = \"abdcabcabca\"\np1 = \"ab\";\np2 = \"ca\";\n \nout = f\"ab{fnCalculation(a,p1)}ca{fnCalculation(a,p2)}\"\nprint(out)",
+          "answer": "제어  or  Control"
+        },
+        {
+          "id": 12,
+          "exam": "2023년 3회",
+          "category": "코드 추적",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\\n\\nprint(\"파이썬 입출력에 대한 문제입니다.\")\n \nnum1, num2 = input()._____()\nnum1 = int(num1)\nnum2 = int(num2)\nprint(num1,num2)\n \nnum3 = num1 + num2\nprint(num1 + \" + \"  + num2 + \" = \" + num3)",
+          "answer": "split"
+        },
+        {
+          "id": 13,
+          "exam": "20xx년 x회",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\n\nlst = [1, 2, 3, 4, 5]\nprint(sum(lst[::2]))",
+          "answer": "9"
+        },
+        {
+          "id": 14,
+          "exam": "랜덤 생성",
+          "category": "유형선택",
+          "question": "문제 유형을 선택하고 '새 문제 만들기' 버튼을 클릭하세요.",
+          "answer": "?"
+        }
+      ]
+    },
+    {
+      "id": "page",
+      "name": "페이지 교체 알고리즘",
+      "icon": "📄",
+      "problems": [
+        {
+          "id": 1,
+          "exam": "2024년 3회",
+          "question": "LRU 페이지 교체 알고리즘에 따른 페이지 부재 횟수를 작성하시오. (프레임 3개)\n\n페이지 참조 순서: 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1",
+          "answer": "12"
+        },
+        {
+          "id": 2,
+          "exam": "2024년 1회",
+          "question": "다음은 운영체제 페이지 순서를 참고하여 할당된 프레임의 수가 3개일 때 LRU와 LFU 알고리즘의 페이지 부재 횟수를 작성하시오.\n\n페이지 참조 순서: 1, 2, 3, 1, 2, 4, 1, 2, 5, 7\n\n(1) LRU: \n(2) LFU:",
+          "answer": "(1) LRU: 6\n(2) LFU: 6"
+        },
+        {
+          "id": 3,
+          "exam": "연습 문제",
+          "question": "FIFO 페이지 교체 알고리즘에 따른 페이지 부재 횟수를 작성하시오. (프레임 3개)\n\n페이지 참조 순서: 1 2 3 4 1 2 5 1 2 3 4 5",
+          "answer": "9"
+        },
+        {
+          "id": 4,
+          "exam": "기출 문제",
+          "question": "3개의 페이지 프레임을 갖는 시스템에서 페이지 참조 순서가 1,2,1,0,4,1,3 일 경우 FIFO 알고리즘에 의한 페이지 교체의 경우 프레임의 최종상태는?\n1. 1,2,0\n2. 2,4,3\n3. 1,4,2\n4. 4,1,3",
+          "answer": "4"
+        },
+        {
+          "id": 5,
+          "exam": "기출 문제",
+          "question": "3개의 페이지 프레임을 가진 기억장치에서 페이지 요청을 다음과 같은 페이지 번호 순으로 요청했을 때 교체 알고리즘으로 FIFO방법을 사용한다면 몇번의 페이지 부재가 발생하는가? (단, 현재 기억장치는 모두 비어 있다고 가정한다.)\n요청된 페이지 번호의 순서 : 2,3,2,1,5,2,4,5,3,2,5,2\n1. 7번\n2. 8번\n3. 9번\n4. 10번",
+          "answer": "1"
+        },
+        {
+          "id": 6,
+          "exam": "기출 문제",
+          "question": "3개의 페이지를 수용할 수 있는 주기억장치가 있으며, 초기에는 모두 비어 있다고 가정한다. 다음의 순서로 페이지 참조가 발생할 때, FIFO 페이지 교체 알고리즘을 사용할 경우 몇 번의 페이지 결함이 발생하는가?\n페이지 참조 순서 : 1,2,3,1,2,4,1,2,5\n1. 4\n2. 5\n3. 6\n4. 7",
+          "answer": "2"
+        },
+        {
+          "id": 7,
+          "exam": "기출 문제",
+          "question": "3개의 페이지를 수용할 수 있는 주기억장치가 있으며, 초기에는 모두 비어 있다고 가정한다. 다음의 순서로 페이지 참조가 발생할 때, LRU페이지 교체 알고리즘을 사용할 경우 몇 번의 페이지 결함이 발생하는가?\n페이지 참조 순서 : 1,2,3,1,2,4,1,2,5,4\n1. 6\n2. 7\n3. 8\n4. 9",
+          "answer": "1"
+        },
+        {
+          "id": 8,
+          "exam": "기출 문제",
+          "question": "3개의 페이지 프레임을 갖는 시스템에서 페이지 참조 순서가 1,2,1,0,4,1,3 일 경우 LRU 알고리즘에 의한 페이지 대치의 최종 결과는?\n1. 1,4,3\n2. 1,2,0\n3. 2,4,3\n4. 0,1,3",
+          "answer": "4"
+        },
+        {
+          "id": 9,
+          "exam": "기출 문제",
+          "question": "4개의 페이지를 수용할 수 있는 주기억장치가 있으며, 초기에는 모두 비어 있다고 가정한다. 다음의 순서로 페이지 참조가 발생할 때, LRU 페이지 교체 알고리즘을 사용할 경우 몇 번의 페이지 결함이 발생하는가?\n페이지 참조 순서 : 1,2,3,1,2,4,1,2,5\n1. 4회\n2. 5회\n3. 6회\n4. 7회",
+          "answer": "3"
+        },
+        {
+          "id": 10,
+          "exam": "기출 문제",
+          "question": "3개의 페이지 프레임으로 구성된 기억장치에서 다음과 같은 순서대로 페이지 요청이 일어날 때, 페이지 교체 알고리즘으로 LFU를 사용한다면 몇번의 페이지 부재가 발생하는가? (단, 초기 페이지 프레임은 비어있다고 가정한다.)\n요청된 페이지 번호의 순서 : 2,3,1,2,1,2,4,2,1,3,2\n1. 4회\n2. 5회\n3. 6회\n4. 7회",
+          "answer": "2"
+        },
+        {
+          "id": 11,
+          "exam": "기출 문제",
+          "question": "4개의 페이지 프레임으로 구성된 기억장치에서 다음과 같은 순서대로 페이지 요청이 일어날 때, 페이지 교체 알고리즘으로 LFU를 사용한다면 페이지 대치의 최종 결과는?(단, 초기 페이지 프레임은 비어있다고 가정한다.)\n요청된 페이지 번호의 순서 : 2,3,1,3,1,2,4,5\n1. 2,3,1,5\n2. 1,2,3,5\n3. 2,3,5,4\n4. 1,2,3,4",
+          "answer": "1"
+        },
+        {
+          "id": 12,
+          "exam": "랜덤 생성",
+          "category": "알고리즘 선택",
+          "question": "알고리즘을 선택하고 '새 문제 만들기' 버튼을 클릭하세요.",
+          "answer": "?"
+        }
+      ]
+    },
+    {
+      "id": "process_schedule",
+      "name": "프로세스 스케줄링",
+      "icon": "⚙️",
+      "problems": [
+        {
+          "id": 1,
+          "exam": "2024년 2회",
+          "category": "SRT",
+          "question": "SRT 스케줄링의 평균 대기시간을 계산하여 작성하시오.\n\n<table>\n<tr><th>프로세스</th><th>도착시간</th><th>실행시간</th></tr>\n<tr><td>P1</td><td>0</td><td>7</td></tr>\n<tr><td>P2</td><td>2</td><td>4</td></tr>\n<tr><td>P3</td><td>4</td><td>1</td></tr>\n<tr><td>P4</td><td>5</td><td>4</td></tr>\n</table>\n\n1. 4.25\n2. 6.5\n3. 8.75\n4. 10",
+          "answer": "6.5"
+        },
+        {
+          "id": 2,
+          "exam": "랜덤 생성",
+          "category": "SRT",
+          "question": "다음 표는 단일 CPU에 진입한 프로세스의 도착 시간과 처리하는 데 필요한 실행 시간을 나타낸 것이다. 프로세스 간 문맥 교환에 따른 오버헤드는 무시한다고 할 때, SRT스케줄링 알고리즘을 사용한 경우 네 프로세스의 평균 반환시간은?\n\n<table>\n<tr><th>프로세스</th><th>도착시간</th><th>실행시간</th></tr>\n<tr><td>P1</td><td>0</td><td>8</td></tr>\n<tr><td>P2</td><td>2</td><td>4</td></tr>\n<tr><td>P3</td><td>4</td><td>1</td></tr>\n<tr><td>P4</td><td>6</td><td>4</td></tr>\n</table>\n\n1. 4.25\n2. 7\n3. 8.75\n4. 10",
+          "answer": "7"
+        },
+        {
+          "id": 3,
+          "exam": "랜덤 생성",
+          "category": "FCFS",
+          "question": "다음은 CPU에 서비스를 받으려고 도착한 순서대로 프로세스와 그 서비스 시간을 나타낸다. FCFS CPU Scheduling에 의해서 프로세스를 처리한다고 했을 경우 프로세스의 평균 대기시간은 얼마인가?\n\n<table>\n<tr><th>프로세스</th><th>버스트 시간(초)</th></tr>\n<tr><td>P1</td><td>24</td></tr>\n<tr><td>P2</td><td>3</td></tr>\n<tr><td>P3</td><td>3</td></tr>\n</table>\n\n1. 15\n2. 16\n3. 17\n4. 18",
+          "answer": "17"
+        },
+        {
+          "id": 4,
+          "exam": "랜덤 생성",
+          "category": "FCFS",
+          "question": "다음과 같은 3개의 작업에 대하여 FCFS 알고리즘을 사용할 때, 임의의 작업 순서로 얻을 수 있는 최대 평균 반환 시간을 T, 최소 평균 반환 시간을 t라고 가정했을 경우 T-t의 값은?\n\n<table>\n<tr><th>프로세스</th><th>실행시간</th></tr>\n<tr><td>P1</td><td>9</td></tr>\n<tr><td>P2</td><td>3</td></tr>\n<tr><td>P3</td><td>12</td></tr>\n</table>\n\n1. 3\n2. 4\n3. 5\n4. 6",
+          "answer": "6"
+        },
+        {
+          "id": 5,
+          "exam": "랜덤 생성",
+          "category": "SJF",
+          "question": "다음과 같은 프로세스들이 차례로 준비상태 큐에 들어왔을 경우 SJF 스케줄링 기법을 이용하여 제출시간이 없는 경우의 평균 실행시간은?\n\n<table>\n<tr><th>프로세스</th><th>실행시간(초)</th></tr>\n<tr><td>P1</td><td>18</td></tr>\n<tr><td>P2</td><td>6</td></tr>\n<tr><td>P3</td><td>9</td></tr>\n</table>\n\n1. 10\n2. 11\n3. 18\n4. 24",
+          "answer": "11"
+        },
+        {
+          "id": 6,
+          "exam": "랜덤 생성",
+          "category": "SJF",
+          "question": "대기하고 있는 프로세스 P1, P2, P3, P4의 처리시간은 24[ms], 9[ms], 15[ms], 10[ms]일 때, 최단 작업 우선(SJF) 스케줄링으로 처리했을 때 평균 대기 시간은 얼마인가?\n\n1. 8.5[ms]\n2. 14.5[ms]\n3. 15.5[ms]\n4. 25.25[ms]",
+          "answer": "15.5"
+        },
+        {
+          "id": 7,
+          "exam": "랜덤 생성",
+          "category": "SJF",
+          "question": "SJF스케줄링에서 다음과 같은 작업들이 준비상태 큐에 있을 때 평균 반환시간과 평균 대기시간은?\n\n<table>\n<tr><th>프로세스</th><th>실행시간</th></tr>\n<tr><td>P-1</td><td>6</td></tr>\n<tr><td>P-2</td><td>3</td></tr>\n<tr><td>P-3</td><td>8</td></tr>\n<tr><td>P-4</td><td>7</td></tr>\n</table>\n\n1. 평균 반환시간 : 13, 평균 대기시간 : 7\n2. 평균 반환시간 : 13, 평균 대기시간 : 9\n3. 평균 반환시간 : 15, 평균 대기시간 : 7\n4. 평균 반환시간 : 15, 평균 대기시간 : 9",
+          "answer": "평균 반환시간 : 13, 평균 대기시간 : 7"
+        },
+        {
+          "id": 8,
+          "exam": "랜덤 생성",
+          "category": "SJF",
+          "question": "다음과 같은 Task List에서 SJF방식으로 Scheduling할 경우 Task 2의 종료 시간을 구하면?\n\n<table>\n<tr><th>Task</th><th>도착시간</th><th>실행시간</th></tr>\n<tr><td>Task1</td><td>0</td><td>6</td></tr>\n<tr><td>Task2</td><td>1</td><td>3</td></tr>\n<tr><td>Task3</td><td>2</td><td>4</td></tr>\n</table>\n\n1. 3\n2. 6\n3. 9\n4. 13",
+          "answer": "9"
+        },
+        {
+          "id": 9,
+          "exam": "랜덤 생성",
+          "category": "HRN",
+          "question": "HRN방식으로 스케줄링 할 경우, 입력된 작업이 다음과 같을 때 우선순위가 가장 높은 작업은?\n\n<table>\n<tr><th>작업</th><th>대기시간</th><th>서비스시간</th></tr>\n<tr><td>A</td><td>8</td><td>2</td></tr>\n<tr><td>B</td><td>10</td><td>6</td></tr>\n<tr><td>C</td><td>15</td><td>7</td></tr>\n<tr><td>D</td><td>20</td><td>8</td></tr>\n</table>\n\n1. A\n2. B\n3. C\n4. D",
+          "answer": "A"
+        },
+        {
+          "id": 10,
+          "exam": "랜덤 생성",
+          "category": "HRN",
+          "question": "HRN스케줄링 방식에서 입력된 작업이 다음과 같을 때 우선순위가 가장 높은것은?\n\n<table>\n<tr><th>작업</th><th>대기시간</th><th>서비스(실행)시간</th></tr>\n<tr><td>A</td><td>5</td><td>20</td></tr>\n<tr><td>B</td><td>40</td><td>20</td></tr>\n<tr><td>C</td><td>15</td><td>45</td></tr>\n<tr><td>D</td><td>20</td><td>2</td></tr>\n</table>\n\n1. A\n2. B\n3. C\n4. D",
+          "answer": "D"
+        },
+        {
+          "id": 11,
+          "exam": "랜덤 생성",
+          "category": "HRN",
+          "question": "HRN방식으로 스케줄링 할 경우, 입력된 작업이 다음과 같을 때 우선순위가 높은 순서부터 차례로 옳게 나열한 것은?\n\n<table>\n<tr><th>작업</th><th>대기시간</th><th>서비스(실행)시간</th></tr>\n<tr><td>A</td><td>40</td><td>20</td></tr>\n<tr><td>B</td><td>20</td><td>20</td></tr>\n<tr><td>C</td><td>70</td><td>10</td></tr>\n<tr><td>D</td><td>120</td><td>30</td></tr>\n</table>\n\n1. B > A > C > D\n2. B > A > D > C\n3. C > D > A > B\n4. D > C > A > B",
+          "answer": "C > D > A > B"
+        }
+      ]
+    },
+    {
+      "id": "disk_schedule",
+      "name": "디스크 스케줄링",
+      "icon": "💾",
+      "problems": [
+        {
+          "id": 1,
+          "exam": "랜덤 생성",
+          "category": "FCFS",
+          "question": "디스크 입/출력 요청 대기 큐에 다음과 같은 순서로 기억되어 있다. 현재 헤드가 53에 있을 때, 이들 모두를 처리하기 위한 총 이동거리는 얼마인가?\n\n대기큐: 98, 183, 37, 122, 14, 124, 65, 67",
+          "answer": "640"
+        },
+        {
+          "id": 2,
+          "exam": "랜덤 생성",
+          "category": "SSTF",
+          "question": "초기 헤드 위치가 50이며 트랙 0방향으로 이동중이다. 디스크 대기 큐에 다음과 같은 순서의 액세스 요청이 대기 중일 때 SSTF 스케줄링을 사용하여 모든 처리를 완료하고자 한다. 가장 먼저 처리되는 트랙을 쓰시오.\n(단, 가장 안쪽 트랙 0, 가장 바깥쪽 트랙 200)\n\n대기큐: 100, 180, 40, 120, 0, 130, 55, 80, 51, 200",
+          "answer": "51"
+        },
+        {
+          "id": 3,
+          "exam": "랜덤 생성",
+          "category": "SSTF",
+          "question": "디스크 큐에 다음과 같이 I/O 요청이 들어와 있다. 최소탐색시간 우선(SSTF)스케줄링 적용 시 발생하는 총 헤드 이동 거리를 구하시오.\n(단, 추가 I/O 요청은 없다고 가정한다. 디스크 헤드는 0부터 150까지 이동 가능하며, 현재 위치는 50이다.)\n\n대기큐: 80, 20, 100, 30, 70, 130, 40",
+          "answer": "140"
+        },
+        {
+          "id": 4,
+          "exam": "랜덤 생성",
+          "category": "SSTF",
+          "question": "사용자가 요청한 디스크 입,출력 내용이 다음과 같은 순서로 큐에 들어 있을 때 SSTF 스케줄링을 사용한 경우의 처리 순서를 쓰시오.\n(단, 현재 헤드 위치는 53이고, 제일 안쪽이 1번, 바깥쪽이 200번 트랙이다.)\n\n대기큐: 98, 183, 37, 122, 14, 124, 65, 67",
+          "answer": "53-65-67-37-14-98-122-124-183"
+        },
+        {
+          "id": 5,
+          "exam": "랜덤 생성",
+          "category": "SCAN",
+          "question": "디스크 스케줄링에서 SCAN기법을 사용할 경우, 다음과 같은 작업대기 큐의 작업들을 수행하기 위한 헤드의 총 트랙 이동 거리는?\n(단, 초기 헤드의 위치는 30이고, 현재 0번 트랙으로 이동 중이다.)\n\n대기큐: 7, 46, 15, 38, 3",
+          "answer": "76"
+        },
+        {
+          "id": 6,
+          "exam": "랜덤 생성",
+          "category": "SCAN",
+          "question": "디스크 스케줄링 기법 중 SCAN을 사용하여 다음 작업대기 큐의 작업을 모두 처리하고자 할 경우, 가장 최후에 처리되는 트랙은?\n(단, 현재 디스크 헤드는 50 트랙에서 40트랙으로 이동해 왔다고 가정한다.)\n\n대기큐: 3, 7, 15, 38, 55",
+          "answer": "55"
+        },
+        {
+          "id": 7,
+          "exam": "랜덤 생성",
+          "category": "SCAN",
+          "question": "디스크에서 헤드가 70트랙을 처리하고 60트랙으로 이동해 왔다. 디스크 스케줄링 기법으로 SCAN 방식을 사용할 때 다음 디스크 대기큐에서 가장 먼저 처리되는 트랙은?\n\n대기큐: 20, 50, 95, 100",
+          "answer": "50"
+        },
+        {
+          "id": 8,
+          "exam": "랜덤 생성",
+          "category": "C-SCAN",
+          "question": "트랙 번호가 0부터 199인 200개의 트랙을 가진 디스크가 있다. 디스크 스케줄링 기법 중 C-SCAN을 사용하여 다음과 같은 작업 대기 큐(디스크 큐)의 작업을 처리하고자 하는 경우 처리되는 트랙의 순서를 바르게 나열하시오.\n(단, 현재 디스크 헤드는 트랙 35에서 트랙 47로 이동해 왔다고 가정한다.)\n\n대기큐: 139, 22, 175, 86, 13, 158",
+          "answer": "47 > 86 > 139 > 158 > 175 > 199 > 0 > 13 > 22"
+        },
+        {
+          "id": 9,
+          "exam": "랜덤 생성",
+          "category": "C-SCAN",
+          "question": "현재 헤드의 위치가 50에 있고, 요청 대기열의 순서가 다음과 같을 경우 C-SCAN 스케줄링 알고리즘에 의한 헤드의 총 이동거리는 얼마인가?\n(단, 현재 헤드의 이동 방향은 안쪽이며, 안쪽의 위치는 0으로 가정한다.)\n\n대기큐: 0, 40, 70, 80, 100, 120, 130, 150, 180, 200",
+          "answer": "380"
+        },
+        {
+          "id": 10,
+          "exam": "랜덤 생성",
+          "category": "LOOK",
+          "question": "디스크 스케줄링 방법 중 LOOK 방식을 사용할 때 현재 헤드가 60에서 50으로 이동해 왔다고 가정할 경우 다음과 같은 디스크 큐에서 가장 먼저 처리되는 것은?\n\n대기큐: 70, 80, 100, 90",
+          "answer": "70"
+        },
+        {
+          "id": 11,
+          "exam": "랜덤 생성",
+          "category": "LOOK",
+          "question": "다음과 같은 트랙이 요청되어 큐에 도착하였다. 모든 트랙을 서비스하기 위하여 LOOK 스케줄링 기법이 사용되었을 때 모두 몇 트랙의 헤드 이동이 생기는가?\n(단, 현재 헤드의 위치는 50 트랙이고 헤드는 트랙 0 방향으로 움직이고 있다.)\n\n대기큐: 10, 40, 55, 35",
+          "answer": "85"
+        },
+        {
+          "id": 12,
+          "exam": "랜덤 생성",
+          "category": "C-LOOK",
+          "question": "디스크의 서비스 요청 대기 큐에 도착한 요청이 다음과 같을 때 C-LOOK 스케줄링 알고리즘에 의한 헤드의 총 이동거리는 얼마인가?\n(단, 현재 헤드의 위치는 50에 있고, 헤드의 이동방향은 0에서 199방향이다.)\n\n대기큐: 65, 112, 40, 16, 90, 170, 165, 35, 180",
+          "answer": "318"
+        }
+      ]
+    },
+    {
+      "id": "sql",
+      "name": "SQL 쿼리",
+      "icon": "🗄️",
+      "problems": []
+    },
+    {
+      "id": "base",
+      "name": "진법 변환",
+      "icon": "🔢",
+      "problems": [
+        {
+          "id": 1,
+          "exam": "랜덤 생성",
+          "question": "다음 10진수를 2진수로 변환하시오.\n\n45(10) = ( )(2)",
+          "answer": "101101"
+        },
+        {
+          "id": 2,
+          "exam": "랜덤 생성",
+          "question": "다음 2진수를 10진수로 변환하시오.\n\n11010(2) = ( )(10)",
+          "answer": "26"
+        },
+        {
+          "id": 3,
+          "exam": "랜덤 생성",
+          "question": "다음 10진수를 16진수로 변환하시오.\n\n255(10) = ( )(16)",
+          "answer": "FF"
+        }
+      ]
+    }
+  ]
+}

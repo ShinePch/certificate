@@ -113,150 +113,115 @@
       "problems": [
         {
           "id": 1,
-          "exam": "2021년 3회",
-          "category": "조건문 & 비트연산",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class testco {...}",
-          "answer": "7"
+          "exam": "2025년 2회",
+          "category": "배열과 메소드",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main {\n    public static void change(String[] data, String s){\n        data[0] = s;\n        s = \"Z\";\n    }\n    \n    public static void main(String[] args) {\n        String data[] = { \"A\" };\n        String s = \"B\";\n        \n        change(data, s);\n        System.out.print(data[0] + s);\n    }\n}",
+          "answer": "BB"
         },
         {
           "id": 2,
-          "exam": "2022년 1회",
-          "category": "스레드",
-          "question": "다음 Java 코드 중에서 밑줄에 들어갈 알맞는 코드를 작성하시오.\\n\\nclass Car implements Runnable {...}",
-          "answer": "Car"
+          "exam": "2025년 2회",
+          "category": "람다와 예외처리",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main {\n \n    static interface F {\n        int apply(int x) throws Exception;\n    }\n \n    public static int run(F f) {\n        try {\n            return f.apply(3);\n        } catch (Exception e) {\n            return 7;\n        }\n    }\n \n    public static void main(String[] args) {\n \n        F f = (x) -> {\n            if (x > 2) {\n                throw new Exception();\n            }\n            return x * 2;\n        };\n \n        System.out.print(run(f) + run((int n) -> n + 9));\n    }\n \n}",
+          "answer": "19"
         },
         {
           "id": 3,
-          "exam": "2021년 2회",
-          "category": "상속",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class ovr1 {...}",
-          "answer": "11"
+          "exam": "2025년 2회",
+          "category": "상속과 오버라이딩",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main{\n \n    public static class Parent {\n \n        public int x(int i) { return i + 2; }\n        public static String id() { return \"P\";}\n        \n    }\n \n    public static class Child extends Parent {\n        \n        public int x(int i) { return i + 3; }\n        public String x(String s) { return s + \"R\"; }\n        public static String id() { return \"C\"; }\n        \n    }\n \n    public static void main(String[] args) {\n \n        Parent ref = new Child();\n        System.out.println(ref.x(2) + ref.id());\n        \n    }\n    \n}",
+          "answer": "5P"
         },
         {
           "id": 4,
-          "exam": "2021년 1회",
-          "category": "배열",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class QfranTest {...}",
-          "answer": "31455089"
+          "exam": "2025년 2회",
+          "category": "객체 배열과 참조",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main{\n    public static class BO {\n        public int v;\n        public BO(int v) {\n            this.v = v;\n        }\n    }\n    public static void main(String[] args) {\n        BO a = new BO(1);\n        BO b = new BO(2);\n        BO c = new BO(3);\n        BO[] arr = {a, b, c};\n        BO t = arr[0];\n        arr[0] = arr[2];\n        arr[2] = t;\n        arr[1].v = arr[0].v;\n        System.out.println(a.v + \"a\" + b.v + \"b\" + c.v);\n    }\n}",
+          "answer": "1a3b3"
         },
         {
           "id": 5,
-          "exam": "2021년 1회",
-          "category": "반복문",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class good {...}",
-          "answer": "0+1+2+3+4+5=15"
+          "exam": "2025년 1회",
+          "category": "스위치와 반복문",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main {\n \n    public static void main(String[] args) {\n        int a = 0;\n        int b = 1;\n        \n        for (int i = 0; i <= 5; i++) {\n            switch(i % 2){\n                case 0:\n                    a += i;\n                    break;\n                case 1:\n                    b += i;\n                    break;\n            }\n        }\n        \n        System.out.printf(\"%d %d\", a, b);\n    }\n}",
+          "answer": "6 9"
         },
         {
           "id": 6,
-          "exam": "2020년 4회",
-          "category": "재귀함수",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass Parent {...}",
-          "answer": "1"
+          "exam": "2024년 3회",
+          "category": "클래스와 상속",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\nclass Parent {\n    int x, y;\n \n    Parent(int x, int y) {\n        this.x=x;\n        this.y=y;\n    }\n \n    int getT() {\n        return x*y;\n    }\n}\n \nclass Child extends Parent {\n    int x;\n \n    Child (int x) {\n        super(x+1, x);\n        this.x=x;\n    }\n \n    int getT(int n){\n        return super.getT()+n;\n    }\n}\n \nclass Main {\n    public static void main(String[] args) {\n        Parent parent = new Child(3);\n        System.out.println(parent.getT());\n    }\n}",
+          "answer": "12"
         },
         {
           "id": 7,
-          "exam": "2020년 3회",
-          "category": "추상클래스",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nabstract class Vehicle {...}",
-          "answer": "Vehicle name: Spark"
-        },
-        {
-          "id": 8,
-          "exam": "2020년 3회",
-          "category": "반복문",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Test {...}",
-          "answer": "30"
-        },
-        {
-          "id": 9,
-          "exam": "2020년 2회",
-          "category": "빈칸",
-          "question": "다음 Java 코드 중에서 밑줄에 들어갈 알맞은 표현을 작성하시오.\\n\\nclass Parent {...}",
-          "answer": "new"
-        },
-        {
-          "id": 10,
-          "exam": "2020년 2회",
-          "category": "생성자",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass A {...}",
-          "answer": "a=10"
-        },
-        {
-          "id": 11,
-          "exam": "2020년 1회",
-          "category": "배열",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Test {...}",
-          "answer": "0 1 2 3"
-        },
-        {
-          "id": 12,
           "exam": "2024년 2회",
-          "category": "배열",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Main {...}",
-          "answer": "NNN"
-        },
-        {
-          "id": 13,
-          "exam": "2024년 2회",
-          "category": "배열",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass OENumber {...}",
-          "answer": "25, 20"
-        },
-        {
-          "id": 14,
-          "exam": "2024년 2회",
-          "category": "재귀함수",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Main {...}",
-          "answer": "dcba"
-        },
-        {
-          "id": 15,
-          "exam": "2024년 2회",
-          "category": "문자열",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\npublic class Main {...}",
-          "answer": "S"
-        },
-        {
-          "id": 16,
-          "exam": "2024년 1회",
-          "category": "싱글톤",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass Connection {...}",
-          "answer": "4"
-        },
-        {
-          "id": 17,
-          "exam": "2024년 1회",
-          "category": "빈칸",
-          "question": "다음 Java 코드의 실행 순서를 중복 번호 없이 작성하시오.\\n\\nclass Parent {...}",
-          "answer": "6 3 1 7 2"
-        },
-        {
-          "id": 18,
-          "exam": "2024년 1회",
-          "category": "생성자",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass classOne {...}",
+          "category": "메소드 오버로딩",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\nclass classOne {\n    int a, b;\n \n    public classOne(int a, int b) {\n        this.a = a;\n        this.b = b;\n    }\n \n    public void print() {\n        System.out.println(a + b);\n    }\n \n}\nclass classTwo extends classOne {\n    int po = 3;\n    \n    public classTwo(int i) {\n        super(i, i+1);\n    }\n \n    public void print() {\n        System.out.println(po*po);\n    }\n}\n \npublic class main {  \n    public static void main(String[] args) {\n        classOne one = new classTwo(10);\n        one.print();\n    }\n}",
           "answer": "9"
         },
         {
-          "id": 19,
-          "exam": "2023년 1회",
-          "category": "추상클래스",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nabstract class Vehicle {...}",
+          "id": 8,
+          "exam": "2024년 1회",
+          "category": "배열 탐색",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main {\n    public static void main(String[] args){\n        int[]a = new int[8];\n        int i = 0;\n        int n = 10;\n        while (n>0) {\n            a[i++] = n%2;\n            n/=2;\n        }\n        for (int k=0; k<i; k++){\n            System.out.print(a[k]);\n        }\n    }\n}",
+          "answer": "01010000"
+        },
+        {
+          "id": 9,
+          "exam": "2023년 3회",
+          "category": "추상 클래스",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\nabstract class Vehicle{\n    String name;\n    abstract public String getName(String n);\n    \n    public String getName(){\n        return \"Vehicle name: \" + name;\n    }\n}\n \nclass Car extends Vehicle{\n    public Car(String n){\n        name = n;\n    }\n    public String getName(String n){\n        return \"Car name: \" + n;\n    }\n    public String getName(byte[] n){\n        return \"Car name: \" + n;\n    }\n}\n \npublic class Main {\n    public static void main(String[] args){\n        Vehicle obj = new Car(\"Spark\");\n        System.out.print(obj.getName());\n    }\n}",
           "answer": "Vehicle name: Spark"
         },
         {
-          "id": 20,
-          "exam": "2023년 1회",
-          "category": "생성자",
-          "question": "다음 Java 코드의 출력값을 작성하시오.\\n\\nclass Parent {...}",
-          "answer": "500"
+          "id": 10,
+          "exam": "2023년 2회",
+          "category": "문자열 처리",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main {\n    public static void main(String[] args) {\n        String str = \"Programming\";\n        System.out.println(str.substring(3,8));\n    }\n}",
+          "answer": "gramm"
         },
         {
-          "id": 21,
-          "exam": "2023년 2회",
-          "category": "빈칸",
-          "question": "다음 JAVA 코드 문제에서 빈 괄호 안을 채우시오.\\n\\n가지고 있는 돈이 총 4620원일 경우...",
-          "answer": "m / 1000, (m % 1000) / 500, (m % 500) / 100, (m % 100) / 10"
+          "id": 11,
+          "exam": "2023년 1회",
+          "category": "반복문과 조건문",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main {\n    public static void main(String[] args) {\n        int i = 3;\n        int k = 1;\n        switch(i) {\n            case 0:\n            case 1:\n            case 2:\n            case 3: k=0;\n            case 4: k+=3;\n            case 5: k-=10;\n            default: k--;\n        }\n        System.out.print(k);\n    }\n}",
+          "answer": "-8"
+        },
+        {
+          "id": 12,
+          "exam": "2022년 3회",
+          "category": "생성자와 메소드",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\nclass Connection {\n    private static Connection _inst = null;\n    private int count = 0;\n    \n    public static Connection get() {\n        if(_inst == null) {\n            _inst = new Connection();\n            return _inst;\n        }\n        return _inst;\n    }\n    \n    public void count() { count++; }\n    public int getCount() { return count; }\n}\n \npublic class Main {\n    public static void main(String[] args) {\n        Connection conn1 = Connection.get();\n        conn1.count();\n        Connection conn2 = Connection.get();\n        conn2.count();\n        Connection conn3 = Connection.get();\n        conn3.count();\n        System.out.print(conn1.getCount());\n    }\n}",
+          "answer": "3"
+        },
+        {
+          "id": 13,
+          "exam": "2022년 2회",
+          "category": "인터페이스",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\ninterface Studentinterface {\n    public abstract void printName(String name);\n    \n    default void printAge(int age) {\n        System.out.println(\"age: \" + age);\n    }\n}\n \nclass StudentClass implements Studentinterface {\n    public void printName(String name) {\n        System.out.println(\"name: \" + name);\n    }\n \n    public void printAge(int age) {\n        System.out.println(\"age: \" + (age-3));\n    }\n}\n \npublic class Main {\n    public static void main(String[] args) {\n        StudentClass st = new StudentClass();\n        st.printName(\"Kim\");\n        st.printAge(20);\n    }\n}",
+          "answer": "name: Kim\\nage: 17"
+        },
+        {
+          "id": 14,
+          "exam": "2022년 1회",
+          "category": "정적 변수",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\nclass Parent {\n    public int compute(int num) {\n        if(num <= 1) return num;\n        return compute(num - 1) + compute(num - 2);\n    }\n}\n \nclass Child extends Parent {\n    public int compute(int num) {\n        if(num <= 1) return num;\n        return compute(num - 1) + compute(num - 3);\n    }\n}\n \npublic class Main {\n    public static void main(String args[]) {\n        Parent obj = new Child();\n        System.out.print(obj.compute(4));\n    }\n}",
+          "answer": "1"
+        },
+        {
+          "id": 15,
+          "exam": "2021년 3회",
+          "category": "배열과 반복문",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\npublic class Main {\n    public static void main(String[] args) {\n        int[][] a = new int[3][3];\n        int n=1;\n        for(int i=0; i<3; i++) {\n            for(int j=0; j<3; j++) {\n                a[i][j]=n++;\n            }\n        }\n        System.out.print(a[1][1]+a[2][2]);\n    }\n}",
+          "answer": "14"
+        },
+        {
+          "id": 16,
+          "exam": "2021년 2회",
+          "category": "재귀함수",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\nclass A {\n    int a;\n    public A(int a) {\n        this.a = a;\n    }\n    void display() {\n        System.out.println(\"a=\" + a);\n    }\n}\n \nclass B extends A {\n    public B(int a) {\n        super(a);\n        super.a = a + 1;\n    }\n}\n \npublic class Main {\n    public static void main(String[] args) {\n        B obj = new B(10);\n        obj.display();\n    }\n}",
+          "answer": "a=11"
         }
       ]
     },
@@ -267,206 +232,318 @@
       "problems": [
         {
           "id": 1,
-          "exam": "2024년 2회",
-          "category": "반복문",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int i;\\n  int a = 0;\\n  for(i = 1; i < 11; i++) {\\n    if(i % 2 == 0)\\n      a += i;\\n  }\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}",
-          "answer": "30"
-        },
-        {
-          "id": 2,
-          "exam": "2024년 2회",
-          "category": "배열",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[5] = {1, 2, 3, 4, 5};\\n  int sum = 0;\\n  int i;\\n  \\n  for(i = 0; i < 5; i++) {\\n    sum += arr[i];\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
-          "answer": "15"
-        },
-        {
-          "id": 3,
-          "exam": "2024년 2회",
-          "category": "포인터",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 10;\\n  int *p = &a;\\n  \\n  *p = 20;\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}",
-          "answer": "20"
-        },
-        {
-          "id": 4,
-          "exam": "2024년 2회",
-          "category": "재귀함수",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint factorial(int n) {\\n  if(n <= 1) return 1;\\n  return n * factorial(n - 1);\\n}\\n\\nint main() {\\n  printf(\\\"%d\\\", factorial(5));\\n  return 0;\\n}",
-          "answer": "120"
-        },
-        {
-          "id": 5,
-          "exam": "2022년 1회",
-          "category": "재귀함수",
-          "question": "다음 C언어 코드에서 입력값이 5가 들어왔을 때 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint func(int a) {\\n  if(a <= 1)\\n    return 1;\\n  return a * func(a - 1);\\n}\\n\\nint main() {\\n  int a;\\n  scanf(\\\"%d\\\", &a);\\n  printf(\\\"%d\\\", func(a));\\n  return 0;\\n}",
-          "answer": "120"
-        },
-        {
-          "id": 6,
-          "exam": "2022년 1회",
-          "category": "빈칸",
-          "question": "다음 C언어 프로그램의 괄호 안에 들어갈 알맞은 연산자를 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 10;\\n  int b = 20;\\n  int c;\\n  \\n  c = (a ( ① ) b) ? a : b;\\n  printf(\\\"%d\\\", c / 2);\\n  \\n  return 0;\\n}",
-          "answer": ">"
-        },
-        {
-          "id": 7,
-          "exam": "2022년 1회",
-          "category": "비트연산",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 12;\\n  int b = 7;\\n  \\n  printf(\\\"%d\\\", a & b);\\n  return 0;\\n}",
-          "answer": "4"
-        },
-        {
-          "id": 8,
-          "exam": "2024년 1회",
-          "category": "문자열",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <string.h>\\n\\nint main() {\\n  char str[] = \\\"Hello\\\";\\n  printf(\\\"%d\\\", strlen(str));\\n  return 0;\\n}",
-          "answer": "5"
-        },
-        {
-          "id": 9,
-          "exam": "2024년 1회",
-          "category": "배열",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[3][3] = {{1,2,3},{4,5,6},{7,8,9}};\\n  int sum = 0;\\n  int i, j;\\n  \\n  for(i = 0; i < 3; i++) {\\n    for(j = 0; j < 3; j++) {\\n      if(i == j)\\n        sum += arr[i][j];\\n    }\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
-          "answer": "15"
-        },
-        {
-          "id": 10,
-          "exam": "2024년 1회",
-          "category": "포인터",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a[] = {10, 20, 30};\\n  int *p = a;\\n  \\n  printf(\\\"%d\\\", *(p + 2));\\n  return 0;\\n}",
-          "answer": "30"
-        },
-        {
-          "id": 11,
-          "exam": "2023년 1회",
-          "category": "반복문",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int i, sum = 0;\\n  \\n  for(i = 1; i <= 10; i++) {\\n    if(i % 2 == 1)\\n      continue;\\n    sum += i;\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
-          "answer": "30"
-        },
-        {
-          "id": 12,
-          "exam": "2023년 1회",
-          "category": "조건문",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 5;\\n  int b = 3;\\n  int c;\\n  \\n  c = (a > b) ? a * 2 : b * 2;\\n  printf(\\\"%d\\\", c);\\n  return 0;\\n}",
-          "answer": "10"
-        },
-        {
-          "id": 13,
-          "exam": "2023년 1회",
-          "category": "문자열",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char str[] = \\\"Programming\\\";\\n  printf(\\\"%c\\\", str[5]);\\n  return 0;\\n}",
-          "answer": "a"
-        },
-        {
-          "id": 14,
-          "exam": "2021년 3회",
-          "category": "포인터",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid swap(int *a, int *b) {\\n  int temp = *a;\\n  *a = *b;\\n  *b = temp;\\n}\\n\\nint main() {\\n  int x = 10, y = 20;\\n  swap(&x, &y);\\n  printf(\\\"%d %d\\\", x, y);\\n  return 0;\\n}",
-          "answer": "20 10"
-        },
-        {
-          "id": 15,
-          "exam": "2021년 3회",
-          "category": "배열",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {5, 3, 8, 1, 9};\\n  int max = arr[0];\\n  int i;\\n  \\n  for(i = 1; i < 5; i++) {\\n    if(arr[i] > max)\\n      max = arr[i];\\n  }\\n  \\n  printf(\\\"%d\\\", max);\\n  return 0;\\n}",
-          "answer": "9"
-        },
-        {
-          "id": 16,
-          "exam": "2021년 2회",
-          "category": "구조체",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nstruct Student {\\n  int age;\\n  int score;\\n};\\n\\nint main() {\\n  struct Student s;\\n  s.age = 20;\\n  s.score = 95;\\n  \\n  printf(\\\"%d\\\", s.age + s.score);\\n  return 0;\\n}",
-          "answer": "115"
-        },
-        {
-        "id": 17,
-        "exam": "2021년 2회",
-        "category": "포인터",
-        "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int ary[3];\\n  int s = 0;\\n  *(ary + 0) = 1;\\n  ary[1] = *(ary + 0) + 2;\\n  ary[2] = *ary + 3;\\n  for(int i = 0; i < 3; i++) {\\n    s = s + ary[i];\\n  }\\n  printf(\\\"%d\\\", s);\\n  return 0;\\n}",
-        "answer": "8"
-        },
-        {
-          "id": 18,
-          "exam": "2021년 3회",
-          "category": "포인터",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int *arr[3];\\n  int a = 12, b = 24, c = 36;\\n  arr[0] = &a;\\n  arr[1] = &b;\\n  arr[2] = &c;\\n  printf(\\\"%d\\\", *arr[1] + **arr + 1);\\n  return 0;\\n}",
-          "answer": "37"
-        },
-        {
-          "id": 19,
-          "exam": "2022년 1회",
-          "category": "재귀함수",
-          "question": "다음 C언어 코드에서 입력값이 5일 때 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint func(int a) {\\n  if(a <= 1)\\n    return 1;\\n  return a * func(a - 1);\\n}\\n\\nint main() {\\n  int a;\\n  scanf(\\\"%d\\\", &a);\\n  printf(\\\"%d\\\", func(a));\\n  return 0;\\n}",
-          "answer": "120"
-        },
-        {
-          "id": 20,
-          "exam": "2022년 1회",
-          "category": "빈칸",
-          "question": "다음 C언어 프로그램의 괄호 안에 들어갈 알맞은 연산자를 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int number = 1234;\\n  int div = 10;\\n  int result = 0;\\n  while(number ( ① ) 0) {\\n    result = result * div;\\n    result = result + number ( ② ) div;\\n    number = number ( ③ ) div;\\n  }\\n  printf(\\\"%d\\\", result);\\n  return 0;\\n}",
-          "answer": "1. > 2. % 3. /"
-        },
-        {
-          "id": 21,
-          "exam": "2020년 4회",
-          "category": "포인터",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char *p = \\\"KOREA\\\";\\n  printf(\\\"%s\\\", p);\\n  printf(\\\"%s\\\", p + 3);\\n  printf(\\\"%c\\\", *p);\\n  printf(\\\"%c\\\", *(p + 3));\\n  printf(\\\"%c\\\", *p + 2);\\n  return 0;\\n}",
-          "answer": "KOREAEAKEM"
-        },
-        {
-          "id": 22,
-          "exam": "2020년 3회",
-          "category": "반복문",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid main() {\\n  int c = 0;\\n  int i = 0;\\n  while(i < 10) {\\n    i++;\\n    c *= i;\\n  }\\n  printf(\\\"%d\\\", c);\\n}",
-          "answer": "0"
-        },
-        {
-          "id": 23,
-          "exam": "2020년 1회",
-          "category": "배열정렬",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid align(int a[]) {\\n  int temp;\\n  for(int i = 0; i < 4; i++) {\\n    for(int j = 0; j < 4 - i; j++) {\\n      if(a[j] > a[j+1]) {\\n        temp = a[j];\\n        a[j] = a[j+1];\\n        a[j+1] = temp;\\n      }\\n    }\\n  }\\n}\\n\\nint main() {\\n  int a[] = {85, 75, 50, 100, 95};\\n  align(a);\\n  for(int i = 0; i < 5; i++)\\n    printf(\\\"%d \\\", a[i]);\\n  return 0;\\n}",
-          "answer": "50 75 85 95 100"
-        },
-        {
-          "id": 24,
           "exam": "2020년 1회",
           "category": "switch",
           "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int c = 1;\\n  switch(3) {\\n    case 1: c += 3;\\n    case 2: c++;\\n    case 3: c = 0;\\n    case 4: c += 3;\\n    case 5: c -= 10;\\n    default: c--;\\n  }\\n  printf(\\\"%d\\\", c);\\n  return 0;\\n}",
           "answer": "-8"
         },
         {
-          "id": 25,
-          "exam": "2024년 1회",
+          "id": 2,
+          "exam": "2020년 1회",
+          "category": "배열정렬",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid align(int a[]) {\\n  int temp;\\n  for(int i = 0; i < 4; i++) {\\n    for(int j = 0; j < 4 - i; j++) {\\n      if(a[j] > a[j+1]) {\\n        temp = a[j];\\n        a[j] = a[j+1];\\n        a[j+1] = temp;\\n      }\\n    }\\n  }\\n}\\n\\nint main() {\\n  int a[] = {85, 75, 50, 100, 95};\\n  align(a);\\n  for(int i = 0; i < 5; i++)\\n    printf(\\\"%d \\\", a[i]);\\n  return 0;\\n}",
+          "answer": "50 75 85 95 100"
+        },
+        {
+          "id": 3,
+          "exam": "2020년 3회",
+          "category": "반복문",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid main() {\\n  int c = 0;\\n  int i = 0;\\n  while(i < 10) {\\n    i++;\\n    c *= i;\\n  }\\n  printf(\\\"%d\\\", c);\\n}",
+          "answer": "0"
+        },
+        {
+          "id": 4,
+          "exam": "2020년 4회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char *p = \\\"KOREA\\\";\\n  printf(\\\"%s\\\", p);\\n  printf(\\\"%s\\\", p + 3);\\n  printf(\\\"%c\\\", *p);\\n  printf(\\\"%c\\\", *(p + 3));\\n  printf(\\\"%c\\\", *p + 2);\\n  return 0;\\n}",
+          "answer": "KOREAEAKEM"
+        },
+        {
+          "id": 5,
+          "exam": "2021년 2회",
+          "category": "구조체",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nstruct Student {\\n  int age;\\n  int score;\\n};\\n\\nint main() {\\n  struct Student s;\\n  s.age = 20;\\n  s.score = 95;\\n  \\n  printf(\\\"%d\\\", s.age + s.score);\\n  return 0;\\n}",
+          "answer": "115"
+        },
+        {
+          "id": 6,
+          "exam": "2021년 2회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int ary[3];\\n  int s = 0;\\n  *(ary + 0) = 1;\\n  ary[1] = *(ary + 0) + 2;\\n  ary[2] = *ary + 3;\\n  for(int i = 0; i < 3; i++) {\\n    s = s + ary[i];\\n  }\\n  printf(\\\"%d\\\", s);\\n  return 0;\\n}",
+          "answer": "8"
+        },
+        {
+          "id": 7,
+          "exam": "2021년 3회",
+          "category": "배열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[] = {5, 3, 8, 1, 9};\\n  int max = arr[0];\\n  int i;\\n  \\n  for(i = 1; i < 5; i++) {\\n    if(arr[i] > max)\\n      max = arr[i];\\n  }\\n  \\n  printf(\\\"%d\\\", max);\\n  return 0;\\n}",
+          "answer": "9"
+        },
+        {
+          "id": 8,
+          "exam": "2021년 3회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nvoid swap(int *a, int *b) {\\n  int temp = *a;\\n  *a = *b;\\n  *b = temp;\\n}\\n\\nint main() {\\n  int x = 10, y = 20;\\n  swap(&x, &y);\\n  printf(\\\"%d %d\\\", x, y);\\n  return 0;\\n}",
+          "answer": "20 10"
+        },
+        {
+          "id": 9,
+          "exam": "2021년 3회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int *arr[3];\\n  int a = 12, b = 24, c = 36;\\n  arr[0] = &a;\\n  arr[1] = &b;\\n  arr[2] = &c;\\n  printf(\\\"%d\\\", *arr[1] + **arr + 1);\\n  return 0;\\n}",
+          "answer": "37"
+        },
+        {
+          "id": 10,
+          "exam": "2022년 1회",
           "category": "비트연산",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int v1 = 0, v2 = 35, v3 = 29;\\n  if(v1 > v2 ? v2 : v1) {\\n    v2 = v2 << 2;\\n  } else {\\n    v3 = v3 << 2;\\n  }\\n  printf(\\\"%d\\\", v2 + v3);\\n  return 0;\\n}",
-          "answer": "151"
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 12;\\n  int b = 7;\\n  \\n  printf(\\\"%d\\\", a & b);\\n  return 0;\\n}",
+          "answer": "4"
         },
         {
-          "id": 26,
-          "exam": "2023년 1회",
-          "category": "문자열",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char a[] = \\\"Art\\\";\\n  char* p = a;\\n  printf(\\\"%s\\\", a);\\n  printf(\\\"%c\\\", *p);\\n  printf(\\\"%c\\\", *a);\\n  printf(\\\"%s\\\", p);\\n  for(int i = 0; a[i] != '\\\\0'; i++)\\n    printf(\\\"%c\\\", a[i]);\\n  return 0;\\n}",
-          "answer": "ArtAAArtArt"
+          "id": 11,
+          "exam": "2022년 1회",
+          "category": "빈칸",
+          "question": "다음 C언어 프로그램의 괄호 안에 들어갈 알맞은 연산자를 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 10;\\n  int b = 20;\\n  int c;\\n  \\n  c = (a ( ① ) b) ? a : b;\\n  printf(\\\"%d\\\", c / 2);\\n  \\n  return 0;\\n}",
+          "answer": ">"
         },
         {
-          "id": 27,
-          "exam": "2023년 1회",
-          "category": "문자열",
-          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char* a = \\\"qwer\\\";\\n  char* b = \\\"qwtety\\\";\\n  for(int i = 0; a[i] != '\\\\0'; i++) {\\n    for(int j = 0; b[j] != '\\\\0'; j++) {\\n      if(a[i] == b[j])\\n        printf(\\\"%c\\\", a[i]);\\n    }\\n  }\\n  return 0;\\n}",
-          "answer": "qwe"
+          "id": 12,
+          "exam": "2022년 1회",
+          "category": "빈칸",
+          "question": "다음 C언어 프로그램의 괄호 안에 들어갈 알맞은 연산자를 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int number = 1234;\\n  int div = 10;\\n  int result = 0;\\n  while(number ( ① ) 0) {\\n    result = result * div;\\n    result = result + number ( ② ) div;\\n    number = number ( ③ ) div;\\n  }\\n  printf(\\\"%d\\\", result);\\n  return 0;\\n}",
+          "answer": "1. > 2. % 3. /"
         },
         {
-          "id": 28,
+          "id": 13,
+          "exam": "2022년 1회",
+          "category": "재귀함수",
+          "question": "다음 C언어 코드에서 입력값이 5가 들어왔을 때 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint func(int a) {\\n  if(a <= 1)\\n    return 1;\\n  return a * func(a - 1);\\n}\\n\\nint main() {\\n  int a;\\n  scanf(\\\"%d\\\", &a);\\n  printf(\\\"%d\\\", func(a));\\n  return 0;\\n}",
+          "answer": "120"
+        },
+        {
+          "id": 14,
+          "exam": "2022년 1회",
+          "category": "재귀함수",
+          "question": "다음 C언어 코드에서 입력값이 5일 때 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint func(int a) {\\n  if(a <= 1)\\n    return 1;\\n  return a * func(a - 1);\\n}\\n\\nint main() {\\n  int a;\\n  scanf(\\\"%d\\\", &a);\\n  printf(\\\"%d\\\", func(a));\\n  return 0;\\n}",
+          "answer": "120"
+        },
+        {
+          "id": 15,
           "exam": "2022년 2회",
           "category": "배열",
           "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a[4] = {0, 2, 4, 8};\\n  int b[3] = {};\\n  int i = 1;\\n  int sum = 0;\\n  int *p1;\\n  for(i; i < 4; i++) {\\n    p1 = a + i;\\n    b[i-1] = *p1 - a[i-1];\\n    sum = sum + b[i-1] + a[i];\\n  }\\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
           "answer": "22"
         },
         {
+          "id": 16,
+          "exam": "2023년 1회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char str[] = \\\"Programming\\\";\\n  printf(\\\"%c\\\", str[5]);\\n  return 0;\\n}",
+          "answer": "a"
+        },
+        {
+          "id": 17,
+          "exam": "2023년 1회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char a[] = \\\"Art\\\";\\n  char* p = a;\\n  printf(\\\"%s\\\", a);\\n  printf(\\\"%c\\\", *p);\\n  printf(\\\"%c\\\", *a);\\n  printf(\\\"%s\\\", p);\\n  for(int i = 0; a[i] != '\\\\0'; i++)\\n    printf(\\\"%c\\\", a[i]);\\n  return 0;\\n}",
+          "answer": "ArtAAArtArt"
+        },
+        {
+          "id": 18,
+          "exam": "2023년 1회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  char* a = \\\"qwer\\\";\\n  char* b = \\\"qwtety\\\";\\n  for(int i = 0; a[i] != '\\\\0'; i++) {\\n    for(int j = 0; b[j] != '\\\\0'; j++) {\\n      if(a[i] == b[j])\\n        printf(\\\"%c\\\", a[i]);\\n    }\\n  }\\n  return 0;\\n}",
+          "answer": "qwe"
+        },
+        {
+          "id": 19,
+          "exam": "2023년 1회",
+          "category": "반복문",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int i, sum = 0;\\n  \\n  for(i = 1; i <= 10; i++) {\\n    if(i % 2 == 1)\\n      continue;\\n    sum += i;\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
+          "answer": "30"
+        },
+        {
+          "id": 20,
+          "exam": "2023년 1회",
+          "category": "조건문",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 5;\\n  int b = 3;\\n  int c;\\n  \\n  c = (a > b) ? a * 2 : b * 2;\\n  printf(\\\"%d\\\", c);\\n  return 0;\\n}",
+          "answer": "10"
+        },
+        {
+          "id": 21,
+          "exam": "2023년 3회",
+          "category": "포인터",
+          "question": "10. 다음은 C언어의 포인터 문제이다. 알맞는 출력값을 작성하시오.\\n\\n#include\\n \\nint main() {\\n    char* p = \\\"KOREA\\\";\\n    printf(\\\"%s\\\\n\\\", p);\\n    printf(\\\"%s\\\\n\\\", p+1);\\n    printf(\\\"%c\\\\n\\\", *p);\\n    printf(\\\"%c\\\\n\\\", *(p+3));\\n    printf(\\\"%c\\\\n\\\", *p+4);\\n}",
+          "answer": "KOREA OREA K E O"
+        },
+        {
+          "id": 22,
+          "exam": "2024년 1회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <string.h>\\n\\nint main() {\\n  char str[] = \\\"Hello\\\";\\n  printf(\\\"%d\\\", strlen(str));\\n  return 0;\\n}",
+          "answer": "5"
+        },
+        {
+          "id": 23,
+          "exam": "2024년 1회",
+          "category": "배열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[3][3] = {{1,2,3},{4,5,6},{7,8,9}};\\n  int sum = 0;\\n  int i, j;\\n  \\n  for(i = 0; i < 3; i++) {\\n    for(j = 0; j < 3; j++) {\\n      if(i == j)\\n        sum += arr[i][j];\\n    }\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
+          "answer": "15"
+        },
+        {
+          "id": 24,
+          "exam": "2024년 1회",
+          "category": "비트연산",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int v1 = 0, v2 = 35, v3 = 29;\\n  if(v1 > v2 ? v2 : v1) {\\n    v2 = v2 << 2;\\n  } else {\\n    v3 = v3 << 2;\\n  }\\n  printf(\\\"%d\\\", v2 + v3);\\n  return 0;\\n}",
+          "answer": "151"
+        },
+        {
+          "id": 25,
+          "exam": "2024년 1회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a[] = {10, 20, 30};\\n  int *p = a;\\n  \\n  printf(\\\"%d\\\", *(p + 2));\\n  return 0;\\n}",
+          "answer": "30"
+        },
+        {
+          "id": 26,
+          "exam": "2024년 1회",
+          "category": "포인터",
+          "question": "4. 다음은 C언어에 대한 문제이다. 알맞는 출력 값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <string.h>\\n \\nvoid reverse(char* str){\\n    int len = strlen(str);\\n    char temp;\\n    char*p1 = str;\\n    char*p2 = str + len - 1;\\n    while(p1<p2){\\n        temp = *p1;\\n        *p1 = *p2;\\n        *p2 = temp;\\n        p1++;\\n        p2--;\\n    }\\n}\\n \\nint main(int argc, char* argv[]){\\n    char str[100] = \\\"ABCDEFGH\\\";\\n \\n    reverse(str);\\n \\n    int len = strlen(str);\\n \\n    for(int i=1; i<len; i+=2){\\n        printf(\\\"%c\\\",str[i]);\\n    }\\n \\n    printf(\\\"\\\\n\\\");\\n \\n    return 0;\\n \\n}",
+          "answer": "GECA"
+        },
+        {
+          "id": 27,
+          "exam": "2024년 2회",
+          "category": "구조체",
+          "question": "19. 다음은 C언어의 구조체에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력 값을 작성하시오.\\n\\n#include <stdio.h>\\n \\nstruct node {\\n    int n1;\\n    struct node *n2;\\n};\\n \\nint main() {\\n \\n    struct node a = {10, NULL};\\n    struct node b = {20, NULL};\\n    struct node c = {30, NULL};\\n \\n    struct node *head = &a;\\n    a.n2 = &b;\\n    b.n2 = &c;\\n \\n    printf(\\\"%d\\\\n\\\", head->n2->n1);\\n \\n    return 0;\\n}",
+          "answer": "20"
+        },
+        {
+          "id": 28,
+          "exam": "2024년 2회",
+          "category": "기타",
+          "question": "18. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력 값을 작성하시오.\\n\\n#include <stdio.h>\\n \\nvoid swap(int a, int b) {\\n    int t = a;\\n    a = b;\\n    b = t;\\n}\\n \\nint main() {\\n    \\n    int a = 11;\\n    int b = 19;\\n    swap(a, b);\\n    \\n    switch(a) {\\n        case 1:\\n            b += 1;\\n        case 11:\\n            b += 2;\\n        default:\\n            b += 3;\\n        break;\\n    }\\n    \\n    printf(\\\"%d\\\", a-b);\\n}",
+          "answer": "-13"
+        },
+        {
           "id": 29,
-          "exam": "랜덤 생성",
-          "category": "유형선택",
-          "question": "문제 유형을 선택하고 '새 문제 만들기' 버튼을 클릭하세요.",
-          "answer": "?"
+          "exam": "2024년 2회",
+          "category": "반복문",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int i;\\n  int a = 0;\\n  for(i = 1; i < 11; i++) {\\n    if(i % 2 == 0)\\n      a += i;\\n  }\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}",
+          "answer": "30"
+        },
+        {
+          "id": 30,
+          "exam": "2024년 2회",
+          "category": "배열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int arr[5] = {1, 2, 3, 4, 5};\\n  int sum = 0;\\n  int i;\\n  \\n  for(i = 0; i < 5; i++) {\\n    sum += arr[i];\\n  }\\n  \\n  printf(\\\"%d\\\", sum);\\n  return 0;\\n}",
+          "answer": "15"
+        },
+        {
+          "id": 31,
+          "exam": "2024년 2회",
+          "category": "재귀함수",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint factorial(int n) {\\n  if(n <= 1) return 1;\\n  return n * factorial(n - 1);\\n}\\n\\nint main() {\\n  printf(\\\"%d\\\", factorial(5));\\n  return 0;\\n}",
+          "answer": "120"
+        },
+        {
+          "id": 32,
+          "exam": "2024년 2회",
+          "category": "포인터",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n\\nint main() {\\n  int a = 10;\\n  int *p = &a;\\n  \\n  *p = 20;\\n  printf(\\\"%d\\\", a);\\n  return 0;\\n}",
+          "answer": "20"
+        },
+        {
+          "id": 33,
+          "exam": "2024년 2회",
+          "category": "포인터",
+          "question": "13. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n \\nint main() {\\n    int arr[3][3] = {1, 2, 3, 4, 5, 6, 7, 8, 9};\\n    int* parr[2] = {arr[1], arr[2]};\\n    printf(\\\"%d\\\", parr[1][1] + *(parr[1]+2) + **parr);\\n    \\n    return 0;\\n}",
+          "answer": "21"
+        },
+        {
+          "id": 34,
+          "exam": "2024년 2회",
+          "category": "포인터",
+          "question": "15. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <string.h>\\n \\nvoid sumFn(char* d, const char* s) {\\n \\n    while (*s) {\\n        *d = *s;\\n        d++;\\n        s++;\\n    }\\n    *d = '\\\\0'; \\n}\\n \\nint main() {\\n   const char* str1 = \\\"first\\\";\\n    char str2[50] = \\\"teststring\\\";  \\n    int result=0;\\n    sumFn(str2, str1);\\n \\n    for (int i = 0; str2[i] != '\\\\0'; i++) {\\n        result += i;\\n    }\\n    printf(\\\"%d\\\", result);\\n    \\n    return 0;\\n}",
+          "answer": "10"
+        },
+        {
+          "id": 35,
+          "exam": "2024년 3회",
+          "category": "구조체",
+          "question": "12. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n \\nstruct Node {\\n int value;\\n struct Node* next;\\n};\\n \\nvoid func(struct Node* node){\\n  while(node != NULL && node->next != NULL){\\n     int t = node->value;\\n     node->value = node->next->value;\\n     node->next->value = t;\\n     node = node->next->next;\\n  }\\n}\\n \\nint main(){\\n  struct Node n1 = {1, NULL};\\n  struct Node n2 = {2, NULL};\\n  struct Node n3 = {3, NULL};\\n  \\n  n1.next = &n3;\\n  n3.next = &n2;\\n \\n  func(&n1);  \\n \\n  struct Node* current = &n1;\\n \\n  while(current != NULL){\\n    printf(\\\"%d\\\", current->value);\\n    current = current->next;\\n }\\n \\n return 0;\\n \\n}",
+          "answer": "312"
+        },
+        {
+          "id": 36,
+          "exam": "2024년 3회",
+          "category": "반복문",
+          "question": "7. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n \\nint func(){\\n static int x =0; \\n  x+=2; \\n  return x;\\n}\\n \\nint main(){\\n  int x = 1; \\n  int sum=0; \\n  for(int i=0;i<4;i++) {\\n    x++; \\n    sum+=func();\\n  } \\n  printf(\\\"%d\\\", sum);\\n \\n  return 0;\\n}",
+          "answer": "20"
+        },
+        {
+          "id": 37,
+          "exam": "2024년 3회",
+          "category": "포인터",
+          "question": "16. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n \\nvoid func(int** arr, int size){\\n  for(int i=0; i<size; i++){\\n     *(*arr + i) = (*(*arr+i) + i) % size;\\n  }\\n}\\n \\nint main(){\\n  int arr[] = {3,1, 4, 1, 5};\\n  int* p = arr;\\n  int** pp = &p;\\n  int num = 6;\\n  \\n  func(pp, 5);  \\n  num = arr[2];\\n  printf(\\\"%d\\\", num);  \\n \\n  return 0;\\n}",
+          "answer": "1"
+        },
+        {
+          "id": 38,
+          "exam": "2025년 1회",
+          "category": "구조체",
+          "question": "18. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>   \\n#include <stdlib.h>  \\n \\ntypedef struct Data {\\n    int value;\\n    struct Data *next;\\n} Data;\\n \\nData* insert(Data* head, int value) {\\n    Data* new_node = (Data*)malloc(sizeof(Data));\\n    new_node->value = value;\\n    new_node->next = head;\\n    return new_node;\\n}\\n \\nData* reconnect(Data* head, int value) {\\n    if (head == NULL || head->value == value) return head;\\n    Data *prev = NULL, *curr = head;\\n    while (curr != NULL && curr->value != value) {\\n        prev = curr;\\n        curr = curr->next;\\n    }\\n \\n    if (curr != NULL && prev != NULL) {\\n        prev->next = curr->next;\\n        curr->next = head;\\n        head = curr;\\n    }\\n    return head;\\n}\\n \\nint main() {\\n \\n    Data *head = NULL, *curr;\\n    for (int i = 1; i <= 5; i++)\\n        head = insert(head, i);\\n    head = reconnect(head, 3);\\n    for (curr = head; curr != NULL; curr = curr->next)\\n        printf(\\\"%d\\\", curr->value);\\n    return 0; \\n}",
+          "answer": "35421"
+        },
+        {
+          "id": 39,
+          "exam": "2025년 1회",
+          "category": "구조체",
+          "question": "19.다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n \\ntypedef struct student {\\n    char* name;\\n    int score[3];\\n} Student;\\n \\nint dec(int enc) {\\n    return enc & 0xA5;\\n}\\n \\nint sum(Student* p) {\\n    return dec(p->score[0]) + dec(p->score[1]) + dec(p->score[2]);\\n}\\n \\nint main() {\\n    Student s[2] = { \\\"Kim\\\", {0xA0, 0xA5, 0xDB}, \\\"Lee\\\", {0xA0, 0xED, 0x81} };\\n    Student* p = s;\\n    int result = 0;\\n \\n    for (int i = 0; i < 2; i++) {\\n        result += sum(&s[i]);\\n    }\\n    printf(\\\"%d\\\", result);\\n    return 0;\\n}",
+          "answer": "908"
+        },
+        {
+          "id": 40,
+          "exam": "2025년 1회",
+          "category": "반복문",
+          "question": "10. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\nchar Data[5] = {'B', 'A', 'D', 'E'};\\nchar c;\\n \\nint main(){\\n    int i, temp, temp2;\\n \\n    c = 'C';\\n    printf(\\\"%d\\\\n\\\", Data[3]-Data[1]);\\n \\n    for(i=0;i<5;++i){\\n        if(Data[i]>c)\\n            break;\\n    }\\n \\n    temp = Data[i];\\n    Data[i] = c;\\n    i++;\\n \\n    for(;i<5;++i){\\n        temp2 = Data[i];\\n        Data[i] = temp;\\n        temp = temp2;\\n    }\\n \\n    for(i=0;i<5;i++){\\n        printf(\\\"%c\\\", Data[i]);\\n    }\\n}",
+          "answer": "4 BACDE"
+        },
+        {
+          "id": 41,
+          "exam": "2025년 1회",
+          "category": "포인터",
+          "question": "11. 다음은 C언어에 대한 문제이다. 아래 코드를 확인하여 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <stdlib.h>\\n \\nvoid set(int** arr, int* data, int rows, int cols) {\\n    for (int i = 0; i < rows * cols; ++i) {\\n        arr[((i + 1) / rows) % rows][(i + 1) % cols] = data[i];\\n    }\\n}\\n \\nint main() {\\n    int rows = 3, cols = 3, sum = 0;\\n    int data[] = {5, 2, 7, 4, 1, 8, 3, 6, 9}; \\n    int** arr;\\n    arr = (int**) malloc(sizeof(int*) * rows);\\n    for (int i = 0; i < cols; i++) {\\n        arr[i] = (int*) malloc(sizeof(int) * cols);\\n    }\\n \\n    set(arr, data, rows, cols);\\n \\n    for (int i = 0; i < rows * cols; i++) {\\n        sum += arr[i / rows][i % cols] * (i % 2 == 0 ? 1 : -1);\\n    }\\n \\n    for(int i=0; i<rows; i++) {\\n        free(arr[i]);\\n    }\\n    free(arr);\\n \\n    printf(\\\"%d\\\", sum);\\n}",
+          "answer": "13"
+        },
+        {
+          "id": 42,
+          "exam": "2025년 2회",
+          "category": "구조체",
+          "question": "12. 다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#define SIZE 3\\n \\ntypedef struct {\\n    int a[SIZE];\\n    int front;\\n    int rear;\\n} Queue;\\n \\nvoid enq(Queue* q, int val){\\n    q->a[q->rear] = val; \\n    q->rear = (q->rear + 1) % SIZE;\\n}\\n \\nint deq(Queue* q) {\\n    int val = q->a[q->front];\\n    q->front = (q->front + 1) % SIZE;\\n    return val;\\n}\\n \\nint main() {\\n    Queue q = {{0}, 0, 0};\\n \\n    enq(&q,1); enq(&q,2); deq(&q); enq(&q, 3);\\n    \\n    int first = deq(&q);\\n    int second = deq(&q);\\n    printf(\\\"%d 그리고 %d\\\", first, second);\\n    \\n    return 0;\\n}",
+          "answer": "2 그리고 3"
+        },
+        {
+          "id": 43,
+          "exam": "2025년 2회",
+          "category": "구조체",
+          "question": "14. 다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n \\nstruct dat {\\n    int x;\\n    int y;\\n};\\n \\nint main() {\\n    struct dat a[] = {{1, 2}, {3, 4}, {5, 6}};\\n    struct dat* ptr = a;\\n    struct dat** pptr = &ptr;\\n \\n    (*pptr)[1] = (*pptr)[2];\\n    printf(\\\"%d 그리고 %d\\\", a[1].x, a[1].y);\\n \\n    return 0;\\n}",
+          "answer": "5 그리고 6"
+        },
+        {
+          "id": 44,
+          "exam": "2025년 2회",
+          "category": "구조체",
+          "question": "16. 다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <stdlib.h>\\n \\nstruct node {\\n    int p;\\n    struct node* n;\\n};\\n \\nint main() {\\n    struct node a = {1, NULL};\\n    struct node b = {2, NULL};\\n    struct node c = {3, NULL};\\n \\n    a.n = &b; b.n = &c; c.n = NULL;\\n    c.n = &a; a.n = &b; b.n = NULL;\\n    struct node* head = &c;\\n    printf(\\\"%d %d %d\\\", head->p, head->n->p, head->n->n->p);\\n    return 0;\\n}",
+          "answer": "3 1 2"
+        },
+        {
+          "id": 45,
+          "exam": "2025년 2회",
+          "category": "구조체",
+          "question": "18. 다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <stdlib.h>\\n \\nstruct node {\\n    char c;\\n    struct node* p;\\n};\\n \\nstruct node* func(char* s) {\\n    struct node* h = NULL, *n;\\n    \\n    while(*s) {\\n        n = malloc(sizeof(struct node));\\n        n->c = *s++;\\n        n->p = h;\\n        h = n;\\n    }\\n    \\n    return h;\\n}\\n \\nint main() {\\n    struct node* n = func(\\\"BEST\\\");\\n    \\n    while(n) {\\n        putchar(n->c);\\n        struct node* t = n;\\n        n = n->p;\\n        free(t);\\n    }\\n    \\n    return 0;\\n}",
+          "answer": "TSEB"
         }
       ]
     },
