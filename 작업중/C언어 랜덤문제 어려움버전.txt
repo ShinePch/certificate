@@ -1,0 +1,196 @@
+1번. c = 1 switch(4) 이 두 수만 움직임
+    case 1: c += 3;
+    case 2: c++;
+    case 3: c = 0;
+    case 4: c += 3;
+    case 5: c -= 10;
+    default: c--;
+	여기도 같이 랜덤으로 바뀌어야함.
+	
+2번. int a[] = {81, 54, 70, 59, 82}; 이곳만 바뀜
+답이 항상 정해져있음	for문도 같이 변해야함
+
+3번. i < ""만 바뀜 변수도 바뀌어야함
+
+6번. 
+int main() {
+  int ary[3];
+  int s = 0;
+  *(ary + 0) = 3;
+  ary[1] = *(ary + 0) + 1;
+  ary[2] = *ary + 3;
+  for(int i = 0; i < 3; i++) {
+    s = s + ary[i];
+  }
+  숫자의 전체적으로 바뀌어야함
+  
+7번. int arr[] = {20, 12, 16, 1, 4};
+답이 항상정해져있음
+for문이 바뀌어야함  
+
+9번.   int a = 19, b = 29, c = 44; 여기만 바뀜
+변수랑 print 의 숫자들도 바뀌어야함
+
+15.
+  int b[3] = {};
+  int i = 1;
+  int sum = 0;
+  int *p1;
+  for(i; i < 4; i++) {
+    p1 = a + i;
+    b[i-1] = *p1 - a[i-1];
+    sum = sum + b[i-1] + a[i];
+  }
+  변수 어레이만 바뀜
+  
+17. 세글자 네글자라 답이 예상이됨  
+  char a[] = \"Code\";
+  char* p = a;
+  printf(\"%s\", a);
+  printf(\"%c\", *p);
+  printf(\"%c\", *a);
+  printf(\"%s\", p);
+  for(int i = 0; a[i] != '\\0'; i++)
+    printf(\"%c\", a[i]);
+아래 계산도 랜덤으로 바뀌어야함
+
+18. 변수만 바뀌어서 답이 예측이됨
+안에 포문들이 바뀌어야함
+
+19.
+  for(i = 1; i <= 8; i++) {
+    if(i % 2 == 1)
+      continue;
+    sum += i;
+	포문들이 같이 바뀌어야함
+	
+20. 변수들만 바뀜
+  c = (a > b) ? a * 2 : b * 2;
+  printf(\"%d\", c);
+  return 0;
+같이 랜덤으로 바뀌어야함  
+
+21. 5글자라 항상 답이 같을거임
+int main() {
+    char* p = \"HELLO\";
+    printf(\"%s\
+\", p);
+    printf(\"%s\
+\", p+1);
+    printf(\"%c\
+\", *p);
+    printf(\"%c\
+\", *(p+3));
+    printf(\"%c\
+\", *p+4);
+}
+여기가 랜덤으로 바뀌어야함
+
+23.   int arr[3][3] = {{3,4,5},{6,7,8},{9,10,11}}; 여기만 바뀜 답이 예상이됨
+
+  for(i = 0; i < 3; i++) {
+    for(j = 0; j < 3; j++) {
+      if(i == j)
+        sum += arr[i][j];
+    }
+  }
+  
+  for문이 바뀌어야함
+  
+24.
+int main() {
+  int v1 = 0, v2 = 37, v3 = 33;
+  if(v1 > v2 ? v2 : v1) {
+    v2 = v2 << 2;
+  } else {
+    v3 = v3 << 2;
+  }
+  printf(\"%d\", v2 + v3);
+  return 0;
+변수만 바뀜 답 예측가능
+다른것들이 바뀌어야함
+  
+  
+26.     char str[100] = \"KEYBOARD\";
+이곳만바뀜
+답이 예측이됨
+
+다른 부분들이 바뀌어야함
+
+27. 
+    struct node a = {10, NULL};
+    struct node b = {16, NULL};
+    struct node c = {29, NULL};
+	
+	이 곳만 바뀌여서 답이 예측이 됨
+	
+30.   int arr[5] = {1, 2, 3, 4, 5};
+여기만 바뀜
+변수나 for문이 바뀌어야함	
+
+31.   printf(\"%d\", factorial(6));만 바뀜
+factorial 들도 랜덤으로 바뀌어야함
+
+33.     int arr[3][3] = {2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+여기만 바뀌어서 답이 예측이 됨
+    int* parr[2] = {arr[1], arr[2]};
+    printf(\"%d\", parr[1][1] + *(parr[1]+2) + **parr);
+	
+	다른 부분들도 바뀌어야함
+
+34.   const char* str1 = \"world\";
+
+여기만 바뀌여서 답이 예측이됨
+
+다른 부분들도 같이 바뀌어야함
+
+35.
+  struct Node n1 = {2, NULL};
+  struct Node n2 = {3, NULL};
+  struct Node n3 = {4, NULL};
+  여기만 바뀌어서 답이 예측이 됨
+  
+  다른부분들도 바뀌어야함
+  
+36.   for(int i=0;i<4;i++) {
+여기만 바뀌여서 대충 답이 예측이됨
+변수나 다른 함수도 같이 바꿔여야 함.
+
+37.   int arr[] = {3, 4, 6, 4, 1};
+여기만 바뀌여서 답이 예측이 됨
+다른곳도 같이 바뀌어야함
+
+39. 바뀌는곳이 아예없음 새문제 만들기가 아예안됨
+
+40.
+char Data[5] = {'A', 'B', 'C', 'D'};
+char c;
+ 
+int main(){
+    int i, temp, temp2;
+ 
+    c = 'B';
+	
+	여기가 바뀌어서 답이 예측이됨
+	다른곳들도 바뀌어야함
+
+41.     int data[] = {3, 3, 5, 4, 5, 7, 8, 8, 9}; 
+여기만 바뀌여서 답이 예측이 됨
+다른곳들도 바뀌어야함
+
+43.     struct dat a[] = {{2, 3}, {5, 5}, {5, 8}};
+이곳만 바뀌어서 답이 예측이 됨
+다른곳들도 바뀌어야함
+
+44. 
+    struct node a = {3, NULL};
+    struct node b = {4, NULL};
+    struct node c = {5, NULL};
+	
+	여기만 바뀌어서 답이 예측이 됨
+	
+45.     struct node* n = func(\"WORK\");
+여기만 바뀌어서 답이 예측이됨
+다른곳들도 바뀌어야함	
+	
