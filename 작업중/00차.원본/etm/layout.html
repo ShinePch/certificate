@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
+      dir="ltr"
+      data-theme="theme-default">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="_csrf_header" th:content="${_csrf != null ? _csrf.headerName : ''}">
+	<meta name="_csrf" th:content="${_csrf != null ? _csrf.token : ''}">
+	<link rel="icon" type="image/png" href="/common/favicon.png" />
+	<title>ì¶©ì „ ì¸í”„ë¼ ê´€ë¦¬ ì‹œìŠ¤í…œ</title>        
+	
+	<!-- jQuery -->
+	<link href="/ext-lib/jquery/jquery-ui.min.css" rel="stylesheet">
+	<script src="/ext-lib/jquery/jquery.min.js"></script>
+	<script src="/ext-lib/jquery/jquery-ui.min.js"></script>
+	<script src="/ext-lib/jquery/jquery.treetable.min.js"></script>
+	<script src="/ext-lib/jquery/jquery.ui.monthpicker.js"></script>
+	
+	<!-- DataTables -->
+	<script src="/ext-lib/dataTables/dataTables.min.js"></script>
+	<link href="/ext-lib/dataTables/dataTables.min.css" rel="stylesheet">
+	
+	<!-- Master CSS (Vuexy Styles) -->
+	<link rel="stylesheet" href="/common/css/master.css" />
+	
+	<!-- JS -->
+	<script src="/common/js/comUtil.js"></script>
+	<script src="/common/js/aos.js"></script>
+	<script src="/common/js/common.js"></script>
+	
+</head>
+
+<body>
+	
+	<!-- loading -->
+	<div class="loading">
+		<div class="ring">Loading</div>
+	</div>
+	
+	<!-- Layout wrapper -->
+	<div class="layout-wrapper layout-content-navbar">
+		<div class="layout-container">
+			
+			<!-- Menu (ì™¼ìª½ ì‚¬ì´ë“œë°”) -->
+			<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+				<th:block th:replace="~{ctts/general/menu :: menuFragment}"></th:block>
+			</aside>
+			<!-- / Menu -->
+			
+			<!-- Layout page -->
+			<div class="layout-page">
+				
+				<!-- Navbar (ìƒë‹¨ ë„¤ë¹„ê²Œì´ì…˜) -->
+				<header class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+					<th:block th:replace="~{ctts/layout/header :: headerFragment}"></th:block>
+                </header>
+				<!-- / Navbar -->
+				
+				<!-- Content wrapper -->
+				<div class="content-wrapper">
+					
+					<!-- Content -->
+					<div class="container-xxl flex-grow-1 container-p-y">
+						<th:block layout:fragment="content"></th:block>
+					</div>
+					<!-- / Content -->
+					
+					<!-- Footer -->
+					<footer class="content-footer footer bg-footer-theme">
+						<div class="container-xxl">
+							<th:block th:replace="~{ctts/layout/footer :: footerFragment}"></th:block>
+						</div>
+					</footer><!-- / Footer --> <!-- <div class="content-backdrop fade"></div> -->
+				</div> <!-- Content wrapper -->
+			</div> <!-- / Layout page -->
+		</div> <!-- Overlay --> <!-- <div class="layout-overlay layout-menu-toggle"></div> -->
+	</div> <!-- / Layout wrapper -->
+</body>
+</html>
