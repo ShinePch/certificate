@@ -3450,4 +3450,150 @@ function generateCProblem45(categoryIndex) {
     categories[categoryIndex].problems[44].question = `다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n${code}`;
     categories[categoryIndex].problems[44].answer = result;
 }
+
+// ====================== 2025년 3회 기출 랜덤 문제 ======================
+
+// C언어 46번: struct 포인터 연산
+function generateCProblem46(categoryIndex) {
+    const genStr = () => {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        return chars[Math.floor(Math.random() * 26)] + chars[Math.floor(Math.random() * 26)];
+    };
+    const str0 = genStr();
+    const str1 = genStr();
+    const str2 = genStr();
+    const answer = str1[1]; // p->g + (p->i - 1) = str1의 두번째 문자
+
+    const code = `#include <stdio.h>\\n\\nstruct Test {\\n    int i;\\n    const char *g;\\n};\\n\\nint main() {\\n    struct Test test[] = {{1, "${str0}"}, {2, "${str1}"}, {3, "${str2}"}};\\n    struct Test *p = &test[1];\\n    printf("%s", p->g + (p->i - 1));\\n    return 0;\\n}`;
+
+    categories[categoryIndex].problems[45].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
+    categories[categoryIndex].problems[45].answer = answer;
+}
+
+// C언어 47번: 문자열 길이 + putchar
+function generateCProblem47(categoryIndex) {
+    const strings = [
+        'REPUBLICOFKOREA', 'INFORMATIONTECH', 'COMPUTERPROGRAMM',
+        'SOFTWAREDEVELOP', 'ALGORITHMSTUDY', 'DATABASESYSTEM'
+    ];
+    const str = strings[Math.floor(Math.random() * strings.length)];
+    const offset = 2 + Math.floor(Math.random() * 3); // 2, 3, 4 중 하나
+    const answer = str[str.length - offset];
+
+    const code = `#include <stdio.h>\\n\\nint main(void) {\\n    char str[] = "${str}";\\n    int a = 0;\\n\\n    while (str[a] != '\\\\0')\\n        ++a;\\n\\n    putchar(str[a - ${offset}]);\\n    return 0;\\n}`;
+
+    categories[categoryIndex].problems[46].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
+    categories[categoryIndex].problems[46].answer = answer;
+}
+
+// C언어 48번: 연결리스트 + XOR 연산
+function generateCProblem48(categoryIndex) {
+    const u1 = 3 + Math.floor(Math.random() * 8);
+    const u2 = 5 + Math.floor(Math.random() * 8);
+    const u3 = 9 + Math.floor(Math.random() * 8);
+    const xorVal = 20 + Math.floor(Math.random() * 30);
+    const addVal = 50 + Math.floor(Math.random() * 80);
+
+    // 시뮬레이션: t3->t2->t1 순서
+    let sum = 0;
+    sum = sum * 3 + u3;
+    sum = sum * 3 + u2;
+    sum = sum * 3 + u1;
+    const result = (sum ^ xorVal) + addVal;
+
+    const code = `#include <stdio.h>\\n\\nstruct Node {\\n    struct Node* next;\\n    unsigned int x;\\n};\\n\\nint main() {\\n    struct Node t1 = { 0, ${u1}u };\\n    struct Node t2 = { 0, ${u2}u };\\n    struct Node t3 = { 0, ${u3}u };\\n\\n    t3.next = &t2;\\n    t2.next = &t1;\\n\\n    struct Node* curr = &t3;\\n    int sum = 0;\\n\\n    while (curr) {\\n        sum = sum * 3 + curr->x;\\n        curr = curr->next;\\n    }\\n\\n    sum = (sum ^ ${xorVal}u) + ${addVal}u;\\n\\n    printf("%u\\\\n", sum);\\n}`;
+
+    categories[categoryIndex].problems[47].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
+    categories[categoryIndex].problems[47].answer = result.toString();
+}
+
+// C언어 49번: 비트 연산 (x>5이면 항상 0)
+function generateCProblem49(categoryIndex) {
+    const x = 6 + Math.floor(Math.random() * 5); // 항상 6 이상
+    const y = 3 + Math.floor(Math.random() * 6);
+
+    // 시뮬레이션
+    let z;
+    z = (y % 3 < 3) ? 2 : 1;  // y%3은 0,1,2 전부 3미만 → z=2
+    z = z & (z >> 1);           // 2 & 1 = 0
+    z = (x > 5 && z <= 3) ? z * x : Math.floor(z / x); // 0 * x = 0
+
+    const code = `#include <stdio.h>\\nint main() {\\n    int x=${x}, y=${y}, z;\\n    z = y%3<3 ? 2 : 1;\\n    z = z & z >> 1;\\n    z = x>5 && z<=3 ? z*x : z/x;\\n    printf("%d", z);\\n    return 0;\\n}`;
+
+    categories[categoryIndex].problems[48].question = `다음 C언어 코드의 출력값을 작성하시오.\\n\\n${code}`;
+    categories[categoryIndex].problems[48].answer = z.toString();
+}
+
+// Java 17번: interface implements 빈칸
+function generateJavaProblem17(categoryIndex) {
+    const interfaces = [
+        { iface: 'Machine', method: 'run', className: 'WashingMachine', msg: 'Washing machine running' },
+        { iface: 'Animal', method: 'sound', className: 'Dog', msg: 'Woof!' },
+        { iface: 'Vehicle', method: 'move', className: 'Car', msg: 'Car is moving' },
+        { iface: 'Printable', method: 'print', className: 'Document', msg: 'Printing document' }
+    ];
+    const selected = interfaces[Math.floor(Math.random() * interfaces.length)];
+
+    const code = `interface ${selected.iface} {\\n    void ${selected.method}();\\n}\\n\\nclass ${selected.className} (____빈칸____) ${selected.iface} {\\n    public void ${selected.method}() {\\n        System.out.println("${selected.msg}");\\n    }\\n}\\n\\npublic class Main {\\n    public static void main(String[] args) {\\n        ${selected.className} obj = new ${selected.className}();\\n        obj.${selected.method}();\\n    }\\n}`;
+
+    categories[categoryIndex].problems[16].question = `다음 Java 코드에서 빈칸에 들어갈 올바른 키워드를 작성하시오.\\n\\n${code}`;
+    categories[categoryIndex].problems[16].answer = 'implements';
+}
+
+// Java 18번: super 키워드 빈칸
+function generateJavaProblem18(categoryIndex) {
+    const sideLen = 5 + Math.floor(Math.random() * 10);
+    const area = sideLen * sideLen;
+
+    const code = `class Rectangle {\\n    int width, height;\\n\\n    Rectangle(int width, int height) {\\n        this.width = width;\\n        this.height = height;\\n    }\\n}\\n\\nclass Square extends Rectangle {\\n    Square(int a) {\\n        ____(a, a);\\n    }\\n\\n    int getSquareArea() {\\n        return width * height;\\n    }\\n}\\n\\npublic class Main {\\n    public static void main(String[] args) {\\n        Square sq = new Square(${sideLen});\\n        System.out.println(sq.getSquareArea());\\n    }\\n}`;
+
+    categories[categoryIndex].problems[17].question = `다음 Java 코드에서 밑줄에 알맞은 단어를 작성하시오.\\n\\n${code}`;
+    categories[categoryIndex].problems[17].answer = 'super';
+}
+
+// Java 19번: enum 코드 추적
+function generateJavaProblem19(categoryIndex) {
+    // enum 구조: values()[name().length()] → A의 이름 길이 = 1 → values()[1] = B
+    const enumSets = [
+        { name: 'Tri', vals: [['A','A'],['B','AB'],['C','ABC']], answer: 'AB' },
+        { name: 'Color', vals: [['R','RED'],['G','GREEN'],['B','BLUE']], answer: 'GREEN' },
+        { name: 'Dir', vals: [['N','NORTH'],['S','SOUTH'],['E','EAST']], answer: 'SOUTH' }
+    ];
+    const selected = enumSets[Math.floor(Math.random() * enumSets.length)];
+    const [n, v] = selected.vals;
+
+    const enumBody = selected.vals.map(([k, val]) => `    ${k}("${val}")`).join(', ');
+
+    const code = `enum ${selected.name} {\\n${enumBody};\\n\\n    private String code;\\n\\n    ${selected.name}(String code) {\\n        this.code = code;\\n    }\\n\\n    public String code() {\\n        return code;\\n    }\\n}\\n\\npublic class Main {\\n    public static void main(String[] args) {\\n        ${selected.name} t = ${selected.name}.values()[${selected.name}.${selected.vals[0][0]}.name().length()];\\n        System.out.print(t.code());\\n    }\\n}`;
+
+    categories[categoryIndex].problems[18].question = `다음 Java 코드의 출력값을 작성하시오.\\n\\n${code}`;
+    categories[categoryIndex].problems[18].answer = selected.answer;
+}
+
+// Python 15번: enumerate + sum + len
+function generatePythonProblem15(categoryIndex) {
+    const listCount = 3 + Math.floor(Math.random() * 2); // 3~4개 리스트
+    const data = [];
+
+    for (let i = 0; i < listCount; i++) {
+        const len = 2 + Math.floor(Math.random() * 4);
+        const row = Array.from({length: len}, () => Math.floor(Math.random() * 9) + 1);
+        data.push(row);
+    }
+
+    // 정답 계산
+    const result = {};
+    data.forEach((lis, index) => {
+        result[index] = `(${lis.reduce((a, b) => a + b, 0)}, ${lis.length})`;
+    });
+
+    const resultStr = '{' + Object.entries(result).map(([k, v]) => `${k}: ${v}`).join(', ') + '}';
+    const dataStr = data.map(row => `    [${row.join(', ')}]`).join(',\n');
+
+    const code = `data = [\n${dataStr}\n]\n\nresult = {}\n\nfor index, lis in enumerate(data):\n    list_sum = sum(lis)\n    list_len = len(lis)\n\n    result[index] = (list_sum, list_len)\n\nprint(result)`;
+
+    categories[categoryIndex].problems[14].question = `다음 Python 코드의 출력값을 작성하시오.\n\n${code}`;
+    categories[categoryIndex].problems[14].answer = resultStr;
+}
+// ====================== 2025년 3회 기출 랜덤 문제 끝 ======================
 // ====================== C언어 랜덤 문제 생성 ======================

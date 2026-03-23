@@ -222,6 +222,27 @@
           "category": "재귀함수",
           "question": "다음 Java 코드의 출력값을 작성하시오.\n\nclass A {\n    int a;\n    public A(int a) {\n        this.a = a;\n    }\n    void display() {\n        System.out.println(\"a=\" + a);\n    }\n}\n \nclass B extends A {\n    public B(int a) {\n        super(a);\n        super.a = a + 1;\n    }\n}\n \npublic class Main {\n    public static void main(String[] args) {\n        B obj = new B(10);\n        obj.display();\n    }\n}",
           "answer": "a=11"
+        },
+        {
+          "id": 17,
+          "exam": "2025년 3회",
+          "category": "인터페이스",
+          "question": "다음 Java 코드에서 빈칸에 들어갈 올바른 키워드를 작성하시오.\n\ninterface Machine {\n    void run();\n}\n\nclass WashingMachine (____빈칸____) Machine {\n    private String name;\n\n    public WashingMachine() {\n        this.name = \"LG Washer\";\n    }\n\n    public void run() {\n        System.out.println(\"Washing machine running\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        WashingMachine wm = new WashingMachine();\n        wm.run();\n    }\n}",
+          "answer": "implements"
+        },
+        {
+          "id": 18,
+          "exam": "2025년 3회",
+          "category": "상속",
+          "question": "다음 Java 코드에서 밑줄에 알맞은 단어를 작성하시오.\n\nclass Rectangle {\n    int width, height;\n\n    Rectangle(int width, int height) {\n        this.width = width;\n        this.height = height;\n    }\n}\n\nclass Square extends Rectangle {\n    Square(int a) {\n        ____(a, a);\n    }\n\n    int getSquareArea() {\n        return width * height;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Square sq = new Square(10);\n        System.out.println(sq.getSquareArea());\n    }\n}",
+          "answer": "super"
+        },
+        {
+          "id": 19,
+          "exam": "2025년 3회",
+          "category": "enum",
+          "question": "다음 Java 코드의 출력값을 작성하시오.\n\nenum Tri {\n    A(\"A\"), B(\"AB\"), C(\"ABC\");\n\n    private String code;\n\n    Tri(String code) {\n        this.code = code;\n    }\n\n    public String code() {\n        return code;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Tri t = Tri.values()[Tri.A.name().length()];\n        System.out.print(t.code());\n    }\n}",
+          "answer": "AB"
         }
       ]
     },
@@ -544,6 +565,34 @@
           "category": "구조체",
           "question": "18. 다음은 C언어의 문제이다. 아래 코드를 보고 알맞는 출력값을 작성하시오.\\n\\n#include <stdio.h>\\n#include <stdlib.h>\\n \\nstruct node {\\n    char c;\\n    struct node* p;\\n};\\n \\nstruct node* func(char* s) {\\n    struct node* h = NULL, *n;\\n    \\n    while(*s) {\\n        n = malloc(sizeof(struct node));\\n        n->c = *s++;\\n        n->p = h;\\n        h = n;\\n    }\\n    \\n    return h;\\n}\\n \\nint main() {\\n    struct node* n = func(\\\"BEST\\\");\\n    \\n    while(n) {\\n        putchar(n->c);\\n        struct node* t = n;\\n        n = n->p;\\n        free(t);\\n    }\\n    \\n    return 0;\\n}",
           "answer": "TSEB"
+        },
+        {
+          "id": 46,
+          "exam": "2025년 3회",
+          "category": "구조체",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\n\n#include <stdio.h>\n\nstruct Test {\n    int i;\n    const char *g;\n};\n\nint main() {\n    struct Test test[] = {{1, \"AB\"}, {2, \"DC\"}, {3, \"EB\"}}; \n    struct Test *p = &test[1]; \n    printf(\"%s\", p->g + (p->i - 1));\n    return 0;\n}",
+          "answer": "C"
+        },
+        {
+          "id": 47,
+          "exam": "2025년 3회",
+          "category": "문자열",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\n\n#include <stdio.h>\n\nint main(void) {\n    char str[] = \"REPUBLICOFKOREA\";\n    int a = 0;\n\n    while (str[a] != '\\0')\n        ++a;\n\n    putchar(str[a - 2]);\n    return 0;\n}",
+          "answer": "E"
+        },
+        {
+          "id": 48,
+          "exam": "2025년 3회",
+          "category": "구조체",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\n\n#include <stdio.h>\n\nstruct Node {\n    struct Node* next;\n    unsigned int x;\n};\n\nint main() {\n    struct Node t1 = { 0, 5u };\n    struct Node t2 = { 0, 7u };\n    struct Node t3 = { 0, 11u };\n\n    t3.next = &t2;\n    t2.next = &t1;\n\n    struct Node* curr = &t3;\n    int sum = 0;\n\n    while (curr) {\n        sum = sum * 3 + curr->x;\n        curr = curr->next;\n    }\n\n    sum = (sum ^ 42u) + 100u;\n\n    printf(\"%u\\n\", sum);\n}",
+          "answer": "187"
+        },
+        {
+          "id": 49,
+          "exam": "2025년 3회",
+          "category": "비트연산",
+          "question": "다음 C언어 코드의 출력값을 작성하시오.\n\n#include <stdio.h>\nint main() {\n    int x=7, y=4, z;\n    z = y%3<3 ? 2 : 1;\n    z = z & z >> 1;\n    z = x>5 && z<=3 ? z*x : z/x;\n    printf(\"%d\", z);\n    return 0;\n}",
+          "answer": "0"
         }
       ]
     },
@@ -645,6 +694,13 @@
           "category": "유형선택",
           "question": "문제 유형을 선택하고 '새 문제 만들기' 버튼을 클릭하세요.",
           "answer": "?"
+        },
+        {
+          "id": 15,
+          "exam": "2025년 3회",
+          "category": "코드 추적",
+          "question": "다음 Python 코드의 출력값을 작성하시오.\n\ndata = [\n    [3, 5, 2, 4, 1],\n    [4, 5, 1],\n    [4, 4, 1, 5, 4],\n    [4, 5]\n]\n\nresult = {}\n\nfor index, lis in enumerate(data):\n    list_sum = sum(lis)\n    list_len = len(lis)\n\n    result[index] = (list_sum, list_len)\n\nprint(result)",
+          "answer": "{0: (15, 5), 1: (10, 3), 2: (18, 5), 3: (9, 2)}"
         }
       ]
     },
